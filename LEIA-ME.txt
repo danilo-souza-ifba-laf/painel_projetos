@@ -1,0 +1,19 @@
+PORTFÓLIO PROFISSIONAL — DANILO SANTOS SOUZA
+
+COMO ABRIR
+1. Extraia todos os arquivos do ZIP para uma pasta.
+2. Abra o arquivo index.html com um navegador.
+3. Não é necessário instalar programas ou iniciar um servidor.
+
+ARQUIVOS
+- index.html: conteúdo e estrutura da página.
+- style.css: aparência, responsividade e três paletas de cores.
+- script.js: troca de paletas e filtros dos projetos.
+
+EDIÇÃO
+Os três arquivos podem ser editados em qualquer editor de texto ou código,
+como Visual Studio Code, Notepad++ ou Bloco de Notas.
+
+PUBLICAÇÃO
+A pasta pode ser hospedada diretamente no GitHub Pages, Netlify, Cloudflare
+Pages ou em qualquer hospedagem que aceite sites estáticos.

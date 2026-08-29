@@ -11,8 +11,13 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#conteudo" aria-label="Painel IFBA">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span><strong>IFBA</strong><small>Pró-Reitoria de Ensino</small></span>
+        <span>
+            <img 
+              src="logo-proen.png" 
+              alt="logotipo do Instituto Federal da Bahia da Pró-reitoria de Ensino" 
+              style="max-width: auto; height: auto;" 
+              loading="lazy">
+        </span>
       </a>
       <div class="nav-actions">
         <span id="sourceBadge" class="source-badge demo"><i></i>Base da planilha atualizada</span>
@@ -26,8 +31,8 @@
     <div class="container hero-content">
       <div>
         <span class="eyebrow">PROEN · ACOMPANHAMENTO INSTITUCIONAL</span>
-        <h1>Painel de avaliação e reformulação de cursos</h1>
-        <p>Acompanhe a tramitação dos Processos referente a projetos pedagógicos dos cursos técnicos e superiores do IFBA.</p>
+        <h1>Painel de acompanhamento dos PPC de cursos</h1>
+        <p>Acompanhe os projetos pedagógicos dos cursos técnicos e superiores de graduação do IFBA.</p>
       </div>
       <div class="sync"><small>Última sincronização</small><strong id="updatedAt">—</strong></div>
     </div>
@@ -35,19 +40,48 @@
 
   <main id="conteudo" class="container workspace">
     <section class="scope-toolbar" aria-label="Segmento de ensino">
-      <div><small>Visão dos dados</small><strong id="scopeTitle">EPTNM e cursos superiores</strong></div>
+      <div><small>Visão dos dados</small><strong id="scopeTitle">EPTNM e Graduação</strong></div>
       <div class="scope-tabs" role="group" aria-label="Filtrar por segmento">
         <button type="button" class="active" data-scope="Todos" aria-pressed="true">Todos</button>
         <button type="button" data-scope="EPTNM" aria-pressed="false">EPTNM</button>
-        <button type="button" data-scope="Superior" aria-pressed="false">Superior</button>
+        <button type="button" data-scope="Superior" aria-pressed="false">Graduação</button>
       </div>
     </section>
     <section class="metrics" aria-label="Indicadores gerais">
-      <article><span class="metric-icon green">▣</span><div><strong id="metricTotal">0</strong><small>Projetos acompanhados</small></div></article>
-      <article><span class="metric-icon blue">⌂</span><div><strong id="metricCampus">0</strong><small>Em análise no campus</small></div></article>
-      <article><span class="metric-icon amber">◷</span><div><strong id="metricProen">0</strong><small>Em análise na PROEN</small></div></article>
-      <article><span class="metric-icon purple">✓</span><div><strong id="metricConsepe">0</strong><small>Em tramitação no CONSEPE</small></div></article>
-      <article><span class="metric-icon red">!</span><div><strong id="metricOverdue">0</strong><small>Com prazo vencido</small></div></article>
+      <article>
+        <span class="metric-icon green" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/><path d="M8 10h8"/><path d="M8 14h6"/></svg>
+        </span>
+        <div><strong id="metricTotal">0</strong><small>Projetos acompanhados</small></div>
+      </article>
+
+      <article>
+        <span class="metric-icon blue" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+        </span>
+        <div><strong id="metricCampus">0</strong><small>Em análise no campus</small></div>
+      </article>
+
+      <article>
+        <span class="metric-icon amber" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </span>
+        <div><strong id="metricProen">0</strong><small>Em análise na PROEN</small></div>
+      </article>
+
+      <article>
+        <span class="metric-icon purple" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/></svg>
+        </span>
+        <div><strong id="metricConsepe">0</strong><small>Em tramitação no CONSEPE</small></div>
+      </article>
+
+      <article>
+        <span class="metric-icon red" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </span>
+        <div><strong id="metricOverdue">0</strong><small>Com prazo vencido</small></div>
+      </article>
     </section>
 
     <section class="overview">
