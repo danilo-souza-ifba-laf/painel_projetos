@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel de acompanhamento da avaliação e reformulação dos cursos do IFBA.">
+  <title>Painel de Avaliação de Cursos do IFBA</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#conteudo" aria-label="Painel IFBA">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span><strong>IFBA</strong><small>Pró-Reitoria de Ensino</small></span>
+      </a>
+      <div class="nav-actions">
+        <span id="sourceBadge" class="source-badge demo"><i></i>Base da planilha atualizada</span>
+        <button id="refreshButton" class="icon-button" type="button" title="Atualizar dados" aria-label="Atualizar dados">↻</button>
+        <button id="apiButton" class="outline-button" type="button">🔗 <span>Conectar API</span></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <div>
+        <span class="eyebrow">PROEN · ACOMPANHAMENTO INSTITUCIONAL</span>
+        <h1>Painel de avaliação e reformulação de cursos</h1>
+        <p>Acompanhe a tramitação dos Processos referente a projetos pedagógicos dos cursos técnicos e superiores do IFBA.</p>
+      </div>
+      <div class="sync"><small>Última sincronização</small><strong id="updatedAt">—</strong></div>
+    </div>
+  </section>
+
+  <main id="conteudo" class="container workspace">
+    <section class="scope-toolbar" aria-label="Segmento de ensino">
+      <div><small>Visão dos dados</small><strong id="scopeTitle">EPTNM e cursos superiores</strong></div>
+      <div class="scope-tabs" role="group" aria-label="Filtrar por segmento">
+        <button type="button" class="active" data-scope="Todos" aria-pressed="true">Todos</button>
+        <button type="button" data-scope="EPTNM" aria-pressed="false">EPTNM</button>
+        <button type="button" data-scope="Superior" aria-pressed="false">Superior</button>
+      </div>
+    </section>
+    <section class="metrics" aria-label="Indicadores gerais">
+      <article><span class="metric-icon green">▣</span><div><strong id="metricTotal">0</strong><small>Projetos acompanhados</small></div></article>
+      <article><span class="metric-icon blue">⌂</span><div><strong id="metricCampus">0</strong><small>Em análise no campus</small></div></article>
+      <article><span class="metric-icon amber">◷</span><div><strong id="metricProen">0</strong><small>Em análise na PROEN</small></div></article>
+      <article><span class="metric-icon purple">✓</span><div><strong id="metricConsepe">0</strong><small>Em tramitação no CONSEPE</small></div></article>
+      <article><span class="metric-icon red">!</span><div><strong id="metricOverdue">0</strong><small>Com prazo vencido</small></div></article>
+    </section>
+
+    <section class="overview">
+      <article class="panel stages-panel">
+        <div class="panel-title"><h2>Distribuição por etapa</h2><p>Visão consolidada da tramitação atual</p></div>
+        <div id="stageBars" class="stage-bars"></div>
+      </article>
+      <article class="panel attention">
+        <span class="attention-icon">!</span>
+        <div><small>Prioridade de gestão</small><strong id="attentionTitle">Nenhum projeto exige atenção</strong><p>Prazos vencidos ou movimentações críticas devem ser verificados com a unidade responsável.</p></div>
+      </article>
+    </section>
+
+    <section class="panel registry">
+      <header class="registry-header">
+        <div><h2>Projetos de curso · <span id="registryScope">Todos</span></h2><p><span id="visibleCount">0</span> de <span id="totalCount">0</span> registros do segmento exibidos</p></div>
+        <button id="clearFilters" class="text-button" type="button">Limpar filtros</button>
+      </header>
+
+      <div class="filters">
+        <label class="search"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Buscar curso, campus ou processo..." aria-label="Buscar curso, campus ou processo"></label>
+        <label><span class="sr-only">Campus</span><select id="campusFilter"><option value="">Todos os campi</option></select></label>
+        <label><span class="sr-only">Nível</span><select id="levelFilter"><option value="">Todos os níveis</option></select></label>
+        <label><span class="sr-only">Etapa</span><select id="stageFilter"><option value="">Todas as etapas</option></select></label>
+      </div>
+
+      <div id="statusMessage" class="status-message" hidden></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Curso e campus</th><th>Demanda</th><th>Etapa atual</th><th>Responsável</th><th>Última movimentação</th><th>Prazo</th><th>CONSEPE</th><th><span class="sr-only">Detalhes</span></th></tr></thead>
+          <tbody id="courseTableBody"></tbody>
+        </table>
+      </div>
+      <div id="mobileCards" class="mobile-cards"></div>
+    </section>
+  </main>
+
+  <footer>Protótipo para acompanhamento dos PPCs · PROEN/IFBA · Base alinhada à aba Listas</footer>
+
+  <div id="drawerBackdrop" class="backdrop" hidden>
+    <aside id="detailDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <button class="close-button" type="button" data-close="drawer" aria-label="Fechar">×</button>
+      <span class="eyebrow dark">DETALHAMENTO DO PROJETO</span>
+      <h2 id="drawerTitle"></h2>
+      <p id="drawerSubtitle" class="drawer-subtitle"></p>
+      <div class="drawer-progress"><div><small>Etapa atual</small><strong id="drawerStage"></strong></div><div class="progress"><span id="drawerProgress"></span></div><b id="drawerPercent"></b></div>
+      <section><h3>Identificação e comissão</h3><dl id="detailGrid" class="detail-grid"></dl></section>
+      <section><h3>Últimas movimentações</h3><div id="timeline" class="timeline"></div></section>
+      <section><h3>Tramitação no CONSEPE</h3><div id="consepeBox" class="consepe-box"></div></section>
+      <section><h3>Observações</h3><p id="drawerNotes" class="notes"></p></section>
+    </aside>
+  </div>
+
+  <div id="apiBackdrop" class="backdrop" hidden>
+    <section class="api-modal" role="dialog" aria-modal="true" aria-labelledby="apiTitle">
+      <button class="close-button" type="button" data-close="api" aria-label="Fechar">×</button>
+      <span class="api-icon">🔗</span>
+      <h2 id="apiTitle">Conectar à planilha</h2>
+      <p>Cole a URL pública do aplicativo Web criado no Google Apps Script. Deixe o campo em branco para retornar à base local atualizada.</p>
+      <label for="apiUrl">URL da API</label>
+      <input id="apiUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec">
+      <div class="modal-actions"><button type="button" class="text-button" data-close="api">Cancelar</button><button id="saveApi" type="button" class="primary-button">Salvar e sincronizar</button></div>
+    </section>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
