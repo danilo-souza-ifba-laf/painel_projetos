@@ -1,0 +1,318 @@
+:root {
+  --green-background: #059669;
+  --green-primary: #64b434;
+  --green-primary-hover: #579f2d;
+  --white: #ffffff;
+  --text: #222222;
+  --line: #e0e0e0;
+  --danger: #b42318;
+  --radius-card: 8px;
+  --radius-control: 4px;
+  --text-muted: #666666; /* ADICIONADO */
+}
+
+* { 
+  box-sizing: border-box; 
+}
+
+html,
+body {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  color: var(--text);
+  background: var(--green-background);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+}
+
+button,
+input { 
+  font: inherit; 
+}
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+.login-card {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  width: min(743px, 100%);
+  min-height: 432px;
+  overflow: hidden;
+  background: var(--white);
+  border-radius: var(--radius-card);
+}
+
+/* Painel da Imagem (Painel Esquerdo) */
+.brand-panel {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white); /* Fundo escuro para combinar com a marca */
+}
+
+.brand-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Preenche toda a área. Alterne para 'contain' se não quiser nenhum corte */
+  object-position: center;
+  display: block;
+}
+
+/* Painel do Formulário (Painel Direito) */
+.form-panel {
+  align-self: stretch;
+  overflow: hidden;
+  background: var(--white);
+  border-left: 1px solid #ececec;
+}
+
+.form-header {
+  display: grid;
+  height: 80px;
+  place-content: center;
+  gap: 6px;
+  color: var(--white);
+  text-align: center;
+  background: var(--green-primary);
+  padding: 0 16px;
+}
+
+.form-header p,
+.form-header h1 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.form-header p { 
+  font-size: 16px; 
+  font-weight: 700; 
+}
+
+.form-header h1 { 
+  font-size: 13px; 
+  font-weight: 400; 
+}
+
+.login-form {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  padding: 20px 20px 16px;
+  gap: 12px;
+}
+
+.field-group {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.field-group label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field-group input {
+  width: 100%;
+  height: 36px;
+  padding: 5px 12px;
+  color: #0d0d0d;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field-group input:hover { 
+  border-color: #c9c9c9; 
+}
+
+.field-group input:focus {
+  border-color: var(--green-primary);
+  box-shadow: 0 0 0 3px rgb(100 180 52 / 18%);
+}
+
+.field-group input[aria-invalid="true"] { 
+  border-color: var(--danger); 
+}
+
+.field-error {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  color: var(--danger);
+  font-size: 10px;
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  padding-top: 12px;
+}
+
+.form-footer button {
+  width: 100%;
+  max-width: 180px;
+  height: 36px;
+  color: var(--white);
+  font-weight: 600;
+  background: var(--green-primary);
+  border: none;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 120ms ease;
+}
+
+.form-footer button:hover { 
+  background: var(--green-primary-hover); 
+}
+
+.form-footer button:active { 
+  transform: translateY(1px); 
+}
+
+.form-footer button:focus-visible {
+  outline: 3px solid rgb(5 150 105 / 32%);
+  outline-offset: 2px;
+}
+
+.form-footer button:disabled { 
+  cursor: wait; 
+  opacity: 0.72; 
+}
+
+.form-message {
+  min-height: 13px;
+  margin: 6px 0 0;
+  color: #386321;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 720px) {
+  .login-page { 
+    padding: 16px; 
+  }
+
+  .login-card {
+    grid-template-columns: 1fr;
+    width: min(420px, 100%);
+    min-height: auto;
+  }
+
+  .brand-panel {
+    grid-row: 1;
+    height: 160px;
+  }
+
+  .brand-panel img {
+    object-fit: contain; /* No mobile, 'contain' evita cortar o logo em banners horizontais */
+    padding: 16px;
+  }
+
+  .form-panel { 
+    grid-row: 2; 
+    border-left: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .login-page { 
+    padding: 12px; 
+  }
+  
+  .login-form { 
+    padding: 16px 12px 0; 
+  }
+  
+  .form-header { 
+    height: 72px; 
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.system-credits {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  width: 100%;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--white);
+  text-align: center;
+}
+
+.system-credits strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* Contêiner principal */
+.checkbox-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: var(--white, #ffffff);
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: var(--radius-control, 4px);
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+/* Efeito ao passar o mouse no campo */
+.checkbox-group:hover {
+  border-color: #c9c9c9;
+  background-color: #f9f9f9;
+}
+
+/* Texto do Label */
+.checkbox-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #222222);
+  cursor: pointer;
+}
+
+/* Caixa de Seleção (Input) */
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--green-primary, #64b434); /* Utiliza a cor verde do seu projeto */
+}
+
+/* Foco via teclado */
+.checkbox-group input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--green-primary, #64b434);
+  outline-offset: 2px;
+}

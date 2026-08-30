@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#059669" />
+    <meta name="description" content="Tela responsiva de acesso ao Painel PANDA da PROEN/IFBA" />
+    <title>PANDA Login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="login-page">
+  <div class="login-card">
+    <aside class="brand-panel" aria-label="Instituto Federal da Bahia">
+      <img src="panda-login.png" alt="Instituto Federal da Bahia" />
+    </aside>
+
+    <div class="form-panel">
+      <header class="form-header">
+        <p>PANDA</p>
+        <h1>Instituto Federal de Educação, Ciência e Tecnologia da Bahia - IFBA</h1>
+      </header>
+
+      <form class="login-form">
+        <div class="field-group">
+          <label for="email">Usuário</label>
+          <input type="text" id="email" required />
+          <span class="field-error"></span>
+        </div>
+
+        <div class="field-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" required />
+          <span class="field-error"></span>
+        </div>
+        <div class="checkbox-group">
+          <label for="administrador">Usuário administrador</label>
+          <input type="checkbox" id="administrador" />
+        </div>
+        <a href="recuperar-senha.html" class="forgot-password">Esqueceu a senha?</a>
+        <div class="form-footer">
+          <button type="submit">Entrar</button>
+          <p class="form-message"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+  </body>
+  <footer class="system-credits">
+            Desenvolvido por <strong>Danilo Santos Souza</strong>, <strong>Edilson Santos</strong> e <strong>Jaime Neto</strong>, sob orientação do <strong>Núcleo de Dados Acadêmicos do IFBA</strong>.
+  </footer>
+</html>

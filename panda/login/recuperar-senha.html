@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#059669" />
+    <meta name="description" content="Recuperação segura de acesso ao Painel PANDA" />
+    <title>Recuperar acesso — PANDA</title>
+    <link rel="stylesheet" href="recuperar-senha.css" />
+    <script src="recuperar-senha.js" defer></script>
+  </head>
+  <body>
+    <main class="login-page">
+      <section class="login-card recovery-card" aria-labelledby="recovery-title">
+        <div class="form-panel recovery-panel">
+          <header class="form-header">
+            <p>PAINEL PANDA</p>
+            <h1 id="recovery-title">Recuperar acesso</h1>
+          </header>
+
+          <form id="recovery-form" class="recovery-form" novalidate>
+            <p class="recovery-intro">
+              Informe o usuário e o e-mail vinculados ao cadastro. Se os dados corresponderem,
+              enviaremos instruções seguras para redefinir a senha.
+            </p>
+
+            <div class="recovery-field">
+              <label for="recovery-user">Usuário</label>
+              <input id="recovery-user" name="usuario" type="text" autocomplete="username" required />
+              <small class="recovery-error" id="recovery-user-error"></small>
+            </div>
+
+            <div class="recovery-field">
+              <label for="recovery-email">E-mail cadastrado</label>
+              <input id="recovery-email" name="email" type="email" autocomplete="email" placeholder="usuario@ifba.edu.br" required />
+              <small class="recovery-error" id="recovery-email-error"></small>
+            </div>
+
+            <footer class="recovery-footer">
+              <button id="recovery-button" type="submit">Enviar instruções</button>
+              <a href="/" target="_top">Voltar para o login</a>
+            </footer>
+
+            <p id="recovery-message" class="recovery-message" role="status" aria-live="polite"></p>
+
+            <p class="security-note">
+              Por segurança, a senha atual nunca é enviada por e-mail. O procedimento correto utiliza
+              um link ou código temporário, de uso único e com prazo de validade.
+            </p>
+          </form>
+        </div>
+
+        <aside class="brand-panel" aria-label="Instituto Federal da Bahia">
+          <img src="recuperar-senha.png" alt="Instituto Federal da Bahia" width="89" height="108" />
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

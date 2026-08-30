@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#087f23" />
+    <meta name="description" content="Painel PANDA de auditoria dos dados acadêmicos SUAP e SISTEC" />
+    <title>Painel PANDA</title>
+    <link rel="stylesheet" href="painel.css" />
+    <script src="painel.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <main id="conteudo" class="dashboard-shell">
+      <header class="brand-banner">
+       <img src="banner-panda.png" width="100%" height="100%"/>
+      </header>
+
+      <section class="filters" aria-label="Filtros do painel">
+        <label>
+          <span>Unidade:</span>
+          <select id="campus-filter"></select>
+        </label>
+        <label>
+          <span>Forma de oferta:</span>
+          <select id="offer-filter">
+            <option value="">Todas as formas</option>
+            <option value="Técnico">Técnico</option>
+            <option value="FIC">FIC</option>
+            <option value="Graduação">Graduação</option>
+            <option value="Pós-graduação">Pós-graduação</option>
+          </select>
+        </label>
+        <label>
+          <span>Modalidade de ensino:</span>
+          <select id="mode-filter">
+            <option value="">Todas as modalidades</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Semipresencial">Semipresencial</option>
+            <option value="EAD">EAD</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="summary-grid" aria-label="Indicadores gerais">
+        <article class="summary-card summary-suap">
+          <h2>SUAP</h2>
+          <div class="summary-content compact-summary">
+            <strong id="suap-total">0</strong>
+            <span>Matriculados</span>
+            <p>Data Referência:<br /><time id="suap-date">—</time></p>
+          </div>
+        </article>
+
+        <article class="summary-card summary-sistec">
+          <h2>SISTEC</h2>
+          <div class="summary-content compact-summary">
+            <strong id="sistec-total">0</strong>
+            <span>Matriculados</span>
+            <p>Data Referência:<br /><time id="sistec-date">—</time></p>
+          </div>
+        </article>
+
+        <article class="summary-card summary-distortion">
+          <h2>Distorção</h2>
+          <div class="summary-content metric-layout">
+            <div>
+              <strong id="distortion-total">0</strong>
+              <span>Matriculados</span>
+            </div>
+            <div id="distortion-gauge" class="ring" aria-label="Percentual de distorção"><span>0%</span></div>
+          </div>
+        </article>
+
+        <article class="summary-card summary-divergence">
+          <h2>Divergência</h2>
+          <div class="summary-content divergence-layout">
+            <div class="divergence-total">
+              <strong id="divergence-total">0</strong>
+              <span>Matriculados</span>
+            </div>
+            <div class="divergence-bars">
+              <label>Suap/Sistec: <span id="suap-sistec-percent">0%</span></label>
+              <progress id="suap-sistec-bar" max="100" value="0"></progress>
+              <label>Sistec/Suap: <span id="sistec-suap-percent">0%</span></label>
+              <progress id="sistec-suap-bar" max="100" value="0"></progress>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <div class="data-action-row">
+        <input id="data-upload" type="file" accept=".csv,.xlsx,.xls" hidden />
+        <button id="data-upload-button" class="primary-button" type="button">Atualizar/Subir Dados</button>
+      </div>
+
+      <section class="panel-section" aria-labelledby="distortion-title">
+        <header class="section-heading">
+          <h2 id="distortion-title">Informações de Distorção por Curso</h2>
+          <p><strong>Distorção:</strong> diferença absoluta entre os matriculados no SUAP e no SISTEC.</p>
+        </header>
+        <div id="distortion-cards" class="course-grid"></div>
+      </section>
+
+      <section class="panel-section" aria-labelledby="divergence-title">
+        <header class="section-heading">
+          <h2 id="divergence-title">Informações de Divergência por Curso</h2>
+          <p><strong>Suap/Sistec:</strong> estudantes no SUAP e não localizados no SISTEC. <strong>Sistec/Suap:</strong> situação inversa.</p>
+        </header>
+        <div id="divergence-cards" class="course-grid"></div>
+      </section>
+
+      <section class="panel-section students-section" aria-labelledby="students-title">
+        <header class="section-heading compact-heading">
+          <h2 id="students-title">Discentes SUAP/SISTEC</h2>
+        </header>
+
+        <div id="student-tabs" class="tabs" role="tablist" aria-label="Tipos de registro">
+          <button type="button" role="tab" aria-selected="true" data-tab="suap-only">No SUAP e não encontrados no SISTEC</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="sistec-only">No SISTEC e não encontrados no SUAP</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="suap-total">Total cadastrados no SUAP</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="sistec-total">Total cadastrados no SISTEC</button>
+        </div>
+
+        <div class="table-alert" role="status">
+          <strong>Alerta</strong>
+          <span>Quantidade de elementos divergentes: <b id="divergent-count">0</b></span>
+        </div>
+
+        <div class="table-toolbar">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="student-search" type="search" placeholder="Pesquisar por matrícula, nome ou curso" />
+          </label>
+          <div class="toolbar-actions">
+            <button id="download-csv" type="button">Baixar CSV</button>
+            <button id="refresh-table" type="button">Atualizar</button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Nº matrícula</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Curso</th>
+                <th>Situação SUAP</th>
+                <th>Último período</th>
+                <th>Campus</th>
+                <th>Data referência</th>
+              </tr>
+            </thead>
+            <tbody id="student-table-body"></tbody>
+          </table>
+        </div>
+        <p id="table-result-count" class="result-count">0 resultados</p>
+      </section>
+
+      <section class="panel-section notification-section" aria-labelledby="notification-title">
+        <header class="section-heading compact-heading">
+          <h2 id="notification-title">Notificar Campus</h2>
+        </header>
+
+        <article class="notification-copy">
+          <h3>Levantamento de divergências entre os dados do SUAP e do SISTEC – Solicitação de verificação</h3>
+          <p>Prezado(a),</p>
+          <p id="notification-summary"></p>
+          <p>Com o objetivo de subsidiar a análise dessas inconsistências, encaminhamos, em anexo, arquivos em formato CSV contendo a relação dos estudantes envolvidos, com nome, matrícula, curso e natureza da divergência identificada.</p>
+          <p>Solicitamos a conferência dos registros e, caso sejam confirmadas inconsistências, a adoção das providências necessárias para atualização e alinhamento das informações nos sistemas correspondentes.</p>
+          <p>A consistência entre as bases de dados é essencial para assegurar a confiabilidade das informações institucionais e dos indicadores utilizados na gestão, no monitoramento e na avaliação institucional.</p>
+          <p>Em caso de dúvidas, permanecemos à disposição.</p>
+          <p>Atenciosamente,<br />Equipe responsável pela Auditoria de Dados Acadêmicos<br />PROEN – Instituto Federal da Bahia</p>
+        </article>
+
+        <div class="notification-actions">
+          <label>Anexo SUAP/SISTEC<input id="attachment-suap" type="file" accept=".csv" /></label>
+          <label>Anexo SISTEC/SUAP<input id="attachment-sistec" type="file" accept=".csv" /></label>
+          <div class="recipient-block">
+            <p><strong>Destinatário:</strong> <a id="recipient-email" href="#">—</a></p>
+            <button id="send-email" class="secondary-button" type="button" disabled>Enviar E-mail</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="charts-grid" aria-label="Evolução dos indicadores">
+        <article class="panel-section chart-panel">
+          <h2>Gráfico de Evolução da Distorção</h2>
+          <div id="distortion-chart" class="bar-chart" aria-label="Histórico da distorção"></div>
+        </article>
+        <article class="panel-section chart-panel">
+          <h2>Gráfico de Evolução da Divergência</h2>
+          <div id="divergence-chart" class="bar-chart" aria-label="Histórico da divergência"></div>
+        </article>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
