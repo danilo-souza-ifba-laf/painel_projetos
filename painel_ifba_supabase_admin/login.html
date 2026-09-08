@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Acesso ao Painel de Avaliação de Cursos do IFBA.">
+  <title>Acesso · Painel de Cursos do IFBA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-brand">
+      <img src="logo.png" alt="Instituto Federal da Bahia">
+      <div>
+        <span class="eyebrow">PROEN · IFBA</span>
+        <h1>Acompanhamento dos projetos de curso</h1>
+        <p>Entre com a conta cadastrada para consultar o painel ou administrar os registros.</p>
+      </div>
+    </section>
+
+    <section class="auth-card" aria-labelledby="loginTitle">
+      <div class="auth-card-heading">
+        <span class="auth-symbol" aria-hidden="true">↳</span>
+        <div><small>ACESSO RESTRITO</small><h2 id="loginTitle">Entrar no painel</h2></div>
+      </div>
+      <form id="loginForm" novalidate>
+        <label>E-mail institucional
+          <input id="loginEmail" name="email" type="email" autocomplete="username" required placeholder="nome@ifba.edu.br">
+        </label>
+        <label>Senha
+          <input id="loginPassword" name="password" type="password" autocomplete="current-password" required minlength="6">
+        </label>
+        <button id="loginButton" class="admin-primary full" type="submit">Entrar</button>
+      </form>
+      <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+      <p class="auth-help">A conta deve ser criada previamente pelo responsável no Supabase Authentication.</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
+

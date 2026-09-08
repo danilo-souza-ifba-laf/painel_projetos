@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Área administrativa do Painel de Avaliação de Cursos do IFBA.">
+  <title>Administração · Painel de Cursos do IFBA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+  <header class="admin-topbar">
+    <a class="admin-brand" href="index.html"><img src="logo.png" alt="Instituto Federal da Bahia"></a>
+    <div class="admin-account">
+      <span><small>Administrador</small><strong id="adminName">Verificando acesso…</strong></span>
+      <a class="admin-ghost" href="index.html">Ver painel</a>
+      <button id="logoutButton" class="admin-ghost" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main id="adminApp" class="admin-container" hidden>
+    <header class="admin-heading">
+      <div><span class="section-kicker">GESTÃO DOS REGISTROS</span><h1>Acompanhamento dos projetos</h1><p>Cadastre demandas, atribua responsáveis e registre a tramitação institucional.</p></div>
+      <div class="heading-actions"><button id="refreshAdmin" class="admin-secondary" type="button">Atualizar</button><button id="newDemand" class="admin-primary" type="button">+ Nova demanda</button></div>
+    </header>
+
+    <section class="admin-metrics" aria-label="Resumo dos registros">
+      <article><small>Demandas ativas</small><strong id="adminMetricTotal">0</strong></article>
+      <article><small>Sem usuário atribuído</small><strong id="adminMetricUnassigned">0</strong></article>
+      <article><small>Prazos vencidos</small><strong id="adminMetricOverdue">0</strong></article>
+      <article><small>Usuários disponíveis</small><strong id="adminMetricUsers">0</strong></article>
+    </section>
+
+    <div class="admin-workspace">
+      <section class="admin-panel demand-browser">
+        <header><div><h2>Demandas cadastradas</h2><p>Selecione um registro para editar.</p></div><span id="adminDemandCount" class="count-chip">0</span></header>
+        <label class="admin-search"><span aria-hidden="true">⌕</span><input id="demandSearch" type="search" placeholder="Buscar curso, campus ou processo…"></label>
+        <div id="demandList" class="demand-list"></div>
+        <p id="demandEmpty" class="admin-empty" hidden>Nenhuma demanda encontrada.</p>
+      </section>
+
+      <section class="admin-panel editor-panel">
+        <header class="editor-header"><div><span id="editorMode" class="section-kicker">NOVA DEMANDA</span><h2 id="editorTitle">Cadastrar acompanhamento</h2></div><button id="cancelEdit" class="admin-ghost" type="button" hidden>Cancelar edição</button></header>
+
+        <form id="demandForm" class="admin-form" novalidate>
+          <input id="demandUuid" type="hidden">
+
+          <fieldset>
+            <legend>Identificação do curso</legend>
+            <div class="form-grid two">
+              <label>Campus <span>*</span>
+                <div class="field-action"><select id="campusId" required><option value="">Selecione</option></select><button id="openCampusDialog" type="button" title="Cadastrar campus" aria-label="Cadastrar campus">+</button></div>
+              </label>
+              <label>Curso <span>*</span>
+                <div class="field-action"><select id="courseId" required disabled><option value="">Selecione primeiro o campus</option></select><button id="openCourseDialog" type="button" title="Cadastrar curso" aria-label="Cadastrar curso">+</button></div>
+              </label>
+              <label>Código do acompanhamento <span>*</span><input id="demandCode" required maxlength="30" placeholder="Ex.: C011"></label>
+              <label>Processo SEI <span>*</span><input id="processoSei" required maxlength="80" placeholder="00000.000000/2026-00"></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Situação do acompanhamento</legend>
+            <div class="form-grid two">
+              <label>Tipo de demanda <span>*</span><select id="demandType" required></select></label>
+              <label>Etapa atual <span>*</span><select id="currentStage" required></select></label>
+              <label>Unidade responsável <span>*</span><select id="currentUnit" required></select></label>
+              <label>Usuário responsável<select id="assignedUser"><option value="">Ainda não atribuído</option></select><small>Conta responsável pelo acompanhamento cotidiano.</small></label>
+              <label>Prioridade <span>*</span><select id="priority" required><option>Alta</option><option selected>Média</option><option>Baixa</option></select></label>
+              <label>Prazo vigente<input id="deadline" type="date"></label>
+              <label class="progress-field">Progresso estimado <output id="progressOutput" for="progressValue">0%</output><input id="progressValue" type="range" min="0" max="100" step="1" value="0"></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Comissão e CONSEPE</legend>
+            <div class="form-grid two">
+              <label>Portaria da comissão<input id="commissionOrdinance" maxlength="120" placeholder="Portaria nº 000/2026"></label>
+              <label>Data da portaria<input id="commissionDate" type="date"></label>
+              <label>Situação no CONSEPE <span>*</span><select id="consepeStatus" required></select></label>
+              <label>Data do último registro<input id="consepeDate" type="date"></label>
+            </div>
+          </fieldset>
+
+          <label>Observações<textarea id="notes" rows="4" maxlength="3000" placeholder="Pendências, providências e encaminhamentos relevantes."></textarea></label>
+
+          <div class="form-footer">
+            <p id="demandMessage" class="form-message" role="status" aria-live="polite"></p>
+            <div><button id="archiveDemand" class="admin-danger" type="button" hidden>Arquivar</button><button id="saveDemand" class="admin-primary" type="submit">Salvar demanda</button></div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section class="admin-panel movement-panel">
+      <header><div><span class="section-kicker">HISTÓRICO</span><h2>Registrar movimentação</h2><p id="movementContext">Selecione uma demanda na lista para registrar entrada ou saída.</p></div></header>
+      <form id="movementForm" class="movement-form">
+        <label>Unidade<select id="movementUnit" required><option>Campus</option><option>PROEN</option><option>CONSEPE</option></select></label>
+        <label>Movimentação<select id="movementType" required><option>Entrada</option><option>Saída</option></select></label>
+        <label>Data<input id="movementDate" type="date" required></label>
+        <label class="movement-note">Observação<input id="movementNote" maxlength="500" placeholder="Informação opcional sobre a tramitação"></label>
+        <button id="saveMovement" class="admin-secondary" type="submit" disabled>Registrar</button>
+      </form>
+      <p id="movementMessage" class="form-message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <section id="accessState" class="access-state" aria-live="polite">
+    <span class="access-spinner" aria-hidden="true"></span><h1>Verificando seu acesso</h1><p>Aguarde enquanto validamos o perfil administrativo.</p>
+  </section>
+
+  <dialog id="campusDialog" class="admin-dialog">
+    <form id="campusForm" method="dialog">
+      <header><div><small>NOVO CADASTRO</small><h2>Adicionar campus</h2></div><button class="dialog-close" type="button" data-close-dialog="campusDialog" aria-label="Fechar">×</button></header>
+      <label>Nome do campus<input id="newCampusName" required maxlength="100" placeholder="Ex.: Salvador"></label>
+      <p id="campusMessage" class="form-message"></p>
+      <footer><button class="admin-ghost" type="button" data-close-dialog="campusDialog">Cancelar</button><button id="saveCampus" class="admin-primary" type="submit">Adicionar</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="courseDialog" class="admin-dialog">
+    <form id="courseForm" method="dialog">
+      <header><div><small>NOVO CADASTRO</small><h2>Adicionar curso</h2></div><button class="dialog-close" type="button" data-close-dialog="courseDialog" aria-label="Fechar">×</button></header>
+      <label>Campus<select id="newCourseCampus" required></select></label>
+      <label>Nome do curso<input id="newCourseName" required maxlength="180" placeholder="Nome oficial do curso"></label>
+      <label>Nível<select id="newCourseLevel" required></select></label>
+      <label>Modalidade<select id="newCourseModality" required><option>Presencial</option><option>A distância</option></select></label>
+      <p id="courseMessage" class="form-message"></p>
+      <footer><button class="admin-ghost" type="button" data-close-dialog="courseDialog">Cancelar</button><button id="saveCourse" class="admin-primary" type="submit">Adicionar</button></footer>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
