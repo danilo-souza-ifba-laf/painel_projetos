@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Solicitação de acesso ao Painel de Avaliação de Cursos do IFBA.">
+  <title>Solicitar acesso · Painel de Cursos do IFBA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-brand">
+      <img src="logo.png" alt="Instituto Federal da Bahia">
+      <div>
+        <span class="eyebrow">PROEN · IFBA</span>
+        <h1>Solicite acesso ao painel</h1>
+        <p>Crie sua senha e envie a solicitação. O acesso será liberado após a análise de um administrador.</p>
+      </div>
+    </section>
+
+    <section class="auth-card auth-card-wide" aria-labelledby="registerTitle">
+      <div class="auth-card-heading">
+        <span class="auth-symbol" aria-hidden="true">+</span>
+        <div><small>NOVO VISUALIZADOR</small><h2 id="registerTitle">Criar solicitação</h2></div>
+      </div>
+
+      <form id="registerForm" novalidate>
+        <label>Nome completo
+          <input id="registerName" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="Nome que será exibido no painel">
+        </label>
+        <label>E-mail
+          <input id="registerEmail" name="email" type="email" autocomplete="email" required maxlength="180" placeholder="nome@ifba.edu.br">
+        </label>
+        <div class="auth-form-grid">
+          <label>Senha
+            <input id="registerPassword" name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="72">
+          </label>
+          <label>Confirmar senha
+            <input id="registerPasswordConfirm" name="password_confirmation" type="password" autocomplete="new-password" required minlength="8" maxlength="72">
+          </label>
+        </div>
+        <p class="password-hint">Use pelo menos 8 caracteres. Não compartilhe sua senha com o administrador.</p>
+        <button id="registerButton" class="admin-primary full" type="submit">Enviar solicitação</button>
+      </form>
+
+      <div id="registerSuccess" class="registration-success" hidden>
+        <span aria-hidden="true">✓</span>
+        <h2>Solicitação enviada</h2>
+        <p id="registerSuccessText">Sua conta foi criada e aguarda a aprovação do administrador.</p>
+        <a class="admin-secondary" href="login.html">Voltar para o acesso</a>
+      </div>
+
+      <p id="registerMessage" class="form-message" role="status" aria-live="polite"></p>
+      <p class="auth-help">Já possui uma conta? <a href="login.html">Entrar no painel</a></p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="cadastro.js"></script>
+</body>
+</html>
+
