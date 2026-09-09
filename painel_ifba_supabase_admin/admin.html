@@ -29,6 +29,14 @@
       <article><small>Sem usuário atribuído</small><strong id="adminMetricUnassigned">0</strong></article>
       <article><small>Prazos vencidos</small><strong id="adminMetricOverdue">0</strong></article>
       <article><small>Usuários disponíveis</small><strong id="adminMetricUsers">0</strong></article>
+      <article class="metric-pending"><small>Solicitações pendentes</small><strong id="adminMetricPending">0</strong></article>
+    </section>
+
+    <section class="admin-panel approval-panel" aria-labelledby="approvalTitle">
+      <header><div><span class="section-kicker">CONTROLE DE ACESSO</span><h2 id="approvalTitle">Solicitações de visualizadores</h2><p>Aprove somente pessoas autorizadas a consultar o painel.</p></div><span id="pendingCount" class="count-chip">0</span></header>
+      <div id="approvalList" class="approval-list"></div>
+      <p id="approvalEmpty" class="admin-empty" hidden>Nenhuma solicitação aguardando análise.</p>
+      <p id="approvalMessage" class="form-message approval-message" role="status" aria-live="polite"></p>
     </section>
 
     <div class="admin-workspace">

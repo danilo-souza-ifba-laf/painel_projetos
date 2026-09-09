@@ -6,7 +6,7 @@
   const UNITS = ["Campus", "PROEN", "PROEN - DPE", "PROEN - DESUP", "PROEN - DETEC", "PROEX - Curricularização", "CONSEPE"];
   const CONSEPE = ["Não encaminhado", "Preparação para envio", "Na Câmara de Ensino", "Em análise pelo relator", "Em análise", "Pauta agendada", "Aprovado", "Aprovado com ressalvas", "Aguardando emissão de Resolução", "Resolução emitida"];
   const LEVELS = ["Superior - Licenciatura", "Superior - Bacharelado", "Superior - Tecnologia", "EPTNM - Concomitante", "EPTNM - Integrado", "EPTNM - Subsequente", "EPTNM - EJA"];
-  const state = { session:null, profile:null, campi:[], courses:[], profiles:[], demands:[], selectedDemandId:null };
+  const state = { session:null, profile:null, campi:[], courses:[], profiles:[], pendingProfiles:[], demands:[], selectedDemandId:null };
   const $ = selector => document.querySelector(selector);
 
   document.addEventListener("DOMContentLoaded", init);
@@ -48,6 +48,10 @@
       const item = event.target.closest("[data-demand-id]");
       if (item) selectDemand(item.dataset.demandId);
     });
+    $("#approvalList").addEventListener("click", event => {
+      const button = event.target.closest("[data-approval-action]");
+      if (button) decideAccess(button.dataset.userId, button.dataset.approvalAction, button);
+    });
     $("#progressValue").addEventListener("input", updateProgressOutput);
     $("#demandForm").addEventListener("submit", saveDemand);
     $("#archiveDemand").addEventListener("click", archiveDemand);
@@ -70,7 +74,7 @@
   async function loadAdminProfile() {
     const { data, error } = await window.IFBA_SUPABASE
       .from("perfis_usuario")
-      .select("usuario_id,nome,email,papel,ativo")
+      .select("usuario_id,nome,email,papel,ativo,status_acesso")
       .eq("usuario_id", state.session.user.id)
       .maybeSingle();
 
@@ -78,7 +82,7 @@
       denyAccess("Perfil não encontrado", "Execute a migração 02 e vincule esta conta em perfis_usuario.");
       return false;
     }
-    if (!data.ativo || data.papel !== "admin") {
+    if (!data.ativo || data.status_acesso !== "aprovado" || data.papel !== "admin") {
       denyAccess("Acesso não autorizado", "Esta página é exclusiva para usuários com perfil administrador.", true);
       return false;
     }
@@ -89,14 +93,15 @@
   async function loadAll() {
     setGlobalBusy(true);
     const sb = window.IFBA_SUPABASE;
-    const [campiResult, coursesResult, profilesResult, demandsResult] = await Promise.all([
+    const [campiResult, coursesResult, profilesResult, pendingResult, demandsResult] = await Promise.all([
       sb.from("campi").select("id,nome,ativo").eq("ativo", true).order("nome"),
       sb.from("cursos").select("id,campus_id,nome,nivel,modalidade,ativo").eq("ativo", true).order("nome"),
-      sb.from("perfis_usuario").select("usuario_id,nome,email,papel,campus_id,ativo").eq("ativo", true).order("nome"),
+      sb.from("perfis_usuario").select("usuario_id,nome,email,papel,campus_id,ativo,status_acesso").eq("ativo", true).eq("status_acesso", "aprovado").order("nome"),
+      sb.from("perfis_usuario").select("usuario_id,nome,email,status_acesso,solicitado_em").eq("status_acesso", "pendente").order("solicitado_em"),
       sb.from("painel_cursos").select("*").order("campus").order("curso")
     ]);
 
-    const failed = [campiResult, coursesResult, profilesResult, demandsResult].find(result => result.error);
+    const failed = [campiResult, coursesResult, profilesResult, pendingResult, demandsResult].find(result => result.error);
     if (failed) {
       showMessage("demandMessage", friendlyError(failed.error), "error");
       setGlobalBusy(false);
@@ -106,9 +111,11 @@
     state.campi = campiResult.data || [];
     state.courses = coursesResult.data || [];
     state.profiles = profilesResult.data || [];
+    state.pendingProfiles = pendingResult.data || [];
     state.demands = demandsResult.data || [];
     populateCampusSelects();
     populateAssignedUsers();
+    renderApprovals();
     renderDemandList();
     renderMetrics();
 
@@ -159,6 +166,49 @@
     $("#adminMetricUnassigned").textContent = state.demands.filter(item => !item.responsavel_usuario_id).length;
     $("#adminMetricOverdue").textContent = state.demands.filter(item => item.prazo && item.prazo < today && item.etapa_atual !== "Concluído").length;
     $("#adminMetricUsers").textContent = state.profiles.length;
+    $("#adminMetricPending").textContent = state.pendingProfiles.length;
+  }
+
+  function renderApprovals() {
+    $("#pendingCount").textContent = state.pendingProfiles.length;
+    $("#approvalEmpty").hidden = state.pendingProfiles.length > 0;
+    $("#approvalList").hidden = state.pendingProfiles.length === 0;
+    $("#approvalList").innerHTML = state.pendingProfiles.map(profile => {
+      const name = profile.nome || profile.email || "Solicitante";
+      const initial = name.trim().charAt(0).toLocaleUpperCase("pt-BR") || "?";
+      const requested = profile.solicitado_em ? new Date(profile.solicitado_em).toLocaleDateString("pt-BR") : "data não informada";
+      return `<article class="approval-card"><div class="approval-person"><span class="approval-avatar" aria-hidden="true">${escapeHtml(initial)}</span><span><strong>${escapeHtml(name)}</strong><small>${escapeHtml(profile.email || "E-mail não informado")}</small><small>Solicitado em ${escapeHtml(requested)}</small></span></div><div class="approval-actions"><button class="admin-danger" type="button" data-approval-action="reject" data-user-id="${escapeHtml(profile.usuario_id)}">Rejeitar</button><button class="admin-primary" type="button" data-approval-action="approve" data-user-id="${escapeHtml(profile.usuario_id)}">Aprovar</button></div></article>`;
+    }).join("");
+  }
+
+  async function decideAccess(userId, action, button) {
+    const profile = state.pendingProfiles.find(item => item.usuario_id === userId);
+    if (!profile || !["approve", "reject"].includes(action)) return;
+    if (action === "reject" && !window.confirm(`Rejeitar o acesso de ${profile.nome || profile.email}?`)) return;
+
+    const approve = action === "approve";
+    const payload = approve
+      ? { status_acesso:"aprovado", ativo:true, papel:"leitor", aprovado_em:new Date().toISOString(), aprovado_por:state.session.user.id }
+      : { status_acesso:"rejeitado", ativo:false, aprovado_em:null, aprovado_por:state.session.user.id };
+
+    button.disabled = true;
+    const original = button.textContent;
+    button.textContent = approve ? "Aprovando…" : "Rejeitando…";
+    const { error } = await window.IFBA_SUPABASE
+      .from("perfis_usuario")
+      .update(payload)
+      .eq("usuario_id", userId)
+      .eq("status_acesso", "pendente");
+
+    if (error) {
+      button.disabled = false;
+      button.textContent = original;
+      showMessage("approvalMessage", friendlyError(error), "error");
+      return;
+    }
+
+    showMessage("approvalMessage", approve ? "Acesso de visualizador aprovado." : "Solicitação rejeitada.", "success");
+    await loadAll();
   }
 
   function selectDemand(id) {
