@@ -20,7 +20,7 @@
     try {
       window.localStorage.setItem("danilo-portfolio-theme", theme);
     } catch (error) {
-      /* O portfólio continua funcionando caso o navegador bloqueie o armazenamento. */
+      /* Suporte gracioso se o armazenamento estiver bloqueado */
     }
   }
 
@@ -43,7 +43,13 @@
 
     projectCards.forEach(function (card) {
       var categories = (card.getAttribute("data-categories") || "").split(" ");
-      card.hidden = category !== "todos" && categories.indexOf(category) === -1;
+      var isVisible = category === "todos" || categories.indexOf(category) !== -1;
+      
+      if (isVisible) {
+        card.removeAttribute("hidden");
+      } else {
+        card.setAttribute("hidden", "");
+      }
     });
   }
 
