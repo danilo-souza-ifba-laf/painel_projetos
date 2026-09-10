@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="admin.css">
 </head>
 <body class="auth-page">
-  <main class="auth-layout">
+ <!-- <main class="auth-layout">
     <section class="auth-brand">
       <img src="logo.png" alt="Instituto Federal da Bahia">
       <div>
@@ -21,7 +21,13 @@
 
     <section class="auth-card" aria-labelledby="loginTitle">
       <div class="auth-card-heading">
-        <span class="auth-symbol" aria-hidden="true">↳</span>
+        <span class="auth-symbol" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+        </span>        
         <div><small>ACESSO RESTRITO</small><h2 id="loginTitle">Entrar no painel</h2></div>
       </div>
       <form id="loginForm" novalidate>
@@ -34,9 +40,76 @@
         <button id="loginButton" class="admin-primary full" type="submit">Entrar</button>
       </form>
       <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
-      <p class="auth-help">A conta deve ser criada previamente pelo responsável no Supabase Authentication.</p>
+      <p class="auth-help">Para realizar a solicitação de cadastro para visualizador do Painel basta <a href="cadastro.html">clicar aqui</a></p>
+      <p class="auth-help">Para cadastro de perfil administrador deve-se contactar por e-mail proen@ifba.edu.br</p>
+
     </section>
   </main>
+-->
+
+<main class="auth-layout">
+    <section class="auth-brand">
+      <img src="logo.png" alt="Instituto Federal da Bahia">
+      <div>
+        <span class="eyebrow">PROEN · IFBA</span>
+        <h1>Acompanhamento dos projetos de curso</h1>
+        <p>Entre com a conta cadastrada para consultar o painel ou administrar os registros.</p>
+      </div>
+    </section>
+
+    <section class="auth-card" aria-labelledby="loginTitle">
+      <div class="auth-card-heading">
+        <span class="auth-symbol" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+        </span>        
+        <div><small>ACESSO RESTRITO</small><h2 id="loginTitle">Entrar no painel</h2></div>
+      </div>
+      <form id="loginForm" novalidate>
+        <label>E-mail institucional
+          <input id="loginEmail" name="email" type="email" autocomplete="username" required placeholder="nome@ifba.edu.br">
+        </label>
+        <label>Senha
+          <input id="loginPassword" name="password" type="password" autocomplete="current-password" required minlength="6">
+        </label>
+        <button id="loginButton" class="admin-primary full" type="submit">Entrar</button>
+      </form>
+      <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+      <p class="auth-help"><a href="recuperar-senha.html">Esqueceu sua senha?</a></p>
+      <p class="auth-help">Para realizar a solicitação de cadastro para visualizador do Painel basta <a href="cadastro.html">clicar aqui</a></p>
+      <p class="auth-help">Para cadastro de perfil administrador deve-se contactar por e-mail proen@ifba.edu.br</p>
+
+    </section>
+  </main>
+
+
+
+
+  <footer class="app-footer">
+  <div class="footer-container">
+    
+    <!-- Tag/Badge de Código Aberto -->
+    <div class="footer-badge">
+      <svg class="code-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="16 18 22 12 16 6"></polyline>
+        <polyline points="8 6 2 12 8 18"></polyline>
+      </svg>
+      Plataforma de Código Aberto
+    </div>
+
+    <!-- Texto de Créditos -->
+    <p class="footer-text">
+      Desenvolvido por <strong>Danilo Santos Souza</strong>, por meio da atuação enquanto 
+      <span class="role">Diretor de Políticas Educacionais</span> da Pró-reitoria de Ensino do 
+      <strong class="institution">Instituto Federal da Bahia</strong>.
+    </p>
+
+  </div>
+</footer>
+
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
