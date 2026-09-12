@@ -25,7 +25,7 @@
 </form>
 <div class="divider">ou continue com</div><div class="providers"><button class="provider" id="google" type="button" aria-label="Continuar com Google"><span class="google" aria-hidden="true">G</span>Google</button><button class="provider" id="govbr" type="button"><span>Entrar com</span><span class="gov">gov.br</span></button></div>
 <p class="security">O acesso às informações depende do perfil autorizado pela administração.</p><p id="feedback" class="feedback" role="status" aria-live="polite" hidden></p>
-<div class="preview">Prévia visual · autenticação ainda não conectada.<br><a href="dashboard.html">Explorar painel demonstrativo →</a></div>
+<div class="preview">Prévia visual · autenticação ainda não conectada.<br><a href="inicio.html">Explorar sistema demonstrativo →</a></div>
 </section></main>
 <script>
 // Não carrega app.js: o login antigo redirecionava sem autenticar.
@@ -39,7 +39,7 @@
  try{const saved=localStorage.getItem(key);if(saved){email.value=saved;remember.checked=true;}}catch(_){}
  remember.addEventListener('change',()=>{if(!remember.checked){try{localStorage.removeItem(key);}catch(_){}}});
  toggle.addEventListener('click',()=>{const visible=password.type==='password';password.type=visible?'text':'password';toggle.setAttribute('aria-pressed',String(visible));toggle.setAttribute('aria-label',visible?'Ocultar senha':'Mostrar senha');});
- document.getElementById('login-form').addEventListener('submit',event=>{event.preventDefault();try{if(remember.checked)localStorage.setItem(key,email.value.trim());else localStorage.removeItem(key);}catch(_){}password.value='';notify('O login será habilitado após a conexão com o Supabase. Esta prévia não envia nem valida senhas. Para conhecer as telas, use “Explorar painel demonstrativo”.');});
+ document.getElementById('login-form').addEventListener('submit',event=>{event.preventDefault();try{if(remember.checked)localStorage.setItem(key,email.value.trim());else localStorage.removeItem(key);}catch(_){}password.value='';notify('O login será habilitado após a conexão com o Supabase. Esta prévia não envia nem valida senhas. Para conhecer as telas, use “Explorar sistema demonstrativo”.');});
  document.getElementById('recover').addEventListener('click',()=>notify('A recuperação de senha ainda não está conectada. Nenhum e-mail foi enviado.'));
  document.getElementById('google').addEventListener('click',()=>notify('O acesso com Google ainda não está habilitado. Após configurar a integração, você será redirecionado ao Google para autenticar sua conta.'));
  document.getElementById('govbr').addEventListener('click',()=>notify('O acesso gov.br depende da integração institucional com o Login Único. Quando habilitado, a autenticação ocorrerá no próprio gov.br.'));
