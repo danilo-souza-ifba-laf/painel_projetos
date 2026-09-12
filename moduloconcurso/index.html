@@ -1,22 +1,47 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Concursos IFBA | Acesso</title><link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body class="login-page">
-  <main class="login-card">
-    <div class="brand-mark">IF</div>
-    <div>
-      <p class="eyebrow">PRÓ-REITORIA DE ENSINO</p><h1>Gestão de Concursos</h1>
-      <p class="muted">Acompanhamento de listas, demandas, convocações e nomeações.</p>
-    </div>
-    <form id="loginForm" class="form-stack">
-      <label>E-mail<input type="email" placeholder="nome@ifba.edu.br" required></label>
-      <label>Senha<input type="password" placeholder="••••••••" required></label>
-      <button class="button primary" type="submit">Entrar</button>
-    </form>
-    <p class="muted small">Protótipo de interface. A autenticação será conectada ao Supabase Auth.</p>
-  </main>
-  <script src="assets/js/app.js"></script>
-</body></html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#247b36"><title>Acesso | Concursos IFBA</title>
+<!-- Arquivo independente: CSS e JS restritos ao login. Provedores ainda não conectados. -->
+<style>
+:root{font:16px Arial,Helvetica,sans-serif;color:#172c20;--green:#247b36;--dark:#104f2a;--muted:#647167}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:28px;background:radial-gradient(ellipse at 100% 0%,#d9e8d6,transparent 46%),#f7f8f5}button,input{font:inherit}button{cursor:pointer}a{color:var(--dark)}:focus-visible{outline:3px solid #c83232;outline-offset:4px}
+.layout{width:100%;max-width:1240px;display:grid;grid-template-columns:1.04fr 1fr;gap:clamp(36px,6vw,86px);align-items:center}.story{min-height:700px;height:calc(100vh - 56px);max-height:840px;position:relative;overflow:hidden;isolation:isolate;border-radius:28px;padding:42px;color:white;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(154deg,#c5e2ae 0%,#6bab57 33%,#247b36 64%,#104f2a 100%)}
+.story:before,.story:after{content:"";position:absolute;z-index:-1;pointer-events:none;width:900px;height:560px;left:-160px;border:1px solid #ffffff35;border-radius:48%;transform:rotate(-27deg);background:linear-gradient(145deg,#ffffff12,#ffffff00)}.story:before{top:160px;box-shadow:0 -40px 0 #ffffff12,0 -80px 0 #ffffff0a}.story:after{top:325px;left:-75px;background:linear-gradient(160deg,#0a552211,#043a23aa);box-shadow:0 -36px 0 #d7efbd18}
+.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;color:#103f22}.mark{display:grid;place-items:center;border-radius:12px;width:45px;height:45px;background:#fff;font-size:21px;position:relative}.mark:after{content:"";position:absolute;right:-3px;top:-3px;background:#c83232;height:12px;width:12px;border-radius:50%;border:2px solid #c5e2ae}.brand small{display:block;font-size:12px;letter-spacing:.1em;margin-top:5px;font-weight:400}.kicker{font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 20px}.story h1{font-weight:500;font-size:clamp(36px,4vw,57px);letter-spacing:-.045em;line-height:1.1;margin:0 0 22px}.story h1 strong{font-weight:750}.story-copy>p:last-of-type{line-height:1.65;max-width:365px;color:#e4f1e4;margin-bottom:28px}.tags{display:flex;gap:9px;flex-wrap:wrap}.tags span{border:1px solid #ffffff55;border-radius:24px;padding:9px 16px;font-size:13px;background:#ffffff0b}.story-footer{display:flex;align-items:center;gap:10px;margin-top:45px;font-size:12px;color:#d8e8d8}.story-footer:before{content:"";width:26px;height:3px;background:#e35353}
+.access{padding:32px 18px 24px 0;max-width:466px;width:100%}.overline{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:22px}.overline:before{content:"";width:7px;height:7px;background:#c83232;border-radius:2px}.access h2{color:var(--green);font-size:clamp(32px,3.3vw,45px);letter-spacing:-.045em;margin:0 0 14px;line-height:1.1}.intro{line-height:1.6;color:var(--muted);margin:0 0 32px;max-width:375px}.field{margin-bottom:22px}label{display:block;font-size:14px;font-weight:700;margin-bottom:9px}input[type=email],input[type=password],input[type=text]{height:52px;width:100%;border:1px solid #aebbae;background:#ffffff66;border-radius:9px;padding:0 15px;color:#172c20}input::placeholder{color:#78867b;font-size:14px}.password-wrap{position:relative}.password-wrap input{padding-right:62px}.toggle{position:absolute;right:5px;top:5px;display:grid;place-items:center;height:42px;width:45px;background:none;border:0;border-radius:7px;color:#647167}.toggle svg{width:23px;height:23px}.toggle:hover{background:#e5eee3}.options{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 26px}.remember{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;margin:0;color:var(--muted)}input[type=checkbox]{width:16px;height:16px;accent-color:var(--green);margin:0}.text-button{border:0;padding:6px 0;background:transparent;color:var(--dark);font-size:13px;text-decoration:underline;text-underline-offset:3px}.submit{height:51px;width:100%;border:0;border-radius:9px;background:var(--green);color:white;display:flex;justify-content:center;align-items:center;gap:14px;font-weight:700}.submit:hover{background:var(--dark)}.divider{display:flex;align-items:center;gap:15px;font-size:13px;color:var(--muted);margin:29px 0 23px}.divider:before,.divider:after{content:"";height:1px;background:#ccd5cb;flex:1}.providers{display:grid;grid-template-columns:1fr 1fr;gap:12px}.provider{background:#fff8;border:1px solid #b9c5b8;border-radius:9px;min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px;font-size:14px;font-weight:600;color:#243b2b}.provider:hover{background:#e9f0e6;border-color:var(--green)}.google{font-size:23px;font-weight:750;color:#4285f4}.gov{font-size:20px;font-weight:800;color:#1351b4;letter-spacing:-1px}.security{color:var(--muted);font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center}.preview{margin-top:25px;border-top:1px solid #d7dfd5;padding-top:17px;color:#6a746b;font-size:12px;line-height:1.6}.preview a{font-weight:700}.feedback{border-left:3px solid var(--green);border-radius:4px;background:#e8f0e4;padding:12px 14px;margin-top:16px;font-size:14px;line-height:1.5}
+@media(max-width:960px){body{padding:20px}.layout{gap:32px}.story{padding:30px;min-height:680px}.access{padding-right:0}.story h1{font-size:39px}.providers{grid-template-columns:1fr}.options{flex-wrap:wrap}}@media(max-width:700px){body{padding:14px;display:block}.layout{display:block}.story{height:auto;min-height:0;padding:25px;border-radius:19px}.brand{font-size:16px}.brand small{font-size:11px}.story-copy{margin-top:35px}.story h1{font-size:32px;margin-bottom:15px}.kicker,.story-copy>p:last-of-type,.story-footer{display:none}.tags span{font-size:12px;padding:6px 12px}.access{max-width:470px;margin:0 auto;padding:34px 12px 20px}.overline{margin-bottom:15px}.access h2{font-size:35px}.intro{margin-bottom:26px}.providers{grid-template-columns:1fr 1fr}.provider{font-size:13px;gap:7px;padding:8px}.security{text-align:left}}
+</style></head><body>
+<main class="layout">
+<section class="story" aria-labelledby="story-title">
+<div class="brand"><span class="mark" aria-hidden="true">IF</span><div>CONCURSOS IFBA<small>INSTITUTO FEDERAL DA BAHIA</small></div></div>
+<div class="story-copy"><p class="kicker">Gestão de concursos públicos</p><h1 id="story-title">Pessoas que<br><strong>transformam</strong><br>a educação.</h1><p>Da convocação ao exercício: acompanhe cada etapa em um só lugar.</p><div class="tags"><span>Concurso Docente</span><span>Concurso TAE</span></div><div class="story-footer">Educação pública. Gestão com responsabilidade.</div></div>
+</section>
+<section class="access" aria-labelledby="login-title">
+<div class="overline">Acesso ao sistema</div><h2 id="login-title">Bem-vindo de volta!</h2><p class="intro">Entre para acompanhar listas, demandas e convocações do IFBA.</p>
+<form id="login-form">
+<div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="username" placeholder="seu.email@ifba.edu.br" required maxlength="254"></div>
+<div class="field"><label for="password">Senha</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required><button class="toggle" id="toggle-password" type="button" aria-label="Mostrar senha" aria-pressed="false" aria-controls="password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+<div class="options"><label class="remember" for="remember"><input type="checkbox" id="remember">Lembrar meu e-mail</label><button class="text-button" id="recover" type="button">Esqueci minha senha</button></div><button class="submit" type="submit">Entrar no sistema <span aria-hidden="true">→</span></button>
+</form>
+<div class="divider">ou continue com</div><div class="providers"><button class="provider" id="google" type="button" aria-label="Continuar com Google"><span class="google" aria-hidden="true">G</span>Google</button><button class="provider" id="govbr" type="button"><span>Entrar com</span><span class="gov">gov.br</span></button></div>
+<p class="security">O acesso às informações depende do perfil autorizado pela administração.</p><p id="feedback" class="feedback" role="status" aria-live="polite" hidden></p>
+<div class="preview">Prévia visual · autenticação ainda não conectada.<br><a href="dashboard.html">Explorar painel demonstrativo →</a></div>
+</section></main>
+<script>
+// Não carrega app.js: o login antigo redirecionava sem autenticar.
+// Nenhuma senha é enviada, validada ou armazenada nesta prévia.
+// A integração futura deverá usar OAuth e nunca segredos no navegador.
+(() => {
+ 'use strict';
+ const email=document.getElementById('email'), password=document.getElementById('password'), remember=document.getElementById('remember'), toggle=document.getElementById('toggle-password'), feedback=document.getElementById('feedback');
+ const key='concursos-ifba.email-lembrado';
+ const notify=message=>{feedback.textContent=message;feedback.hidden=false;};
+ try{const saved=localStorage.getItem(key);if(saved){email.value=saved;remember.checked=true;}}catch(_){}
+ remember.addEventListener('change',()=>{if(!remember.checked){try{localStorage.removeItem(key);}catch(_){}}});
+ toggle.addEventListener('click',()=>{const visible=password.type==='password';password.type=visible?'text':'password';toggle.setAttribute('aria-pressed',String(visible));toggle.setAttribute('aria-label',visible?'Ocultar senha':'Mostrar senha');});
+ document.getElementById('login-form').addEventListener('submit',event=>{event.preventDefault();try{if(remember.checked)localStorage.setItem(key,email.value.trim());else localStorage.removeItem(key);}catch(_){}password.value='';notify('O login será habilitado após a conexão com o Supabase. Esta prévia não envia nem valida senhas. Para conhecer as telas, use “Explorar painel demonstrativo”.');});
+ document.getElementById('recover').addEventListener('click',()=>notify('A recuperação de senha ainda não está conectada. Nenhum e-mail foi enviado.'));
+ document.getElementById('google').addEventListener('click',()=>notify('O acesso com Google ainda não está habilitado. Após configurar a integração, você será redirecionado ao Google para autenticar sua conta.'));
+ document.getElementById('govbr').addEventListener('click',()=>notify('O acesso gov.br depende da integração institucional com o Login Único. Quando habilitado, a autenticação ocorrerá no próprio gov.br.'));
+})();
+</script></body></html>
