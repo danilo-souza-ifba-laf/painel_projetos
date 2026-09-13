@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo Exato para Escala de Motoristas - SBPO 2013</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            color: inherit;       /* Herda a cor do elemento pai */
+            text-decoration: none; /* Remove o sublinhado */
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 5rem 1.5rem 4rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            padding: 0.4rem 1.2rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            line-height: 1.25;
+            margin-bottom: 1.25rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            max-width: 1100px;
+            margin: -3rem auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 45px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        ul.custom-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.custom-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.85rem;
+            color: var(--text-main);
+        }
+
+        ul.custom-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            font-size: 0.925rem;
+        }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .badge-optimal {
+            background-color: #dcfce7;
+            color: #15803d;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .badge-gap {
+            background-color: #fef3c7;
+            color: #b45309;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .authors-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .author-card {
+            flex: 1;
+            min-width: 260px;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .author-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .author-inst {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-email {
+            font-size: 0.875rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: #94a3b8;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.85rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">Projetos Danilo Souza| Artigo Mestrado | Simpósio Brasileiro em Pesquisa Operacional - SBPO </a>
+            <ul class="nav-links">
+                <li><a href="#resumo">Resumo</a></li>
+                <li><a href="#modelo">O Modelo</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#autores">Autores</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <span class="badge"><a href="http://www.sbpo2013.ect.ufrn.br/pt/sobre-o-sbpo/">XLV SBPO 2013 • Natal/RN</a></span>
+            <h1><a href="assets/files/sbpo-2013.pdf">Um Modelo Exato para Resolver o Problema da Escala de Motoristas de Ônibus Urbano</a></h1>
+            <p>Formulação inédita de Programação Linear Inteira baseada em Recobrimento de Conjuntos para alocação eficiente e otimizada de tripulações no transporte público[cite: 1].</p>
+        </div>
+    </section>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">765.600</div>
+            <div class="stat-label">Variáveis no Maior Instância[cite: 1]</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">1.462.053</div>
+            <div class="stat-label">Restrições Geradas[cite: 1]</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">CPLEX 12.5</div>
+            <div class="stat-label">Solver de Otimização[cite: 1]</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">UFOP</div>
+            <div class="stat-label">Universidade Federal de Ouro Preto[cite: 1]</div>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <section id="resumo">
+            <h2 class="section-title">Resumo do Projeto</h2>
+            <div class="card">
+                <p>Este trabalho aborda o <strong>Problema da Programação de Tripulações (PPT)</strong> no transporte público urbano, um problema classificado como <em>NP-difícil</em> devido à sua alta complexidade combinatória e à vasta quantidade de restrições operacionais e trabalhistas impostas pela legislação vigente e Convenções Coletivas de Trabalho (CCT)[cite: 1].</p>
+                <br>
+                <p>O objetivo principal é designar a escala diária de trabalho para motoristas e cobradores com o menor custo total possível, minimizando a quantidade de tripulações necessárias, o tempo ocioso e as horas extras acumuladas[cite: 1].</p>
+            </div>
+        </section>
+
+        <section id="modelo">
+            <h2 class="section-title">Abordagem Proposta e Diferenciais</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary);">Formulação Inédita[cite: 1]</h3>
+                    <p>Ao contrário dos modelos clássicos de recobrimento ou particionamento que exigem a pré-geração prévia de um conjunto (potencialmente infinito) de jornadas factíveis, o modelo proposto gera as jornadas diretamente durante o processo de resolução matemática a partir das tarefas operacionais dos veículos[cite: 1].</p>
+                    <br>
+                    <p>O modelo foi estruturado na linguagem <strong>Mathematical Programming Language (MPL)</strong> no ambiente Gusek e resolvido com o solver <strong>CPLEX 12.5</strong>[cite: 1].</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary);">Restrições Reais Incorporadas[cite: 1]</h3>
+                    <ul class="custom-list">
+                        <li><strong>Compatibilidade de Tarefas:</strong> Início de uma tarefa deve ser posterior ao término da anterior, mantendo a continuidade geográfica no mesmo terminal[cite: 1].</li>
+                        <li><strong>Jornada de Trabalho:</strong> Duração normal de 6h40m, com limite máximo de 2h de horas extras por jornada[cite: 1].</li>
+                        <li><strong>Troca de Veículos:</strong> Permite no máximo 1 troca de veículo por tripulação durante o dia[cite: 1].</li>
+                        <li><strong>Interjornada:</strong> Descanso mínimo obrigatório superior a 11 horas entre dias consecutivos[cite: 1].</li>
+                        <li><strong>Dupla Pegada:</strong> Tratamento de jornadas divididas (intervalo &ge; 2h) utilizadas nos horários de pico[cite: 1].</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultados">
+            <h2 class="section-title">Resultados Computacionais</h2>
+            <div class="card">
+                <p>Os testes foram realizados com dados reais de uma empresa de transporte coletivo que opera na região metropolitana de Belo Horizonte - MG[cite: 1]. Os testes utilizaram um computador Intel Core i7-2600 (3.40 GHz, 8GB RAM)[cite: 1].</p>
+                
+                <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem;">Dimensão dos Problemas Testados[cite: 1]</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Problema</th>
+                                <th>Tarefas ($|T|$)</th>
+                                <th>Veículos ($|V|$)</th>
+                                <th>Variáveis de Decisão</th>
+                                <th>Quantidade de Restrições</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Problema 1</strong></td>
+                                <td>24</td>
+                                <td>2</td>
+                                <td>41.320</td>
+                                <td>69.355</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 2</strong></td>
+                                <td>33</td>
+                                <td>3</td>
+                                <td>124.144</td>
+                                <td>224.074</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 3</strong></td>
+                                <td>40</td>
+                                <td>4</td>
+                                <td>227.280</td>
+                                <td>422.331</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 4</strong></td>
+                                <td>45</td>
+                                <td>5</td>
+                                <td>344.616</td>
+                                <td>658.278</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 5</strong></td>
+                                <td>52</td>
+                                <td>6</td>
+                                <td>765.600</td>
+                                <td>1.462.053</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.1rem;">Desempenho da Resolução das Instâncias[cite: 1]</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Problema</th>
+                                <th>Jornadas</th>
+                                <th>Horas Extras (min)</th>
+                                <th>Tempo Ocioso (min)</th>
+                                <th>Duplas Pegadas</th>
+                                <th>Solução Ótima</th>
+                                <th>GAP Estimado</th>
+                                <th>Tempo Proc.</th>
+                                <th>Função Objetivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Problema 1</strong></td>
+                                <td>5</td>
+                                <td>146</td>
+                                <td>225</td>
+                                <td>1</td>
+                                <td><span class="badge-optimal">Sim</span></td>
+                                <td>0%</td>
+                                <td>~305 min</td>
+                                <td>3.517</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 2</strong></td>
+                                <td>7</td>
+                                <td>151</td>
+                                <td>403</td>
+                                <td>1</td>
+                                <td><span class="badge-gap">Não</span></td>
+                                <td>38,84%</td>
+                                <td>~198 min</td>
+                                <td>4.905</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 3</strong></td>
+                                <td>10</td>
+                                <td>98</td>
+                                <td>451</td>
+                                <td>2</td>
+                                <td><span class="badge-gap">Não</span></td>
+                                <td>54,87%</td>
+                                <td>~290 min</td>
+                                <td>6.647</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 4</strong></td>
+                                <td>13</td>
+                                <td>454</td>
+                                <td>1.046</td>
+                                <td>2</td>
+                                <td><span class="badge-gap">Não</span></td>
+                                <td>65,40%</td>
+                                <td>~294 min</td>
+                                <td>9.754</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problema 5</strong></td>
+                                <td>16</td>
+                                <td>257</td>
+                                <td>1.989</td>
+                                <td>3</td>
+                                <td><span class="badge-gap">Não</span></td>
+                                <td>67,78%</td>
+                                <td>~430 min</td>
+                                <td>12.103</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="autores">
+            <h2 class="section-title">Autores & Instituição</h2>
+            <div class="authors-box">
+                <div class="author-card">
+                    <div class="author-name">Danilo S. Souza</div>
+                    <div class="author-inst">Universidade Federal de Ouro Preto (UFOP)<br>Departamento de Computação - ICEB[cite: 1]</div>
+                    <a href="mailto:danilo.gdc@gmail.com" class="author-email">danilo.gdc@gmail.com</a>
+                </div>
+                <div class="author-card">
+                    <div class="author-name">Gustavo P. Silva</div>
+                    <div class="author-inst">Universidade Federal de Ouro Preto (UFOP)<br>Departamento de Computação - ICEB[cite: 1]</div>
+                    <a href="mailto:gustavo@iceb.ufop.br" class="author-email">gustavo@iceb.ufop.br</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p><strong>XLV Simpósio Brasileiro de Pesquisa Operacional (SBPO 2013)</strong>[cite: 1]</p>
+        <p>A Pesquisa Operacional na busca de eficiência nos serviços públicos e/ou privados • Natal/RN[cite: 1]</p>
+        <p style="margin-top: 1rem; font-size: 0.8rem; color: #64748b;">Agradecimentos ao Prof. Dr. Haroldo Gambini Santos, CNPq, FAPEMIG e UFOP[cite: 1].</p>
+    </footer>
+
+</body>
+</html>
