@@ -1452,6 +1452,9 @@
         </header>
         <main id="conteudo">
             <p class="crumb"><a href="inicio.html">Início</a> / Convocações e admissões</p>
+            <div class="notice"><b>Ordenamento por concurso, cargo e área</b> · Docente e TAE utilizam a mesma sequência
+                AC / PPP / PcD, com contadores independentes. A regra é vinculada à legislação vigente à época de cada
+                concurso e ao respectivo edital.</div>
             <div class="notice"><b>Ambiente de demonstração</b> · Movimentações e documentos são salvos apenas neste
                 navegador. Nenhuma comunicação, nomeação ou decisão institucional é enviada. Demandas locais aparecem
                 para triagem; a lista oficial e os perfis dependem da integração.</div>
@@ -1503,14 +1506,17 @@
                 </div>
                 <details>
                     <summary>Base, limites e decisões de configuração</summary>
-                    <p>Anexo III enviado: página 98 do Edital Docente nº 02/2022; tabela de 1 a 80. A sequência é
-                        reproduzida exatamente, sem extrapolação nem aplicação automática ao concurso TAE. PPP
-                        corresponde a PP nas demais telas.</p>
+                    <p>Anexo III enviado: página 98 do Edital Docente nº 02/2022; tabela de 1 a 80. Por configuração
+                        deste projeto, a mesma sequência é aplicada aos concursos Docente e TAE, de forma independente
+                        por concurso, cargo e área, sem extrapolar a 80ª posição. PPP corresponde a PP nas demais telas.
+                    </p>
                     <p>O arquivo recebido contém somente a tabela. Regras de recusa e reposição são as especificadas
                         para este projeto e devem ser vinculadas aos respectivos dispositivos do edital completo antes
-                        do uso institucional. O escopo do contador (área/cargo ou outro agrupamento oficial), a validade
-                        e o histórico anterior precisam ser homologados na integração. Nesta simulação, o contador é por
-                        edital e área.</p>
+                        do uso institucional. O ordenamento deve observar a legislação vigente à época do respectivo
+                        concurso público e seu edital, sem atualização automática por regras de concursos posteriores.
+                        Cada combinação de concurso, cargo e área possui contador e listas próprios; demandas de campi
+                        distintos para a mesma combinação compartilham a sequência. A vinculação oficial, a validade e o
+                        histórico anterior precisam ser homologados na integração.</p>
                     <p>Reversão para AC exige esgotamento da lista, motivação e documento; ausência temporária de
                         elegível não equivale a esgotamento. Resultado pendente de comissão não elimina nem desvia
                         automaticamente um candidato.</p>
@@ -1553,11 +1559,34 @@
             const names = ['Pessoa exemplo 01', 'Pessoa exemplo 02', 'Pessoa exemplo 03', 'Pessoa exemplo 04', 'Pessoa exemplo 05', 'Pessoa exemplo 06', 'Pessoa exemplo 07', 'Pessoa exemplo 08', 'Pessoa exemplo 09', 'Pessoa exemplo 10', 'Pessoa exemplo 11', 'Pessoa exemplo 12'];
             return { id: KEY, revision: 0, next: 1, demands: [{ id: 'DEMO-DOC', number: 'SIM-DOC-001', type: 'Docente', area: 'Informática', campus: 'Salvador / Lauro de Freitas', campi: { Salvador: 2, 'Lauro de Freitas': 1 }, quantity: 3, status: 'Apta para convocação', demo: true, sourceStatus: 'Apta para convocação', history: [] }, { id: 'DEMO-TAE', number: 'SIM-TAE-001', type: 'TAE', area: 'Assistente em Administração', campus: 'Salvador', campi: { Salvador: 1 }, quantity: 1, status: 'Em análise técnica', demo: true, sourceStatus: 'Em análise técnica', history: [] }], candidates: names.map((name, i) => ({ id: 'C' + i, name, score: 95 - i, rank: i + 1, group: i % 4 === 0 ? 'PPP' : i % 4 === 3 ? 'PcD' : 'AC', refusals: 0, status: 'waiting', tail: {} })), slots: [], history: [] };
         }
-        function queue(s, list) {
-            return s.candidates.filter(c => c.status === 'waiting' && (!c.deferredList || c.deferredList === list) && (list === 'AC' || c.group === list)).sort((a, b) => (a.tail[list] || a.rank) - (b.tail[list] || b.rank) || a.rank - b.rank);
+        function scopeKey(d) {
+            return JSON.stringify([d.contestId || ('pendente:' + d.id), d.type, d.cargo || d.area, d.area].map(x => String(x || '').trim().toLocaleLowerCase()));
         }
-        function eligible(s, list, excluded = []) { return queue(s, list).find(c => !excluded.includes(c.id)); }
-        function exhausted(s, list) { return !s.candidates.some(c => (list === 'AC' || c.group === list) && ['waiting', 'active'].includes(c.status)); }
+        function nextOrdinal(s, d) { return s.counters?.[scopeKey(d)] || 1; }
+        function migrate(s) {
+            if (s.schemaVersion === 3) return s;
+            const doc = s.demands.find(d => d.id === 'DEMO-DOC'), tae = s.demands.find(d => d.id === 'DEMO-TAE');
+            for (const d of s.demands) {
+                d.contestId = d.contestId || (d.demo ? 'SIM-' + d.type + '-2022' : 'pendente:' + d.id);
+                d.cargo = d.cargo || (d.type === 'Docente' ? 'Professor EBTT' : d.area);
+            }
+            for (const c of s.candidates) c.scope = c.scope || scopeKey(doc);
+            for (const slot of s.slots) slot.scope = slot.scope || scopeKey(s.demands.find(d => d.id === slot.demandId));
+            s.counters = s.counters || {};
+            for (const slot of s.slots) s.counters[slot.scope] = Math.max(s.counters[slot.scope] || 1, slot.ordinal + 1);
+            s.counters[scopeKey(doc)] = Math.max(s.counters[scopeKey(doc)] || 1, s.next || 1);
+            if (tae) {
+                tae.status = 'Apta para convocação'; tae.sourceStatus = tae.status;
+                s.candidates.push(...seed().candidates.map(c => ({ ...c, id: 'TAE-' + c.id, name: c.name + ' (TAE)', scope: scopeKey(tae) })));
+                s.counters[scopeKey(tae)] = 1;
+            }
+            delete s.next; s.schemaVersion = 3; return s;
+        }
+        function queue(s, list, scope) {
+            return s.candidates.filter(c => c.scope === scope && c.status === 'waiting' && (!c.deferredList || c.deferredList === list) && (list === 'AC' || c.group === list)).sort((a, b) => (a.tail[list] || a.rank) - (b.tail[list] || b.rank) || a.rank - b.rank);
+        }
+        function eligible(s, list, scope, excluded = []) { return queue(s, list, scope).find(c => !excluded.includes(c.id)); }
+        function exhausted(s, list, scope) { return !s.candidates.some(c => c.scope === scope && (list === 'AC' || c.group === list) && ['waiting', 'active'].includes(c.status)); }
         function log(s, text, attachment = null) { s.history.push({ id: uid(), at: new Date().toISOString(), text, attachment, actor: $('role').value + ' (simulação)' }); }
         function demand() { return state.demands.find(d => d.id === selected); }
         function slotsFor(d) { return state.slots.filter(x => x.demandId === d.id); }
@@ -1567,31 +1596,31 @@
         }
         function canLaunch(d, replacement = false) {
             if (d.unsupplied) return 'Atendimento suspenso neste concurso: ' + d.unsupplied.reason;
-            if (d.type === 'TAE') return 'Anexo de ordenamento do concurso TAE não vinculado. A tabela Docente não será aplicada.';
             if (!d.demo) return 'Vinculação à lista oficial, validade e histórico de nomeações pendentes de integração.';
             if (d.status !== 'Apta para convocação' && d.status !== 'Convocada') return 'A demanda precisa estar apta para convocação.';
-            if (!replacement && state.next > 80) return 'Fim da tabela anexada. É necessário novo ordenamento validado.';
+            if (!replacement && nextOrdinal(state, d) > 80) return 'Fim da tabela anexada. É necessário novo ordenamento validado.';
             return '';
         }
         function callInto(s, slot) {
-            const c = eligible(s, slot.list, slot.calls.map(x => x.candidateId));
+            const c = eligible(s, slot.list, slot.scope, slot.calls.map(x => x.candidateId));
             assert(c, 'Não há próximo candidato elegível nesta lista. Verifique pendências ou esgotamento.');
             c.status = 'active';
-            const rank = queue({ ...s, candidates: s.candidates.map(x => x.id === c.id ? { ...x, status: 'waiting' } : x) }, slot.list).findIndex(x => x.id === c.id) + 1;
-            const originalListRank = s.candidates.filter(x => slot.list === 'AC' || x.group === slot.list).sort((a, b) => a.rank - b.rank).findIndex(x => x.id === c.id) + 1;
+            const rank = queue({ ...s, candidates: s.candidates.map(x => x.id === c.id ? { ...x, status: 'waiting' } : x) }, slot.list, slot.scope).findIndex(x => x.id === c.id) + 1;
+            const originalListRank = s.candidates.filter(x => x.scope === slot.scope && (slot.list === 'AC' || x.group === slot.list)).sort((a, b) => a.rank - b.rank).findIndex(x => x.id === c.id) + 1;
             slot.calls.push({ id: uid(), candidateId: c.id, name: c.name, stage: 0, at: today(), original: c.rank, originalListRank, current: rank, finalQueue: !!c.tail[slot.list], offered: [...slot.offered], initialCampus: slot.initialCampus, events: [] });
             slot.status = 'active'; log(s, slot.ordinal + 'ª posição · ' + slot.list + ' · ' + c.name + ' convocado(a). Campus inicialmente ofertado: ' + slot.initialCampus + '.');
         }
         function reserve(s, d, count, offered, initial) {
-            assert(d.demo && d.type === 'Docente', 'Lista oficial não integrada.');
+            assert(d.demo && ['Docente', 'TAE'].includes(d.type), 'Lista oficial não integrada.');
             assert(!d.unsupplied, 'Demanda não suprível.');
             assert(Number.isInteger(count) && count > 0 && count <= d.quantity - s.slots.filter(x => x.demandId === d.id).length, 'Quantidade superior ao saldo da demanda.');
-            assert(s.next + count - 1 <= 80, 'A tabela anexada termina na 80ª posição.');
+            assert(nextOrdinal(s, d) + count - 1 <= 80, 'A tabela anexada termina na 80ª posição.');
             assert(offered.length && offered.includes(initial), 'Informe campi disponíveis e o campus inicial.');
             assert(offered.every(x => capacity(s, d, x) > 0), 'Há campus sem saldo.');
             assert(offered.reduce((n, x) => n + capacity(s, d, x), 0) >= count, 'Campi selecionados não têm capacidade para o lote.');
             for (let i = 0; i < count; i++) {
-                const slot = { id: uid(), demandId: d.id, ordinal: s.next++, originalList: ORDER[s.next - 2], list: ORDER[s.next - 2], offered, initialCampus: initial, status: 'pending', calls: [] };
+                const scope = scopeKey(d), ordinal = nextOrdinal(s, d); s.counters[scope] = ordinal + 1;
+                const slot = { id: uid(), demandId: d.id, scope, ordinal, originalList: ORDER[ordinal - 1], list: ORDER[ordinal - 1], offered, initialCampus: initial, status: 'pending', calls: [] };
                 callInto(s, slot); s.slots.push(slot);
             }
             d.status = 'Convocada';
@@ -1602,7 +1631,7 @@
             if (kind === 'refuse') {
                 assert(call.stage === 0, 'Recusa de lotação deve ocorrer antes do aceite.');
                 c.refusals++; c.status = c.refusals === 1 ? 'waiting' : 'eliminated';
-                if (c.refusals === 1) { c.tail[slot.list] = Math.max(0, ...s.candidates.map(x => x.tail[slot.list] || x.rank)) + 1; c.deferredList = slot.list; }
+                if (c.refusals === 1) { c.tail[slot.list] = Math.max(0, ...s.candidates.filter(x => x.scope === slot.scope).map(x => x.tail[slot.list] || x.rank)) + 1; c.deferredList = slot.list; }
                 call.outcome = c.refusals === 1 ? 'Final de fila' : 'Desistente — segunda recusa';
             } else {
                 assert(call.stage < 6, 'Após exercício, utilize vacância formal.');
@@ -1616,8 +1645,8 @@
             assert(slot.status === 'active' && call.stage >= 5, 'Vacância formal somente após posse.');
             const d = s.demands.find(x => x.id === slot.demandId), c = s.candidates.find(x => x.id === call.candidateId);
             c.status = 'vacated'; call.outcome = 'Vacância formal'; slot.status = 'vacated';
-            const id = uid(); s.demands.push({ id, number: 'SIM-VAC-' + id.slice(0, 6).toUpperCase(), type: d.type, area: d.area, campus: call.chosenCampus, campi: { [call.chosenCampus]: 1 }, quantity: 1, status: 'Em análise técnica', sourceStatus: 'Em análise técnica', demo: true, origin: 'Vacância', parentSlot: slot.id, history: [] });
-            log(s, 'Vacância formal de ' + call.name + ' em ' + call.chosenCampus + '. Nova demanda de análise criada; próximo ordinal disponível: ' + s.next + '. ' + reason, attachment);
+            const id = uid(); s.demands.push({ id, number: 'SIM-VAC-' + id.slice(0, 6).toUpperCase(), type: d.type, contestId: d.contestId, cargo: d.cargo, area: d.area, campus: call.chosenCampus, campi: { [call.chosenCampus]: 1 }, quantity: 1, status: 'Em análise técnica', sourceStatus: 'Em análise técnica', demo: true, origin: 'Vacância', parentSlot: slot.id, history: [] });
+            log(s, 'Vacância formal de ' + call.name + ' em ' + call.chosenCampus + '. Nova demanda de análise criada; próximo ordinal disponível: ' + nextOrdinal(s, d) + '. ' + reason, attachment);
         }
         function badge(list) { return '<span class="badge ' + esc(list) + '">' + esc(list) + '</span>'; }
         function notify(text) { $('message').textContent = text; $('message').hidden = false; }
@@ -1634,25 +1663,25 @@
             const block = canLaunch(d), ssD = slotsFor(d), left = d.quantity - ssD.length;
             $('detail').innerHTML = '<section class="panel"><div class="detail-head"><div><span class="eyebrow" style="color:#617364">' + esc(d.number) + ' · ' + esc(d.type) + '</span><h2>' + esc(d.area) + '</h2><p class="meta">' + esc(d.campus) + ' · ' + d.quantity + ' vaga(s)<br>Origem: ' + esc(d.origin || 'Expansão (exemplo)') + ' · Situação: ' + esc(d.status) + '</p></div><span class="badge">' + (d.demo ? 'Simulação independente' : 'Demanda cadastrada localmente') + '</span></div>' +
                 '<div class="notice ' + (block ? 'danger' : '') + '">' + esc(block || 'Lista e validade fictícias habilitadas para testar o fluxo. Não representam a validade real do Edital 02/2022.') + '</div>' +
-                (d.type === 'Docente' ? '<h3>Ordenamento · Anexo III / Docente</h3><p class="meta">Contador demonstrativo por edital e área · próximo ordinal: ' + state.next + ' · saldo desta demanda: ' + Math.max(0, left) + '. Reservar uma vaga avança o contador; repor mantém o ordinal.</p><div class="sequence">' + ORDER.slice(Math.max(0, state.next - 3), Math.min(80, state.next + 9)).map((x, i) => { const n = Math.max(0, state.next - 3) + i + 1; return '<div class="seq ' + (n < state.next ? 'used' : n === state.next ? 'next' : '') + '"><strong>' + n + 'ª</strong>' + badge(x) + '</div>'; }).join('') + '</div>' : '') +
+                (['Docente', 'TAE'].includes(d.type) ? '<h3>Ordenamento · ' + esc(d.type) + ' · ' + esc(d.cargo || d.area) + ' / ' + esc(d.area) + '</h3><p class="meta">Contador independente por concurso, cargo e área · próximo ordinal: ' + nextOrdinal(state, d) + ' · saldo desta demanda: ' + Math.max(0, left) + '. Reservar uma vaga avança o contador; repor mantém o ordinal.</p><div class="sequence">' + ORDER.slice(Math.max(0, nextOrdinal(state, d) - 3), Math.min(80, nextOrdinal(state, d) + 9)).map((x, i) => { const n = Math.max(0, nextOrdinal(state, d) - 3) + i + 1; return '<div class="seq ' + (n < nextOrdinal(state, d) ? 'used' : n === nextOrdinal(state, d) ? 'next' : '') + '"><strong>' + n + 'ª</strong>' + badge(x) + '</div>'; }).join('') + '</div>' : '') +
                 '<div class="actions"><button class="primary" data-action="batch" ' + (!canManage() || block || left < 1 ? 'disabled' : '') + '>Preparar convocação / lote</button><button data-action="unsupported" ' + (!isAdmin() || d.unsupplied ? 'disabled' : '') + '>Sinalizar não suprível</button>' +
                 (d.unsupplied ? '<button data-action="reopen" ' + (!isAdmin() ? 'disabled' : '') + '>Reavaliar atendimento</button>' : '') +
                 (d.demo && d.parentSlot && d.status === 'Em análise técnica' ? '<button data-action="approve" ' + (!isAdmin() ? 'disabled' : '') + '>Registrar aptidão da nova demanda</button>' : '') + '</div>' +
                 (d.unsupplied ? '<p class="meta">Motivo: ' + esc(d.unsupplied.reason) + ' · ' + esc(d.unsupplied.note) + '</p>' : '') +
                 (ssD.length ? ssD.map(renderSlot).join('') : '<p class="empty">Ainda não há convocações vinculadas a esta demanda.</p>') +
-                (d.demo && d.type === 'Docente' ? renderQueue() : '') +
+                (d.demo ? renderQueue() : '') +
                 '<details><summary>Histórico e documentos da demanda</summary><ol class="audit">' + state.history.filter(h => h.demandId === d.id).map(h => '<li>' + esc(h.at.replace('T', ' ').slice(0, 19)) + ' · ' + esc(h.actor) + '<br>' + esc(h.text) + (h.attachment ? ' <button data-file="' + esc(h.id) + '">Baixar ' + esc(h.attachment.name) + '</button>' : '') + '</li>').join('') + '</ol></details></section>';
         }
         function renderQueue() {
-            return '<details><summary>Consultar ordem atual das listas demonstrativas</summary><div class="table-wrap"><table><thead><tr><th>Lista</th><th>Posição atual</th><th>Pessoa</th><th>Classificação original</th><th>Ordenação</th></tr></thead><tbody>' + ['AC', 'PPP', 'PcD'].flatMap(l => queue(state, l).map((c, i) => '<tr><td>' + badge(l) + '</td><td>' + (i + 1) + 'ª</td><td>' + esc(c.name) + '</td><td>' + c.rank + 'ª geral</td><td>' + (c.tail[l] ? 'Final de fila' : 'Original') + '</td></tr>')).join('') + '</tbody></table></div></details>';
+            return '<details><summary>Consultar ordem atual das listas demonstrativas</summary><div class="table-wrap"><table><thead><tr><th>Lista</th><th>Posição atual</th><th>Pessoa</th><th>Classificação original</th><th>Ordenação</th></tr></thead><tbody>' + ['AC', 'PPP', 'PcD'].flatMap(l => queue(state, l, scopeKey(demand())).map((c, i) => '<tr><td>' + badge(l) + '</td><td>' + (i + 1) + 'ª</td><td>' + esc(c.name) + '</td><td>' + c.rank + 'ª geral</td><td>' + (c.tail[l] ? 'Final de fila' : 'Original') + '</td></tr>')).join('') + '</tbody></table></div></details>';
         }
         function renderSlot(slot) {
-            const c = currentCall(slot), person = state.candidates.find(x => x.id === c.candidateId), next = eligible(state, slot.list, slot.calls.map(x => x.candidateId)), locked = !!demand().unsupplied;
+            const c = currentCall(slot), person = state.candidates.find(x => x.id === c.candidateId), next = eligible(state, slot.list, slot.scope, slot.calls.map(x => x.candidateId)), locked = !!demand().unsupplied;
             const stage = c.outcome || STAGES[c.stage];
             let actions = '';
             const btn = (action, label, admin = false) => '<button data-action="' + action + '" data-slot="' + slot.id + '" ' + (!canManage() || locked || (admin && !isAdmin()) ? 'disabled' : '') + '>' + label + '</button>';
             if (slot.status === 'replacement') {
-                actions = next ? btn('replace', 'Convocar próximo da mesma lista') : slot.list !== 'AC' && exhausted(state, slot.list) ? btn('reverse', 'Analisar reversão para AC', true) : '';
+                actions = next ? btn('replace', 'Convocar próximo da mesma lista') : slot.list !== 'AC' && exhausted(state, slot.list, slot.scope) ? btn('reverse', 'Analisar reversão para AC', true) : '';
             } else if (slot.status === 'active') {
                 const nextActions = ['accept', 'documents', 'checks', 'nominate', 'posse', 'exercise'];
                 if (c.stage < 6) actions += btn(nextActions[c.stage], ['Registrar escolha de campus', 'Receber documentação', 'Conferir requisitos', 'Registrar nomeação no DOU', 'Registrar posse', 'Registrar exercício'][c.stage], c.stage === 3);
@@ -1663,7 +1692,7 @@
             return '<article class="slot"><div class="slot-head"><h3>' + slot.ordinal + 'ª posição ' + badge(slot.list) + '</h3><span class="badge">' + esc(slot.status === 'replacement' ? 'Reposição pendente' : slot.status === 'vacated' ? 'Nova demanda gerada' : 'Vaga em atendimento') + '</span></div><p class="meta">Modalidade original: ' + slot.originalList + (slot.originalList !== slot.list ? ' · Reversão documentada para ' + slot.list : '') + '<br>Campi ofertados: ' + esc(c.offered.join(', ')) + '<br>Campus inicialmente ofertado (atribuição da desistência): ' + esc(c.initialCampus) + '</p>' +
                 '<div class="candidate"><strong>' + esc(c.name) + '</strong><span class="meta">Nota ' + person.score + ' · ' + c.original + 'ª geral original · ' + (c.originalListRank || c.original) + 'ª original na modalidade · ' + c.current + 'ª posição na fila elegível da chamada · ' + (c.finalQueue ? 'Final de fila' : 'Ordem original') + '<br>Modalidade de provimento ' + slot.list + ' · Cadastro ' + person.group + (slot.list === 'AC' && person.group !== 'AC' ? ' — não consome reserva' : '') + '<br>' + esc(stage) + (c.chosenCampus ? ' · Campus ' + esc(c.chosenCampus) : '') + '</span></div>' +
                 '<div class="steps">' + STAGES.map((s, i) => '<span class="' + (i <= c.stage ? 'done' : '') + '">' + (i + 1) + '. ' + s + '</span>').join('') + '</div>' +
-                (slot.status === 'replacement' ? '<div class="notice">' + esc(next ? 'Próximo elegível: ' + next.name + ' · mesma posição ' + slot.ordinal + ' / ' + slot.list : exhausted(state, slot.list) ? 'Lista esgotada. É necessária decisão documentada sobre atendimento.' : 'Sem candidato disponível para esta reposição. Há candidato pendente, ativo ou já convocado nesta vaga; não há reversão automática.') + '</div>' : '') +
+                (slot.status === 'replacement' ? '<div class="notice">' + esc(next ? 'Próximo elegível: ' + next.name + ' · mesma posição ' + slot.ordinal + ' / ' + slot.list : exhausted(state, slot.list, slot.scope) ? 'Lista esgotada. É necessária decisão documentada sobre atendimento.' : 'Sem candidato disponível para esta reposição. Há candidato pendente, ativo ou já convocado nesta vaga; não há reversão automática.') + '</div>' : '') +
                 '<div class="actions">' + actions + '</div>' +
                 '<details><summary>Chamadas nesta vaga (' + slot.calls.length + ')</summary><ol class="audit">' + slot.calls.map(x => '<li>' + esc(x.name) + ' · ' + esc(x.outcome || STAGES[x.stage]) + ' · ' + esc(x.at) + '</li>').join('') + '</ol></details></article>';
         }
@@ -1686,7 +1715,7 @@
             } else if (action === 'reopen' || action === 'approve') {
                 title = action === 'reopen' ? 'Reavaliar possibilidade de atendimento' : 'Registrar aptidão para nova convocação'; body = note() + file('Parecer de análise') + check('confirm', 'Confirmo a análise técnica, disponibilidade de vaga e possibilidade de provimento nesta simulação.');
             } else if (action === 'replace') {
-                title = 'Reposição sem avanço do ordenamento'; body = '<p>Posição ' + slot.ordinal + ' · ' + slot.list + '. Próximo: ' + esc(eligible(state, slot.list, slot.calls.map(x => x.candidateId))?.name || 'indisponível') + '. A modalidade de provimento será preservada.</p>' + file('Nova convocação') + note();
+                title = 'Reposição sem avanço do ordenamento'; body = '<p>Posição ' + slot.ordinal + ' · ' + slot.list + '. Próximo: ' + esc(eligible(state, slot.list, slot.scope, slot.calls.map(x => x.candidateId))?.name || 'indisponível') + '. A modalidade de provimento será preservada.</p>' + file('Nova convocação') + note();
             } else if (action === 'reverse') {
                 title = 'Reversão excepcional para AC'; body = '<p>A modalidade original ' + slot.originalList + ' será preservada no histórico. O destino AC é definido pela regra, sem escolha manual.</p>' + check('confirm', 'Confirmo o esgotamento definitivo da lista, sem pendências ou recursos que mantenham elegibilidade.') + note() + file('Decisão fundamentada de reversão');
             } else if (action === 'accept') {
@@ -1746,7 +1775,7 @@
                 } else if (a === 'reopen') delete d.unsupplied;
                 else if (a === 'approve') { assert(d.demo && d.parentSlot, 'Demanda de origem não suportada.'); d.status = 'Apta para convocação'; }
                 else if (a === 'replace') { assert(slot.status === 'replacement', 'Reposição não pendente.'); callInto(s, slot); }
-                else if (a === 'reverse') { assert(slot.status === 'replacement' && slot.list !== 'AC' && exhausted(s, slot.list), 'A lista não está esgotada.'); slot.list = 'AC'; }
+                else if (a === 'reverse') { assert(slot.status === 'replacement' && slot.list !== 'AC' && exhausted(s, slot.list, slot.scope), 'A lista não está esgotada.'); slot.list = 'AC'; }
                 else if (a === 'refuse' || a === 'withdraw') finishCall(s, slot, a === 'refuse' ? 'refuse' : 'withdraw', proof, reason);
                 else if (a === 'vacancy') { formalVacancy(s, slot, proof, reason); call.vacancyDate = eventDate; }
                 else {
@@ -1755,10 +1784,10 @@
                     if (a === 'accept') {
                         const campus = $('campus').value;
                         assert(call.offered.includes(campus) && capacity(s, d, campus, slot.id) > 0, 'Campus não ofertado ou sem saldo.');
-                        assert(!s.slots.some(x => x.demandId === d.id && x.ordinal < slot.ordinal && (x.status === 'replacement' || (x.status === 'active' && currentCall(x).stage === 0))), 'Aguarde a escolha dos candidatos convocados nas posições anteriores.');
+                        assert(!s.slots.some(x => x.scope === slot.scope && x.ordinal < slot.ordinal && (x.status === 'replacement' || (x.status === 'active' && currentCall(x).stage === 0))), 'Aguarde a escolha dos candidatos convocados nas posições anteriores.');
                         call.chosenCampus = campus;
                     }
-                    if (a === 'nominate') { assert(!s.slots.some(x => x.ordinal < slot.ordinal && x.status !== 'vacated' && (x.status === 'replacement' || currentCall(x).stage < 4)), 'Aguarde a conclusão das nomeações nas posições anteriores.'); assert(call.chosenCampus, 'Campus não definido.'); call.douDate = eventDate; }
+                    if (a === 'nominate') { assert(!s.slots.some(x => x.scope === slot.scope && x.ordinal < slot.ordinal && x.status !== 'vacated' && (x.status === 'replacement' || currentCall(x).stage < 4)), 'Aguarde a conclusão das nomeações nas posições anteriores.'); assert(call.chosenCampus, 'Campus não definido.'); call.douDate = eventDate; }
                     if (a === 'posse') call.posseDate = eventDate;
                     if (a === 'exercise') call.exerciseDate = eventDate;
                     call.stage++;
@@ -1785,6 +1814,7 @@
         async function init() {
             db = await openDB(DB, 'state');
             state = await new Promise((resolve, reject) => { const r = db.transaction('state').objectStore('state').get(KEY); r.onsuccess = () => resolve(r.result || seed()); r.onerror = () => reject(r.error); });
+            state = migrate(state);
             // Demandas reais do protótipo são apenas referenciadas, sem alterar sua base.
             try {
                 const source = await openDB('ifba-demandas-demo-v1', 'demands');
@@ -1792,7 +1822,7 @@
                 source.close();
                 for (const x of local.filter(x => x.status !== 'Rascunho')) {
                     const existing = state.demands.find(d => d.id === x.id);
-                    const mapped = { id: x.id, number: x.values.number, type: x.values.type, area: x.values.area || x.values.role || 'Área/cargo não informado', campus: x.values.campus, campi: { [x.values.campus]: Number(x.values.quantity) || 1 }, quantity: Number(x.values.quantity) || 1, status: x.status, sourceStatus: x.status, demo: false, origin: x.values.origin };
+                    const mapped = { id: x.id, contestId: x.values.contestId || ('pendente:' + x.id), cargo: x.values.type === 'Docente' ? 'Professor EBTT' : x.values.role, number: x.values.number, type: x.values.type, area: x.values.area || x.values.role || 'Área/cargo não informado', campus: x.values.campus, campi: { [x.values.campus]: Number(x.values.quantity) || 1 }, quantity: Number(x.values.quantity) || 1, status: x.status, sourceStatus: x.status, demo: false, origin: x.values.origin };
                     if (existing) Object.assign(existing, mapped); else state.demands.push(mapped);
                 }
             } catch { notify('Não foi possível consultar as demandas locais; os exemplos continuam disponíveis.'); }
