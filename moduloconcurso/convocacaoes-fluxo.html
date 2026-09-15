@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#153d26">
+    <title>Simulador de Convocação e Investidura | IFBA</title>
+    <style>
+        :root {
+            font: 16px/1.5 Arial, Helvetica, sans-serif;
+            color: #193223;
+            background: #f2f7f1;
+            --green: #25803b;
+            --dark: #153d26;
+            --lime: #dfee9a;
+            --mint: #7acb96;
+            --red: #b53131;
+            --line: #dfe8dc;
+            --muted: #617364;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding-bottom: 40px;
+        }
+
+        button,
+        select,
+        input,
+        textarea {
+            font: inherit
+        }
+
+        button,
+        a,
+        select {
+            touch-action: manipulation
+        }
+
+        a {
+            color: var(--green);
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        :focus-visible {
+            outline: 3px solid #b53131;
+            outline-offset: 3px
+        }
+
+        .wrap {
+            max-width: 1480px;
+            margin: auto;
+            padding: 0 32px 26px;
+        }
+
+        /* BANNER DO CABEÇALHO OFICIAL IFBA */
+        .top {
+            display: block;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            isolation: isolate;
+            overflow: visible;
+            border-radius: 0 0 16px 16px;
+            padding: 0 28px;
+            background: linear-gradient(112deg, #102e1d 0%, #14532d 58%, #287940 100%);
+            color: white;
+            box-shadow: 0 4px 18px rgba(16, 46, 29, 0.25);
+            margin-bottom: 20px;
+        }
+
+        .header-art {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: inherit;
+            z-index: -1;
+            pointer-events: none;
+            background: repeating-linear-gradient(150deg, transparent 0 90px, #ffffff04 91px 92px)
+        }
+
+        .header-art:after {
+            content: "";
+            position: absolute;
+            width: 460px;
+            height: 460px;
+            border: 1px solid #91c79a33;
+            border-radius: 50%;
+            right: -70px;
+            top: -285px;
+            box-shadow: 0 0 0 45px #ffffff04, 0 0 0 90px #ffffff04, 0 0 0 135px #ffffff03
+        }
+
+        .header-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 66px;
+            border-bottom: 1px solid #ffffff20
+        }
+
+        .brand-home {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .02em
+        }
+
+        .brand-home:hover {
+            text-decoration: none
+        }
+
+        .brand-home small {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .1em;
+            font-weight: 400;
+            color: #c1d6c6
+        }
+
+        .brand-mark {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: white;
+            color: #14532d;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .brand-mark:after {
+            content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #c83232;
+            border: 2px solid #14532d;
+            position: absolute;
+            top: -3px;
+            right: -3px
+        }
+
+        .top-title {
+            padding: 14px 0 17px
+        }
+
+        .top-title .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            letter-spacing: .15em;
+            font-size: 11px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            color: #bcd5bd;
+        }
+
+        .top-title .eyebrow:before {
+            content: "";
+            width: 24px;
+            height: 3px;
+            background: #ed6d6d
+        }
+
+        .top h1 {
+            font-size: 27px;
+            line-height: 1.2;
+            margin: 0;
+            letter-spacing: -.035em;
+        }
+
+        .top-title p {
+            color: #cde2d1;
+            font-size: 14px;
+            margin: 5px 0 0
+        }
+
+        .topnav {
+            position: relative;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: nowrap
+        }
+
+        .demo {
+            background: #ffffff0a;
+            border: 1px solid #ffffff35;
+            color: #e2eee4;
+            border-radius: 20px;
+            font-size: 11px;
+            padding: 7px 12px;
+            white-space: nowrap;
+        }
+
+        .portal-menu {
+            margin: 0;
+            position: relative;
+            color: #193223;
+            font-size: 14px;
+            z-index: 20
+        }
+
+        .portal-menu summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 44px;
+            padding: 10px 15px;
+            border: 1px solid #ffffff55;
+            border-radius: 10px;
+            background: #ffffff14;
+            color: white;
+            font-size: 14px;
+            list-style: none;
+            cursor: pointer;
+            user-select: none
+        }
+
+        .portal-menu summary::-webkit-details-marker {
+            display: none
+        }
+
+        .portal-menu summary:hover,
+        .portal-menu[open] summary {
+            background: #ffffff25;
+            border-color: #ffffff99
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex: none
+        }
+
+        .chevron {
+            width: 14px;
+            height: 14px;
+            transition: transform .15s
+        }
+
+        .portal-menu[open] .chevron {
+            transform: rotate(180deg)
+        }
+
+        .portal-panel {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 12px);
+            width: 304px;
+            max-width: calc(100vw - 44px);
+            max-height: 65vh;
+            overflow: auto;
+            background: #fff;
+            border: 1px solid #dce6d8;
+            border-radius: 16px;
+            box-shadow: 0 18px 55px #102e1d30;
+            padding: 9px
+        }
+
+        .portal-caption {
+            padding: 9px 11px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .13em;
+            color: #6b7c6a
+        }
+
+        .portal-panel a {
+            display: flex;
+            gap: 11px;
+            align-items: center;
+            padding: 10px 11px;
+            min-height: 43px;
+            color: #294531;
+            font-size: 14px;
+            border-radius: 9px
+        }
+
+        .portal-panel a:hover {
+            background: #f0f5ec;
+            text-decoration: none
+        }
+
+        .portal-panel a[aria-current=page] {
+            background: #e7f2e1;
+            color: #1f682d;
+            font-weight: 700
+        }
+
+        .portal-panel a[aria-current=page]:after {
+            content: "Atual";
+            font-size: 10px;
+            font-weight: 400;
+            margin-left: auto;
+            border: 1px solid #c6dfbf;
+            border-radius: 12px;
+            padding: 2px 7px
+        }
+
+        .portal-panel .nav-end {
+            border-top: 1px solid #e5ece0;
+            margin-top: 5px;
+            padding-top: 7px
+        }
+
+        .portal-panel .nav-end a {
+            color: #a43030
+        }
+
+        /* BREADCRUMB & AVISOS */
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--muted);
+            margin: 10px 0 15px;
+        }
+
+        .notices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .notice-card {
+            background: #fdf2f2;
+            border: 1px solid #f8b4b4;
+            border-left: 4px solid var(--red);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #7f1d1d;
+        }
+
+        .notice-card.warning {
+            background: #fffbeb;
+            border-color: #fde68a;
+            border-left-color: #d97706;
+            color: #92400e;
+        }
+
+        .notice-card.info {
+            background: #edf6e7;
+            border-color: #c6dfbf;
+            border-left-color: var(--green);
+            color: #153d26;
+        }
+
+        .notice-card strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* LAYOUT DO SIMULADOR */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--card-bg);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .panel h3 {
+            font-size: 17px;
+            color: var(--dark);
+            margin: 0 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eef4e7;
+        }
+
+        .field-group {
+            margin-bottom: 14px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        .field-group small {
+            display: block;
+            font-size: 11px;
+            color: #617364;
+            margin-top: 3px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #c5d5c2;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #193223;
+            min-height: 41px;
+        }
+
+        .btn {
+            border: 1px solid #c6d7c1;
+            border-radius: 8px;
+            padding: 10px 16px;
+            min-height: 42px;
+            background: white;
+            color: #245b30;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.15s ease;
+        }
+
+        .btn.primary {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+        }
+
+        .btn.primary:hover:not(:disabled) {
+            background: var(--dark);
+        }
+
+        .btn.danger {
+            background: var(--red);
+            border-color: var(--red);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        /* CARD DE PERFIL & ORDENAMENTO DA VAGA */
+        .candidate-card {
+            background: #f8faf7;
+            border: 2px dashed var(--green);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 15px;
+        }
+
+        .vacancy-tag {
+            display: inline-block;
+            background: var(--lime);
+            color: #233514;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .quota-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+            background: var(--green);
+        }
+
+        .quota-pill.pcd {
+            background: #0284c7;
+        }
+
+        .quota-pill.ppp {
+            background: #d97706;
+        }
+
+        .quota-pill.ac {
+            background: var(--green);
+        }
+
+        /* MAPA DE ETAPAS / JORNADA DE CONVOCAÇÃO */
+        .stepper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .step-node {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .step-node.active {
+            border: 2px solid var(--green);
+            background: #edf6e7;
+            box-shadow: 0 0 10px rgba(37, 128, 59, 0.2);
+        }
+
+        .step-node.active::before {
+            content: "📍 Etapa Ativa";
+            position: absolute;
+            top: -9px;
+            right: 8px;
+            background: var(--green);
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 8px;
+        }
+
+        .step-node.completed {
+            border-color: var(--mint);
+            background: #f4faf5;
+        }
+
+        .step-num {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .step-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #193223;
+            margin-top: 3px;
+        }
+
+        /* PAINEL DE DECISÕES DA ETAPA */
+        .decision-card {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .decision-card h4 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            color: var(--dark);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        /* TABELA DE ORDENAMENTO ANEXO III INTERATIVA */
+        .anexo-table-wrap {
+            max-height: 220px;
+            overflow-y: auto;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        table.anexo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        table.anexo-table th,
+        table.anexo-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #edf1ea;
+        }
+
+        table.anexo-table th {
+            background: #edf5e8;
+            color: var(--dark);
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+
+        table.anexo-table tr.highlight-row {
+            background: #dfee9a !important;
+            font-weight: bold;
+        }
+
+        /* CONSOLE DE AUDITORIA & HISTÓRICO */
+        .history-log {
+            background: #153d26;
+            color: #d8e8d7;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #235235;
+            padding-bottom: 3px;
+        }
+
+        .history-item .hl {
+            color: #7acb96;
+            font-weight: bold;
+        }
+
+        .history-item .warn {
+            color: #fde68a;
+        }
+
+        .history-item .err {
+            color: #fca5a5;
+        }
+
+        footer.foot {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 17px;
+            border-top: 1px solid var(--line);
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        details {
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        summary {
+            cursor: pointer;
+            color: var(--dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BANNER DE CABEÇALHO PADRÃO IFBA -->
+    <header class="top">
+        <div class="header-art" aria-hidden="true"></div>
+        <div class="header-line">
+            <a class="brand-home" href="inicio.html">
+                <span class="brand-mark" aria-hidden="true">IF</span>
+                <span>CONCURSOS IFBA<small>GESTÃO INSTITUCIONAL</small></span>
+            </a>
+            <nav class="topnav" aria-label="Menu principal">
+                <span class="demo">Dados demonstrativos</span>
+                <details class="portal-menu" id="portal-menu">
+                    <summary aria-controls="portal-links">
+                        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                        </svg>
+                        Navegar
+                        <svg class="nav-icon chevron" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </summary>
+                    <div class="portal-panel" id="portal-links">
+                        <div class="portal-caption">Portais do sistema</div>
+                        <a href="inicio.html" data-icon="home">Início</a>
+                        <a href="dashboard.html" data-icon="grid">Painel Geral</a>
+                        <a href="docentes.html" data-icon="school">Concurso Docente</a>
+                        <a href="tae.html" data-icon="brief">Concurso TAE</a>
+                        <a href="demandas.html" data-icon="folder">Demandas</a>
+                        <a href="convocacoes.html" aria-current="page" data-icon="calendar">Convocações</a>
+                        <a href="cadastros.html" data-icon="users">Cadastros</a>
+                        <a href="documentacao.html" data-icon="file">Documentação</a>
+                        <div class="nav-end"><a href="index.html" data-icon="exit">Voltar ao login</a></div>
+                    </div>
+                </details>
+            </nav>
+        </div>
+        <div class="top-title">
+            <span class="eyebrow">PROVIMENTO DE PESSOAL E EDITAIS</span>
+            <h1>Simulador de Convocação e Escolha de Lotação</h1>
+            <p>Simulação interativa das regras de alternância de vagas (Anexo III), cotas, opção de campus e requisitos
+                da Lei 8.112/90.</p>
+        </div>
+    </header>
+
+    <div class="wrap">
+        <div class="breadcrumb">
+            <a href="inicio.html">Início</a> / <a href="convocacoes.html">Convocações</a> / <span
+                style="color:#193223; font-weight:600;">Simulador Lúdico de Convocação</span>
+        </div>
+
+        <!-- QUADROS DE DIREITOS E REGRAS INSTITUCIONAIS -->
+        <div class="notices-grid">
+            <div class="notice-card info">
+                <strong>📊 Regra de Alternância de Listas (Anexo III)</strong>
+                As nomeações seguem a proporcionalidade estrita: Ampla Concorrência (AC), Pessoas Pretas/Pardas (PPP -
+                20%) e Pessoas com Deficiência (PcD - 5%). Cotistas aprovados na AC não consomem reserva.
+            </div>
+            <div class="notice-card warning">
+                <strong>🔄 Reclassificação e Opção de Campus</strong>
+                É facultada <u>apenas 1 recusa</u> de campus. O candidato que recusar a 1ª convocação assina o Termo de
+                Opção e vai para o **final da lista**. A recusa na 2ª convocação gera **eliminação definitiva**.
+            </div>
+            <div class="notice-card">
+                <strong>📜 Investidura & Lei nº 8.112/90</strong>
+                Perícia Médica Oficial, Heteroidentificação (PPP), Validação de Titulação MEC (com análise de
+                equivalência para nomes correlatos) e compromisso pedagógico para não-licenciados.
+            </div>
+        </div>
+
+        <!-- DSIBOARD DO SIMULADOR -->
+        <div class="dashboard-layout">
+
+            <!-- PAINEL ESQUERDO: CONFIGURAÇÃO DO CANDIDATO E VAGA -->
+            <div class="panel">
+                <h3>⚙️ Parâmetros do Candidato</h3>
+
+                <div class="field-group">
+                    <label for="vagaNum">Número de Ordem da Nomeação (Vaga nº):</label>
+                    <input type="number" id="vagaNum" value="1" min="1" max="80" onchange="updateVacancyFromInput()">
+                    <small>Conforme Tabela de Ordenamento de Vagas do Edital PEBTT (Anexo III).</small>
+                </div>
+
+                <div class="field-group">
+                    <label for="candList">Lista de Origem do Candidato:</label>
+                    <select id="candList" onchange="resetSimulation()">
+                        <option value="AC">Ampla Concorrência (AC)</option>
+                        <option value="PPP">Reserva de Cotas Pretos e Pardos (PPP)</option>
+                        <option value="PCD">Reserva de Cotas Pessoas com Deficiência (PcD)</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="convocacaoNum">Histórico de Convocações:</label>
+                    <select id="convocacaoNum" onchange="resetSimulation()">
+                        <option value="1">1ª Convocação (Primeira chamada)</option>
+                        <option value="2">2ª Convocação (Já reclassificado no final da fila)</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="candLicenciatura">Possui Licenciatura na Área?</label>
+                    <select id="candLicenciatura" onchange="resetSimulation()">
+                        <option value="SIM">Sim (Licenciatura Plena)</option>
+                        <option value="NAO">Não (Apenas Bacharelado / Tecnólogo com Pós-graduação)</option>
+                    </select>
+                    <small>Docentes sem licenciatura devem realizar formação pedagógica no estágio probatório.</small>
+                </div>
+
+                <div class="field-group">
+                    <label for="candDiploma">Denominação do Diploma de Graduação:</label>
+                    <select id="candDiploma" onchange="resetSimulation()">
+                        <option value="EXATA">Exatamente idêntica ao edital</option>
+                        <option value="CORRELATA">Denominação correlata (Requer análise de equivalência IFBA)</option>
+                    </select>
+                </div>
+
+                <!-- DADOS CONSOLIDADOS DO CANDIDATO -->
+                <div class="candidate-card">
+                    <div class="vacancy-tag" id="vacancyLabel">Vaga Reservada: 1º Nomeado</div>
+                    <br>
+                    <span class="quota-pill ac" id="quotaBadge">Lista Destinada: AC</span>
+                    <p style="font-size:12px; color:var(--muted); margin: 8px 0 0;" id="candidateDesc">
+                        Candidato em 1ª convocação aguardando início da chamada.
+                    </p>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <button class="btn primary" onclick="resetSimulation()">🔄 Reiniciar Simulação</button>
+                </div>
+
+                <!-- ANEXO III INTERATIVO RESUMIDO -->
+                <h4 style="font-size:13px; margin:20px 0 5px; color:var(--dark);">📋 Tabela de Ordenamento (Anexo III -
+                    Edital)</h4>
+                <div class="anexo-table-wrap">
+                    <table class="anexo-table" id="anexoTable">
+                        <thead>
+                            <tr>
+                                <th>Nº Vaga</th>
+                                <th>Tipo de Vaga</th>
+                            </tr>
+                        </thead>
+                        <tbody id="anexoTableBody">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- PAINEL DIREITO: JORNADA PASSO A PASSO -->
+            <div class="panel">
+                <h3>🗺️ Jornada da Convocação e Investidura</h3>
+
+                <!-- PASSO A PASSO / STEPPER -->
+                <div class="stepper">
+                    <div class="step-node active" id="stepNode1">
+                        <div class="step-num">Etapa 1</div>
+                        <div class="step-title">1. Ordem da Vaga</div>
+                    </div>
+                    <div class="step-node" id="stepNode2">
+                        <div class="step-num">Etapa 2</div>
+                        <div class="step-title">2. Validação de Cotas</div>
+                    </div>
+                    <div class="step-node" id="stepNode3">
+                        <div class="step-num">Etapa 3</div>
+                        <div class="step-title">3. Opção de Campus</div>
+                    </div>
+                    <div class="step-node" id="stepNode4">
+                        <div class="step-num">Etapa 4</div>
+                        <div class="step-title">4. Requisitos & Titulação</div>
+                    </div>
+                    <div class="step-node" id="stepNode5">
+                        <div class="step-num">Etapa 5</div>
+                        <div class="step-title">5. Posse & Exigências</div>
+                    </div>
+                </div>
+
+                <!-- PAINEL DE AÇÃO DA ETAPA ATIVA -->
+                <div class="decision-card" id="decisionPanel">
+                    <!-- Conteúdo dinâmico da etapa atual -->
+                </div>
+
+                <!-- LOG DE AUDITORIA DA SIMULAÇÃO -->
+                <h4 style="font-size:13px; color:var(--muted); margin: 15px 0 8px;">📜 Histórico de Transições e Eventos
+                    (Auditoria)</h4>
+                <div class="history-log" id="historyLog">
+                    <div class="history-item"><span style="color:#94a3b8;">[Sistema]</span> Aguardando processamento da
+                        convocação.</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DETALHES NORMATIVOS -->
+        <details>
+            <summary>Fundamentação Legal e Normas do Edital PEBTT (IFBA)</summary>
+            <div
+                style="background:#ffffff; border:1px solid var(--line); border-radius:8px; padding:15px; margin-top:10px;">
+                <p><strong>• Alternância de Vagas (Anexo III):</strong> A distribuição de nomeações segue o ordenamento
+                    pré-fixado no edital (ex: 3º, 8º, 13º... para PPP; 5º, 21º, 41º, 61º... para PcD). Cotistas
+                    aprovados dentro do número de vagas da Ampla Concorrência (AC) não ocupam as vagas reservadas.</p>
+                <p><strong>• Escolha de Lotação e Reclassificação:</strong> O candidato escolhe entre os campi com vagas
+                    abertas na data. A recusa na 1ª convocação acarreta a assinatura do Termo de Opção e a
+                    reclassificação para o último lugar da lista. A recusa na 2ª convocação resulta em eliminação
+                    definitiva.</p>
+                <p><strong>• Confirmação de Cotas:</strong> Candidatos PcD passam por perícia com equipe
+                    multiprofissional do IFBA. Candidatos PPP submetem-se à comissão de heteroidentificação baseada
+                    exclusivamente em critérios fenotípicos.</p>
+                <p><strong>• Requisitos de Investidura (Lei nº 8.112/90):</strong> Aptidão física e mental atestada por
+                    junta médica oficial do IFBA, quitação eleitoral/militar, comprovação da formação acadêmica
+                    reconhecida pelo MEC, não gerência de empresa privada e autorização de acesso ao IRPF (IN TCU nº
+                    65/2011).</p>
+                <p><strong>• Exigência Pedagógica Docente:</strong> Conforme legislação de ensino técnico/tecnológico,
+                    docentes nomeados sem licenciatura em curso de graduação devem obrigatoriamente obter a formação
+                    pedagógica equivalente durante o período do estágio probatório.</p>
+            </div>
+        </details>
+
+        <footer class="foot">
+            <span>IFBA · Provimento de Pessoal e Concursos Públicos</span>
+            <a href="inicio.html">Voltar ao início</a>
+        </footer>
+    </div>
+
+    <script>
+        // TABELA DE ORDENAMENTO DE NOMEAÇÕES (EDICAL PEBTT - ANEXO III DO PDF)
+        const ANEXO_III_MAP = {
+            1: "AC", 2: "AC", 3: "PPP", 4: "AC", 5: "PCD", 6: "AC", 7: "AC", 8: "PPP", 9: "AC", 10: "AC",
+            11: "AC", 12: "AC", 13: "PPP", 14: "AC", 15: "AC", 16: "AC", 17: "AC", 18: "PPP", 19: "AC", 20: "AC",
+            21: "PCD", 22: "AC", 23: "PPP", 24: "AC", 25: "AC", 26: "AC", 27: "AC", 28: "PPP", 29: "AC", 30: "AC",
+            31: "AC", 32: "AC", 33: "PPP", 34: "AC", 35: "AC", 36: "AC", 37: "AC", 38: "PPP", 39: "AC", 40: "AC",
+            41: "PCD", 42: "AC", 43: "PPP", 44: "AC", 45: "AC", 46: "AC", 47: "AC", 48: "PPP", 49: "AC", 50: "AC",
+            51: "AC", 52: "AC", 53: "PPP", 54: "AC", 55: "AC", 56: "AC", 57: "AC", 58: "PPP", 59: "AC", 60: "AC",
+            61: "PCD", 62: "AC", 63: "PPP", 64: "AC", 65: "AC", 66: "AC", 67: "AC", 68: "PPP", 69: "AC", 70: "AC",
+            71: "AC", 72: "AC", 73: "PPP", 74: "AC", 75: "AC", 76: "AC", 77: "AC", 78: "PPP", 79: "AC", 80: "AC"
+        };
+
+        // ESTADO ATUAL DA SIMULAÇÃO
+        let currentStep = 1;
+        let simData = {
+            vagaNum: 1,
+            vagaList: "AC",
+            candList: "AC",
+            convocacaoNum: 1,
+            licenciatura: "SIM",
+            diplomaType: "EXATA",
+            quotaValidated: false,
+            campusSelected: "",
+            requisitesPassed: false
+        };
+
+        // INICIALIZAÇÃO
+        window.onload = function () {
+            renderAnexoTable();
+            resetSimulation();
+        };
+
+        function renderAnexoTable() {
+            const tbody = document.getElementById("anexoTableBody");
+            tbody.innerHTML = "";
+            for (let i = 1; i <= 40; i++) {
+                const listType = ANEXO_III_MAP[i] || "AC";
+                const tr = document.createElement("tr");
+                tr.id = `row-vaga-${i}`;
+                tr.innerHTML = `<td>${i}º Nomeado</td><td><strong>${getListName(listType)}</strong></td>`;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function getListName(code) {
+            if (code === "AC") return "Ampla Concorrência (AC)";
+            if (code === "PPP") return "Negros / Pretos e Pardos (PPP)";
+            if (code === "PCD") return "Pessoas com Deficiência (PcD)";
+            return code;
+        }
+
+        function updateVacancyFromInput() {
+            let val = parseInt(document.getElementById("vagaNum").value);
+            if (isNaN(val) || val < 1) val = 1;
+            if (val > 80) val = 80;
+            document.getElementById("vagaNum").value = val;
+            resetSimulation();
+        }
+
+        function highlightAnexoRow(num) {
+            document.querySelectorAll("#anexoTableBody tr").forEach(r => r.classList.remove("highlight-row"));
+            const row = document.getElementById(`row-vaga-${num}`);
+            if (row) {
+                row.classList.add("highlight-row");
+                row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+            }
+        }
+
+        function resetSimulation() {
+            simData.vagaNum = parseInt(document.getElementById("vagaNum").value) || 1;
+            simData.vagaList = ANEXO_III_MAP[simData.vagaNum] || "AC";
+            simData.candList = document.getElementById("candList").value;
+            simData.convocacaoNum = parseInt(document.getElementById("convocacaoNum").value);
+            simData.licenciatura = document.getElementById("candLicenciatura").value;
+            simData.diplomaType = document.getElementById("candDiploma").value;
+            simData.quotaValidated = false;
+            simData.campusSelected = "";
+            simData.requisitesPassed = false;
+
+            // Atualizar Card de Apresentação
+            document.getElementById("vacancyLabel").innerText = `Vaga Reservada: ${simData.vagaNum}º Nomeado`;
+            const pill = document.getElementById("quotaBadge");
+            pill.innerText = `Destinada a: ${simData.vagaList}`;
+            pill.className = `quota-pill ${simData.vagaList.toLowerCase()}`;
+
+            let desc = `Candidato da lista de <strong>${simData.candList}</strong> em <strong>${simData.convocacaoNum}ª convocação</strong>.`;
+            document.getElementById("candidateDesc").innerHTML = desc;
+
+            highlightAnexoRow(simData.vagaNum);
+
+            // Reset histórico e ir para o Passo 1
+            document.getElementById("historyLog").innerHTML = "";
+            logEvent(`Inicializada simulação para a <strong>Vaga nº ${simData.vagaNum}</strong> (Destinada a ${simData.vagaList}).`);
+            goToStep(1);
+        }
+
+        function logEvent(msg, type = "normal") {
+            const log = document.getElementById("historyLog");
+            const item = document.createElement("div");
+            item.className = "history-item";
+            const time = new Date().toLocaleTimeString();
+            let cls = "hl";
+            if (type === "warn") cls = "warn";
+            if (type === "err") cls = "err";
+            item.innerHTML = `<span style="color:#94a3b8;">[${time}]</span> <span class="${cls}">${msg}</span>`;
+            log.prepend(item);
+        }
+
+        function goToStep(step) {
+            currentStep = step;
+
+            // Atualizar Stepper UI
+            for (let i = 1; i <= 5; i++) {
+                const node = document.getElementById(`stepNode${i}`);
+                node.className = "step-node";
+                if (i < step) node.classList.add("completed");
+                if (i === step) node.classList.add("active");
+            }
+
+            renderStepPanel();
+        }
+
+        // RENDERIZADOR DOS CONTEÚDOS DAS ETAPAS
+        function renderStepPanel() {
+            const panel = document.getElementById("decisionPanel");
+
+            // --- ETAPA 1: ORDEM DA VAGA E MATCH DE LISTA ---
+            if (currentStep === 1) {
+                const match = (simData.vagaList === simData.candList);
+                const isACQuotaApproved = (simData.candList !== "AC" && simData.vagaList === "AC");
+
+                let html = `<h4>Etapa 1: Chamada e Regra de Alternância de Listas</h4>`;
+                html += `<p>A <strong>Vaga nº ${simData.vagaNum}</strong> está classificada no Anexo III como <strong>${getListName(simData.vagaList)}</strong>.</p>`;
+
+                if (match) {
+                    html += `<div style="background:#eef6e7; padding:12px; border-left:4px solid var(--green); border-radius:6px; margin:10px 0;">
+                  ✅ <strong>Chamada Compatível!</strong> A vaga atual é destinada à lista de <strong>${simData.candList}</strong> do candidato.
+               </div>`;
+                } else if (isACQuotaApproved) {
+                    html += `<div style="background:#fffbeb; padding:12px; border-left:4px solid #d97706; border-radius:6px; margin:10px 0;">
+                  ℹ️ <strong>Cotista aprovado na Ampla Concorrência (AC):</strong> O candidato cotista foi chamado pela lista geral de AC. Conforme o edital, esta nomeação <u>não consome</u> a reserva de vagas das cotas.
+               </div>`;
+                } else {
+                    html += `<div style="background:#fff4df; padding:12px; border-left:4px solid #b98026; border-radius:6px; margin:10px 0;">
+                  ⚠️ <strong>Divergência de Lista:</strong> A vaga nº ${simData.vagaNum} é destinada à lista <strong>${simData.vagaList}</strong>, mas o perfil selecionado pertence à lista <strong>${simData.candList}</strong>.
+               </div>`;
+                }
+
+                html += `<div class="options-grid">
+               <button class="btn primary" onclick="processStep1(true)">Continuar Convocação ➔</button>
+            </div>`;
+                panel.innerHTML = html;
+            }
+
+            // --- ETAPA 2: VALIDAÇÃO DE COTAS (PPP / PCD) ---
+            else if (currentStep === 2) {
+                let html = `<h4>Etapa 2: Confirmação de Cotas e Bancas de Validação</h4>`;
+
+                if (simData.candList === "AC") {
+                    html += `<p>Candidatos da Ampla Concorrência não necessitam de verificação de cota. Avançando para a próxima fase.</p>`;
+                    html += `<div class="options-grid"><button class="btn primary" onclick="goToStep(3)">Prosseguir para Opção de Campus ➔</button></div>`;
+                } else if (simData.candList === "PPP") {
+                    html += `<p>Candidatos convocados por vagas reservadas a Pretos e Pardos devem passar pela <strong>Comissão de Heteroidentificação do IFBA</strong> (análise estritamente fenotípica).</p>`;
+                    html += `<div class="options-grid">
+                  <button class="btn primary" onclick="validateQuota(true)">✅ Deferido na Heteroidentificação</button>
+                  <button class="btn danger" onclick="validateQuota(false)">❌ Indeferido / Não compareceu</button>
+               </div>`;
+                } else if (simData.candList === "PCD") {
+                    html += `<p>Candidatos convocados por vagas reservadas a PcD devem passar por <strong>Perícia Médica Presencial</strong> com equipe multiprofissional do IFBA.</p>`;
+                    html += `<div class="options-grid">
+                  <button class="btn primary" onclick="validateQuota(true)">✅ Laudo Pericial Confirmado</button>
+                  <button class="btn danger" onclick="validateQuota(false)">❌ Laudo Não Confirmado</button>
+               </div>`;
+                }
+                panel.innerHTML = html;
+            }
+
+            // --- ETAPA 3: OPÇÃO DE CAMPUS E ESCOLHA DE LOTAÇÃO ---
+            else if (currentStep === 3) {
+                let html = `<h4>Etapa 3: Escolha de Lotação / Opção de Campus</h4>`;
+                html += `<p>O candidato em <strong>${simData.convocacaoNum}ª convocação</strong> deve optar por uma das localidades com vaga aberta no momento:</p>`;
+
+                html += `<div style="margin:12px 0;">
+               <label><strong>Campi com Vagas Abertas:</strong></label>
+               <select id="campusSelect" style="margin-top:5px;">
+                  <option value="Paulo Afonso">Campus Paulo Afonso</option>
+                  <option value="Barreiras">Campus Barreiras</option>
+                  <option value="Seabra">Campus Seabra</option>
+                  <option value="Irecê">Campus Irecê</option>
+               </select>
+            </div>`;
+
+                html += `<div class="options-grid">
+               <button class="btn primary" onclick="chooseCampus()">📍 Aceitar Lotação e Aceitar Vaga</button>
+               <button class="btn danger" onclick="refuseCampus()">🚫 Recusar Lotação Ofertada</button>
+            </div>`;
+                panel.innerHTML = html;
+            }
+
+            // --- ETAPA 4: REQUISITOS DE INVESTIDURA (LEI 8.112/90) & TITULAÇÃO ---
+            else if (currentStep === 4) {
+                let html = `<h4>Etapa 4: Requisitos de Investidura e Titulação Acadêmica</h4>`;
+                html += `<p>Campus selecionado: <strong>${simData.campusSelected}</strong>. Validação dos requisitos do Art. 5º da Lei nº 8.112/90 e do edital:</p>`;
+
+                html += `<ul style="font-size:13px; line-height:1.6; margin-bottom:15px; padding-left:20px;">
+               <li>Nacionalidade brasileira ou portuguesa equiparada e idade mínima de 18 anos.</li>
+               <li>Quitação com as obrigações eleitorais e militares.</li>
+               <li>Comprovação de Graduação reconhecida pelo MEC + Pós-graduação na área.</li>
+               ${simData.diplomaType === "CORRELATA" ? `<li style="color:#b45309;"><strong>⚠️ Atenção:</strong> Diploma com denominação correlata submetido à Análise Técnica de Equivalência pelo IFBA.</li>` : ''}
+            </ul>`;
+
+                html += `<div class="options-grid">
+               <button class="btn primary" onclick="processRequisites(true)">✅ Documentação & Equivalência Aprovadas</button>
+               <button class="btn danger" onclick="processRequisites(false)">❌ Documentação Incompleta / Reprovada</button>
+            </div>`;
+                panel.innerHTML = html;
+            }
+
+            // --- ETAPA 5: PERÍCIA MÉDICA, DECLARAÇÕES E POSSE FINAL ---
+            else if (currentStep === 5) {
+                let html = `<h4>Etapa 5: Perícia Médica Oficial e Finalização da Posse</h4>`;
+                html += `<p>Última verificação para emissão da portaria de nomeação e posse no campus <strong>${simData.campusSelected}</strong>:</p>`;
+
+                if (simData.licenciatura === "NAO") {
+                    html += `<div style="background:#fffbeb; border-left:4px solid #d97706; padding:12px; border-radius:6px; margin-bottom:15px; font-size:13px;">
+                  📜 <strong>Termo de Compromisso Pedagógico:</strong> Como o docente não possui licenciatura, fica registrado o compromisso de obter a formação pedagógica necessária ao longo do **estágio probatório**.
+               </div>`;
+                }
+
+                html += `<ul style="font-size:13px; line-height:1.6; margin-bottom:15px; padding-left:20px;">
+               <li>Laudo de Aptidão Física e Mental emitido pela Perícia Médica Oficial do IFBA.</li>
+               <li>Declaração de Não Acumulação Ilícita de Cargos/Proventos.</li>
+               <li>Declaração de não participação em gerência ou administração de empresa privada.</li>
+               <li>Autorização de acesso às declarações do IRPF (IN TCU nº 65/2011).</li>
+            </ul>`;
+
+                html += `<div class="options-grid">
+               <button class="btn primary" onclick="finalizeInvestiture()">🎉 Concluir Investidura / Exercício</button>
+            </div>`;
+                panel.innerHTML = html;
+            }
+
+            // --- ESTADO FINAL: SUCESSO ---
+            else if (currentStep === 6) {
+                let html = `<div style="text-align:center; padding:10px;">
+               <h3 style="color:var(--green); font-size:20px; border:none;">🎉 POSSE CONCLUÍDA COM SUCESSO!</h3>
+               <p style="font-size:14px;">O servidor foi oficialmente empossado e entrou em exercício no <strong>Campus ${simData.campusSelected}</strong> na vaga nº ${simData.vagaNum}.</p>
+               <hr style="border:0; border-top:1px solid var(--line); margin:15px 0;">
+               <button class="btn primary" onclick="resetSimulation()" style="max-width:250px; margin:0 auto;">Simular Nova Convocação</button>
+            </div>`;
+                panel.innerHTML = html;
+            }
+
+            // --- ESTADO FINAL: ELIMINAÇÃO / DESISTÊNCIA ---
+            else if (currentStep === 99) {
+                let html = `<div style="text-align:center; padding:10px;">
+               <h3 style="color:var(--red); font-size:20px; border:none;">❌ CANDIDATO ELIMINADO / DESISTENTE</h3>
+               <p style="font-size:14px;" id="eliminationReason">O processo de convocação foi encerrado para este candidato.</p>
+               <hr style="border:0; border-top:1px solid var(--line); margin:15px 0;">
+               <button class="btn primary" onclick="resetSimulation()" style="max-width:250px; margin:0 auto;">Simular Nova Convocação</button>
+            </div>`;
+                panel.innerHTML = html;
+            }
+        }
+
+        // LÓGICA DE TRANSIÇÃO ENTRE ETAPAS
+
+        function processStep1(continueProceed) {
+            logEvent(`Etapa 1 concluída: Convocação efetuada para a vaga de ${getListName(simData.vagaList)}.`);
+            goToStep(2);
+        }
+
+        function validateQuota(approved) {
+            if (approved) {
+                simData.quotaValidated = true;
+                logEvent(`Etapa 2 concluída: Validação de cotas para ${simData.candList} <span style="color:#4ade80;">DEFERIDA</span>.`);
+                goToStep(3);
+            } else {
+                logEvent(`Etapa 2: Validação de cotas para ${simData.candList} <span style="color:#fca5a5;">INDEFERIDA</span>. Vaga revertida para Ampla Concorrência (AC).`, "err");
+                document.getElementById("eliminationReason").innerText = "Indeferimento na validação da reserva de cotas (Heteroidentificação ou Perícia Médica). A vaga reverte para a Ampla Concorrência.";
+                goToStep(99);
+            }
+        }
+
+        function chooseCampus() {
+            const sel = document.getElementById("campusSelect").value;
+            simData.campusSelected = sel;
+            logEvent(`Etapa 3 concluída: Candidato aceitou a lotação no <strong>Campus ${sel}</strong>.`);
+            goToStep(4);
+        }
+
+        function refuseCampus() {
+            if (simData.convocacaoNum === 1) {
+                logEvent(`Etapa 3: Candidato <span style="color:#fde68a;">RECUSOU</span> a 1ª convocação para os campi ofertados.`, "warn");
+                logEvent(`📋 Assinado Termo de Opção: Candidato reclassificado para o <strong>ÚLTIMO LUGAR</strong> da lista de ${simData.candList}.`, "warn");
+                document.getElementById("eliminationReason").innerHTML = "Candidato assinou o Termo de Opção de Campus e foi reclassificado para o final da sua lista de classificação. Aguardará nova oportunidade de chamada (2ª convocação).";
+                goToStep(99);
+            } else {
+                logEvent(`Etapa 3: Candidato recusou a 2ª convocação (já reclassificado). <span style="color:#fca5a5;">ELIMINAÇÃO DEFINITIVA</span>.`, "err");
+                document.getElementById("eliminationReason").innerText = "Declarado desistente e eliminado definitivamente do certame por recusa de lotação na 2ª convocação.";
+                goToStep(99);
+            }
+        }
+
+        function processRequisites(passed) {
+            if (passed) {
+                simData.requisitesPassed = true;
+                if (simData.diplomaType === "CORRELATA") {
+                    logEvent(`Etapa 4: Análise Técnica de Equivalência de Diploma <span style="color:#4ade80;">APROVADA</span> pelo IFBA.`);
+                }
+                logEvent(`Etapa 4 concluída: Requisitos da Lei nº 8.112/90 e titulação validados com sucesso.`);
+                goToStep(5);
+            } else {
+                logEvent(`Etapa 4: Impedimento de investidura por falta de requisito legal ou incompatibilidade de titulação.`, "err");
+                document.getElementById("eliminationReason").innerText = "Não atendeu aos requisitos de investidura da Lei nº 8.112/90 ou não comprovou titulação acadêmica compatível.";
+                goToStep(99);
+            }
+        }
+
+        function finalizeInvestiture() {
+            logEvent(`Etapa 5 concluída: Laudo de aptidão física/mental emitido. Autorização IRPF e declarações registradas.`);
+            if (simData.licenciatura === "NAO") {
+                logEvent(`📜 Registrada pendência pedagógica: Obrigatória obtenção de Licenciatura durante o Estágio Probatório.`, "warn");
+            }
+            logEvent(`🎉 <strong>INVESTIDURA CONCLUÍDA!</strong> Servidor empossado e em exercício no Campus ${simData.campusSelected}.`);
+            goToStep(6);
+        }
+
+        // NAVEGAÇÃO E ACESSIBILIDADE DO MENU SUPORTE
+        const portalMenu = document.getElementById('portal-menu');
+        const portalTrigger = portalMenu.querySelector('summary');
+        const navPaths = {
+            home: 'M3 10 12 3l9 7M5 9v12h14V9M9 21v-7h6v7',
+            grid: 'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z',
+            school: 'M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4',
+            brief: 'M3 7h18v14H3ZM8 7V3h8v4M3 12l9 3 9-3',
+            folder: 'M3 20V5h7l2 3h9v12ZM7 12h10M7 16h7',
+            calendar: 'M4 5h16v16H4ZM8 3v4M16 3v4M4 11h16M8 15h3M8 18h7',
+            users: 'M9 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0M6 21v-3a6 6 0 0 1 12 0v3M3 19v-1a5 5 0 0 1 2-4M21 19v-1a5 5 0 0 0-2-4',
+            file: 'M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6',
+            exit: 'M10 4H4v16h6M10 12h11m-4-4 4 4-4 4'
+        };
+
+        portalMenu.querySelectorAll('[data-icon]').forEach(link => {
+            link.insertAdjacentHTML('afterbegin', '<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + navPaths[link.dataset.icon] + '"/></svg>');
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && portalMenu.open) {
+                portalMenu.open = false;
+                portalTrigger.focus();
+            }
+        });
+        document.addEventListener('click', event => {
+            if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false;
+        });
+        document.addEventListener('focusin', event => {
+            if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false;
+        });
+    </script>
+</body>
+
+</html>

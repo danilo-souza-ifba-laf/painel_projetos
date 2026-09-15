@@ -4,71 +4,1966 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Cadastros | Concursos IFBA</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Cadastros e importações | IFBA</title>
+    <style>
+        :root {
+            font: 16px/1.5 Arial, Helvetica, sans-serif;
+            color: #193223;
+            background: #f2f7f1;
+            --green: #25803b;
+            --dark: #153d26;
+            --lime: #dfee9a;
+            --mint: #7acb96;
+            --red: #b53131;
+            --line: #dfe8dc;
+            --muted: #617364
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0
+        }
+
+        button,
+        select {
+            font: inherit
+        }
+
+        button,
+        a,
+        select {
+            touch-action: manipulation
+        }
+
+        a {
+            color: var(--green);
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        :focus-visible {
+            outline: 3px solid #b53131;
+            outline-offset: 3px
+        }
+
+        .wrap {
+            max-width: 1480px;
+            margin: auto;
+            padding: 26px 32px
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            background: var(--dark);
+            border-radius: 8px;
+            color: white;
+            padding: 22px 27px
+        }
+
+        .eyebrow {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: #bcd5bd;
+            margin-bottom: 3px
+        }
+
+        .top h1 {
+            font-size: 26px;
+            letter-spacing: -.035em;
+            margin: 0
+        }
+
+        .topnav {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .topnav label {
+            font-size: 13px;
+            color: #d8e8d7
+        }
+
+        select {
+            border: 1px solid #c5d5c2;
+            border-radius: 6px;
+            background: white;
+            color: #233c28;
+            padding: 10px 12px;
+            min-height: 43px;
+            max-width: 100%
+        }
+
+        .topnav select {
+            min-width: 190px
+        }
+
+        .demo {
+            font-size: 12px;
+            background: var(--lime);
+            color: #233514;
+            padding: 7px 10px;
+            border-radius: 4px;
+            white-space: nowrap
+        }
+
+        .filters {
+            display: flex;
+            align-items: end;
+            gap: 14px;
+            padding: 23px 0 18px;
+            flex-wrap: wrap
+        }
+
+        .filters label {
+            font-size: 12px;
+            color: var(--muted);
+            display: grid;
+            gap: 5px
+        }
+
+        .filters select {
+            min-width: 170px
+        }
+
+        .filters p {
+            margin: 0 0 10px auto;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0 0 15px;
+            letter-spacing: -.025em
+        }
+
+        p {
+            margin-top: 0
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 23px
+        }
+
+        .kpi {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 18px 19px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .kpi:before {
+            content: "";
+            height: 4px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--green)
+        }
+
+        .kpi:nth-child(2):before {
+            background: #98b53a
+        }
+
+        .kpi:nth-child(3):before {
+            background: var(--red)
+        }
+
+        .kpi:nth-child(4):before {
+            background: var(--mint)
+        }
+
+        .kpi:nth-child(5):before {
+            background: var(--dark)
+        }
+
+        .kpi span {
+            font-size: 13px;
+            color: #425946
+        }
+
+        .kpi strong {
+            display: block;
+            font-size: 35px;
+            line-height: 1.3;
+            letter-spacing: -.045em;
+            margin: 8px 0
+        }
+
+        .kpi small {
+            font-size: 11px;
+            color: var(--muted);
+            display: block
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1.05fr 1.35fr 1fr;
+            gap: 18px;
+            margin-bottom: 22px
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 21px;
+            min-width: 0
+        }
+
+        .sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: -7px;
+            margin-bottom: 18px
+        }
+
+        .donut-wrap {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap
+        }
+
+        .donut {
+            width: 145px;
+            height: 145px;
+            flex: none;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #eff3eb;
+            position: relative
+        }
+
+        .donut:before {
+            content: "";
+            position: absolute;
+            inset: 23px;
+            background: white;
+            border-radius: 50%
+        }
+
+        .donut b {
+            position: relative;
+            font-size: 25px
+        }
+
+        .legend {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            flex: 1;
+            min-width: 100px
+        }
+
+        .legend li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 9px 0
+        }
+
+        .dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 2px;
+            background: var(--green)
+        }
+
+        .legend strong {
+            margin-left: auto
+        }
+
+        .progress-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 27px;
+            gap: 10px;
+            align-items: center;
+            font-size: 12px;
+            margin: 14px 0
+        }
+
+        .track {
+            height: 10px;
+            background: #e8eee5;
+            border-radius: 20px;
+            overflow: hidden
+        }
+
+        .bar {
+            height: 100%;
+            background: var(--green);
+            border-radius: 20px
+        }
+
+        .attention {
+            border-left: 3px solid var(--green);
+            background: #f0f6e9;
+            padding: 12px;
+            margin: 9px 0;
+            font-size: 13px;
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .attention b {
+            font-size: 24px
+        }
+
+        .attention.warn {
+            border-color: var(--red);
+            background: #fbf1ef
+        }
+
+        .attention span {
+            line-height: 1.4
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin: 4px 0 12px
+        }
+
+        .section-head h2 {
+            margin: 0
+        }
+
+        .section-head span {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .rankings {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px
+        }
+
+        .rank {
+            display: grid;
+            grid-template-columns: 20px 1fr 30px;
+            gap: 9px;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 13px
+        }
+
+        .rank small {
+            color: #81937e
+        }
+
+        .rank .track {
+            margin-top: 6px;
+            height: 7px
+        }
+
+        .rank b {
+            text-align: right
+        }
+
+        .rankings .panel:nth-child(2) .bar {
+            background: #b53131
+        }
+
+        .rankings .panel:nth-child(3) .bar {
+            background: #153d26
+        }
+
+        .bottom {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 18px
+        }
+
+        .trend {
+            width: 100%;
+            height: auto;
+            display: block
+        }
+
+        .trend text {
+            font: 12px Arial;
+            fill: #617364
+        }
+
+        .trendline {
+            fill: none;
+            stroke: #25803b;
+            stroke-width: 3
+        }
+
+        .table-wrap {
+            overflow: auto
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px
+        }
+
+        th {
+            text-align: left;
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        td,
+        th {
+            padding: 11px 7px;
+            border-bottom: 1px solid #edf1ea
+        }
+
+        td:last-child,
+        th:last-child {
+            text-align: right
+        }
+
+        .pill {
+            display: inline-block;
+            background: #edf5e8;
+            color: #215731;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px
+        }
+
+        .note {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 15px 0 0
+        }
+
+        .foot {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 23px;
+            padding-top: 17px;
+            border-top: 1px solid var(--line);
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        details {
+            margin-top: 18px;
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        summary {
+            cursor: pointer;
+            color: #335c3c;
+            font-weight: 600
+        }
+
+        details ul {
+            padding-left: 20px
+        }
+
+        .empty {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 20px 0
+        }
+
+        .sr {
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+            width: 1px;
+            height: 1px;
+            overflow: hidden
+        }
+
+        .skip {
+            position: absolute;
+            top: -100px;
+            background: white;
+            padding: 10px;
+            z-index: 2
+        }
+
+        .skip:focus {
+            top: 5px
+        }
+
+        @media(max-width:1150px) {
+            .kpis {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .row {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .row>.panel:last-child {
+                grid-column: 1/-1
+            }
+
+            .attention {
+                display: inline-flex;
+                min-width: 27%;
+                margin-right: 8px
+            }
+
+            .rankings {
+                grid-template-columns: 1fr
+            }
+
+            .rank {
+                margin: 12px 0
+            }
+
+            .donut-wrap {
+                gap: 15px
+            }
+
+            .bottom {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:650px) {
+            .wrap {
+                padding: 14px
+            }
+
+            .top {
+                display: block;
+                padding: 19px
+            }
+
+            .topnav {
+                margin-top: 17px;
+                flex-wrap: wrap
+            }
+
+            .topnav select {
+                min-width: 0;
+                flex: 1
+            }
+
+            .top h1 {
+                font-size: 25px
+            }
+
+            .filters {
+                gap: 10px
+            }
+
+            .filters label {
+                flex: 1
+            }
+
+            .filters select {
+                min-width: 0;
+                width: 100%
+            }
+
+            .filters p {
+                width: 100%;
+                margin: 0
+            }
+
+            .kpis {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px
+            }
+
+            .kpi {
+                padding: 15px
+            }
+
+            .kpi strong {
+                font-size: 29px
+            }
+
+            .row {
+                grid-template-columns: 1fr
+            }
+
+            .attention {
+                display: flex;
+                margin-right: 0
+            }
+
+            .panel {
+                padding: 17px
+            }
+
+            .progress-row {
+                grid-template-columns: 140px 1fr 25px
+            }
+
+            .section-head {
+                align-items: start;
+                flex-direction: column;
+                gap: 4px
+            }
+
+            .foot {
+                flex-direction: column;
+                gap: 5px
+            }
+        }
+
+        @media print {
+
+            .topnav,
+            .filters,
+            details {
+                display: none
+            }
+
+            .wrap {
+                padding: 0
+            }
+
+            .panel,
+            .kpi {
+                break-inside: avoid
+            }
+        }
+
+        /* Cabeçalho alinhado à identidade da página Início. */
+        /* O menu pertence ao contexto do cabeçalho: elevar apenas o menu não basta.
+   Cabeçalho acima do conteúdo; o recorte decorativo fica só em .header-art. */
+        .top {
+            display: block;
+            position: relative;
+            z-index: 1;
+            isolation: isolate;
+            overflow: visible;
+            border-radius: 16px;
+            padding: 0 28px;
+            background: linear-gradient(112deg, #102e1d 0%, #14532d 58%, #287940 100%)
+        }
+
+        #conteudo {
+            position: relative;
+            z-index: 0
+        }
+
+        .header-art {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: inherit;
+            z-index: -1;
+            pointer-events: none;
+            background: repeating-linear-gradient(150deg, transparent 0 90px, #ffffff04 91px 92px)
+        }
+
+        .header-art:after {
+            content: "";
+            position: absolute;
+            width: 460px;
+            height: 460px;
+            border: 1px solid #91c79a33;
+            border-radius: 50%;
+            right: -70px;
+            top: -285px;
+            box-shadow: 0 0 0 45px #ffffff04, 0 0 0 90px #ffffff04, 0 0 0 135px #ffffff03
+        }
+
+        .header-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 84px;
+            border-bottom: 1px solid #ffffff20
+        }
+
+        .brand-home {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .02em
+        }
+
+        .brand-home:hover {
+            text-decoration: none
+        }
+
+        .brand-home small {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .1em;
+            font-weight: 400;
+            color: #c1d6c6
+        }
+
+        .brand-mark {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: white;
+            color: #14532d;
+            position: relative
+        }
+
+        .brand-mark:after {
+            content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #c83232;
+            border: 2px solid #14532d;
+            position: absolute;
+            top: -3px;
+            right: -3px
+        }
+
+        .top-title {
+            padding: 25px 0 29px
+        }
+
+        .top-title .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            letter-spacing: .15em;
+            font-size: 11px;
+            margin-bottom: 8px
+        }
+
+        .top-title .eyebrow:before {
+            content: "";
+            width: 24px;
+            height: 3px;
+            background: #ed6d6d
+        }
+
+        .top h1 {
+            font-size: 34px;
+            line-height: 1.2
+        }
+
+        .top-title p {
+            color: #cde2d1;
+            font-size: 14px;
+            margin: 9px 0 0
+        }
+
+        .topnav {
+            position: relative;
+            margin: 0;
+            flex-wrap: nowrap
+        }
+
+        .demo {
+            background: #ffffff0a;
+            border: 1px solid #ffffff35;
+            color: #e2eee4;
+            border-radius: 20px;
+            font-size: 11px
+        }
+
+        .portal-menu {
+            margin: 0;
+            position: relative;
+            color: #193223;
+            font-size: 14px;
+            z-index: 20
+        }
+
+        .portal-menu summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 44px;
+            padding: 10px 15px;
+            border: 1px solid #ffffff55;
+            border-radius: 10px;
+            background: #ffffff14;
+            color: white;
+            font-size: 14px;
+            list-style: none;
+            user-select: none
+        }
+
+        .portal-menu summary::-webkit-details-marker {
+            display: none
+        }
+
+        .portal-menu summary:hover,
+        .portal-menu[open] summary {
+            background: #ffffff25;
+            border-color: #ffffff99
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex: none
+        }
+
+        .chevron {
+            width: 14px;
+            height: 14px;
+            transition: transform .15s
+        }
+
+        .portal-menu[open] .chevron {
+            transform: rotate(180deg)
+        }
+
+        .portal-panel {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 12px);
+            width: 304px;
+            max-width: calc(100vw - 44px);
+            max-height: 65vh;
+            overflow: auto;
+            background: #fff;
+            border: 1px solid #dce6d8;
+            border-radius: 16px;
+            box-shadow: 0 18px 55px #102e1d30;
+            padding: 9px
+        }
+
+        .portal-caption {
+            padding: 9px 11px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .13em;
+            color: #6b7c6a
+        }
+
+        .portal-panel a {
+            display: flex;
+            gap: 11px;
+            align-items: center;
+            padding: 10px 11px;
+            min-height: 43px;
+            color: #294531;
+            font-size: 14px;
+            border-radius: 9px
+        }
+
+        .portal-panel a:hover {
+            background: #f0f5ec;
+            text-decoration: none
+        }
+
+        .portal-panel a[aria-current=page] {
+            background: #e7f2e1;
+            color: #1f682d;
+            font-weight: 700
+        }
+
+        .portal-panel a[aria-current=page]:after {
+            content: "Atual";
+            font-size: 10px;
+            font-weight: 400;
+            margin-left: auto;
+            border: 1px solid #c6dfbf;
+            border-radius: 12px;
+            padding: 2px 7px
+        }
+
+        .portal-panel .nav-end {
+            border-top: 1px solid #e5ece0;
+            margin-top: 5px;
+            padding-top: 7px
+        }
+
+        .portal-panel .nav-end a {
+            color: #a43030
+        }
+
+        @media(max-width:650px) {
+            .top {
+                padding: 0 19px
+            }
+
+            .header-line {
+                min-height: 80px;
+                gap: 12px;
+                flex-wrap: wrap;
+                padding: 17px 0
+            }
+
+            .brand-home {
+                font-size: 13px
+            }
+
+            .brand-home small {
+                font-size: 9px
+            }
+
+            .topnav {
+                margin: 0;
+                margin-left: auto
+            }
+
+            .topnav .demo {
+                display: none
+            }
+
+            .portal-menu summary {
+                padding: 9px 11px;
+                gap: 8px
+            }
+
+            .top h1 {
+                font-size: 29px
+            }
+
+            .top-title {
+                padding: 22px 0
+            }
+
+            .top-title p {
+                font-size: 13px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .chevron {
+                transition: none
+            }
+        }
+
+        @media print {
+            .portal-panel {
+                display: none
+            }
+        }
+
+        input,
+        textarea,
+        button {
+            font: inherit
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid #c5d5c2;
+            border-radius: 8px;
+            padding: 10px;
+            background: white;
+            color: #193223
+        }
+
+        textarea {
+            min-height: 94px;
+            resize: vertical
+        }
+
+        button {
+            border: 1px solid #c5d5c2;
+            border-radius: 8px;
+            background: white;
+            padding: 10px 14px;
+            color: #254a30;
+            cursor: pointer
+        }
+
+        button:hover {
+            background: #edf6e9
+        }
+
+        button:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        .primary {
+            background: #25803b;
+            color: white;
+            border-color: #25803b
+        }
+
+        .primary:hover {
+            background: #1c642e
+        }
+
+        .top {
+            position: sticky;
+            top: 0;
+            z-index: 10
+        }
+
+        .top-title {
+            padding: 15px 0 19px
+        }
+
+        .top h1 {
+            font-size: 29px
+        }
+
+        .header-line {
+            min-height: 70px
+        }
+
+        .crumb {
+            font-size: 12px;
+            margin: 22px 0 14px
+        }
+
+        .notice {
+            background: #edf5e8;
+            border: 1px solid #cbdcc2;
+            border-left: 4px solid #25803b;
+            padding: 13px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px
+        }
+
+        .danger {
+            background: #fff3ef;
+            border-color: #e4bbb1;
+            border-left-color: #b53131;
+            color: #862f24
+        }
+
+        .filters input {
+            min-height: 43px
+        }
+
+        .filters {
+            padding-top: 4px
+        }
+
+        .kpis {
+            grid-template-columns: repeat(4, minmax(0, 1fr))
+        }
+
+        .workgrid {
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            gap: 20px;
+            align-items: start
+        }
+
+        .demands {
+            padding: 17px
+        }
+
+        .demand-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 10px 0;
+            padding: 15px
+        }
+
+        .demand-btn.selected {
+            border: 2px solid #25803b;
+            background: #f0f7eb
+        }
+
+        .demand-btn strong,
+        .demand-btn small {
+            display: block
+        }
+
+        .demand-btn small {
+            font-size: 12px;
+            color: #617364;
+            margin-top: 7px
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background: #edf5e8;
+            font-size: 11px;
+            white-space: nowrap
+        }
+
+        .badge.PPP {
+            background: #dfee9a;
+            color: #394a12
+        }
+
+        .badge.PcD {
+            background: #c9ead3;
+            color: #154c32
+        }
+
+        .badge.AC {
+            background: #e9efea;
+            color: #304838
+        }
+
+        .detail-head {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 15px
+        }
+
+        .detail-head h2 {
+            font-size: 21px
+        }
+
+        .meta {
+            font-size: 13px;
+            color: #617364;
+            line-height: 1.8
+        }
+
+        .actions {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 16px
+        }
+
+        .actions button {
+            font-size: 12px
+        }
+
+        .sequence {
+            display: flex;
+            gap: 7px;
+            overflow: auto;
+            padding: 5px 0 13px;
+            margin: 10px 0
+        }
+
+        .seq {
+            min-width: 59px;
+            text-align: center;
+            border: 1px solid #dce5d8;
+            border-radius: 9px;
+            padding: 9px 6px;
+            font-size: 12px
+        }
+
+        .seq strong {
+            display: block
+        }
+
+        .seq.used {
+            box-shadow: inset 0 -4px #25803b
+        }
+
+        .seq.next {
+            outline: 2px solid #25803b;
+            outline-offset: -2px
+        }
+
+        .slot {
+            margin-top: 16px;
+            border: 1px solid #dce5d8;
+            border-radius: 10px;
+            padding: 18px;
+            background: #fff
+        }
+
+        .slot-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px
+        }
+
+        .slot h3 {
+            font-size: 16px;
+            margin: 0 0 7px
+        }
+
+        .slot p {
+            font-size: 13px
+        }
+
+        .steps {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin: 15px 0
+        }
+
+        .steps span {
+            background: #f0f3ed;
+            color: #687965;
+            border-radius: 5px;
+            padding: 5px 8px;
+            font-size: 11px
+        }
+
+        .steps .done {
+            background: #d7edd4;
+            color: #215a2d
+        }
+
+        .candidate {
+            background: #f4f8f0;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 12px
+        }
+
+        .candidate strong {
+            font-size: 17px;
+            display: block
+        }
+
+        .audit {
+            font-size: 12px;
+            padding-left: 18px
+        }
+
+        .audit li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6ece0
+        }
+
+        .audit button {
+            padding: 2px 6px;
+            font-size: 11px
+        }
+
+        .lower {
+            margin-top: 22px
+        }
+
+        .rules {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        .rules h3 {
+            font-size: 14px
+        }
+
+        .rules p {
+            font-size: 13px;
+            color: #617364
+        }
+
+        .table-wrap td:last-child {
+            text-align: left
+        }
+
+        .message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            background: #153d26;
+            color: white;
+            padding: 15px 22px;
+            max-width: 90vw;
+            border-radius: 9px;
+            box-shadow: 0 8px 30px #0002
+        }
+
+        dialog {
+            border: 1px solid #dce5d8;
+            border-radius: 16px;
+            width: min(620px, 94vw);
+            max-height: 88vh;
+            padding: 24px;
+            color: #193223
+        }
+
+        dialog::backdrop {
+            background: #102e1d80
+        }
+
+        .dialoghead {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px
+        }
+
+        .dialoghead button {
+            padding: 0 10px;
+            font-size: 22px
+        }
+
+        .dialoghead h2 {
+            font-size: 20px
+        }
+
+        #actionBody label {
+            display: grid;
+            gap: 6px;
+            font-size: 13px;
+            margin: 14px 0
+        }
+
+        #actionBody .check {
+            display: flex;
+            align-items: start
+        }
+
+        #actionBody input[type=checkbox] {
+            width: auto;
+            margin-top: 5px
+        }
+
+        #actionBody select {
+            width: 100%
+        }
+
+        #actionBody p {
+            font-size: 13px
+        }
+
+        #actionBody small {
+            color: #617364
+        }
+
+        summary {
+            padding: 8px 0
+        }
+
+        [hidden] {
+            display: none !important
+        }
+
+        @media(max-width:1000px) {
+            .workgrid {
+                grid-template-columns: 1fr
+            }
+
+            .demands #demandList {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px
+            }
+
+            .demand-btn {
+                margin: 0
+            }
+
+            .rules {
+                grid-template-columns: 1fr;
+                gap: 5px
+            }
+        }
+
+        @media(max-width:650px) {
+            .kpis {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .demands #demandList {
+                grid-template-columns: 1fr
+            }
+
+            .top {
+                position: relative
+            }
+
+            .detail-head {
+                display: block
+            }
+
+            .filters label {
+                min-width: 42%
+            }
+
+            .slot {
+                padding: 13px
+            }
+
+            .panel {
+                padding: 15px
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin: 22px 0
+        }
+
+        .tabs [aria-selected=true] {
+            background: #25803b;
+            color: white
+        }
+
+        .formgrid,
+        .twocol {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px
+        }
+
+        .twocol {
+            grid-template-columns: 1.1fr 1fr
+        }
+
+        .formgrid label,
+        .field {
+            display: grid;
+            gap: 6px;
+            font-size: 13px;
+            margin: 12px 0
+        }
+
+        .formgrid select {
+            width: 100%
+        }
+
+        .check {
+            display: flex;
+            gap: 9px;
+            align-items: start;
+            margin: 18px 0;
+            font-size: 13px
+        }
+
+        .check input {
+            width: auto;
+            margin-top: 5px
+        }
+
+        .errors {
+            color: #a22c24
+        }
+
+        .muted {
+            color: #617364;
+            font-size: 12px
+        }
+
+        td {
+            vertical-align: top
+        }
+
+        td button {
+            padding: 5px 8px;
+            margin: 2px;
+            font-size: 12px
+        }
+
+        #editBody label {
+            display: grid;
+            gap: 5px;
+            margin: 12px 0;
+            font-size: 13px
+        }
+
+        #editBody .wide {
+            grid-column: 1/-1
+        }
+
+        #editBody .formgrid {
+            grid-template-columns: 1fr 1fr
+        }
+
+        #confirmError,
+        #editError {
+            color: #a22c24
+        }
+
+        #confirmationReview {
+            max-height: 32vh;
+            overflow: auto;
+            padding: 10px;
+            background: #f3f7ef
+        }
+
+        details.audit-item {
+            border-bottom: 1px solid #dfe8dc;
+            padding: 7px
+        }
+
+        pre {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-size: 12px
+        }
+
+        .kpis {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        @media(max-width:750px) {
+
+            .formgrid,
+            .twocol {
+                grid-template-columns: 1fr
+            }
+
+            .tabs {
+                flex-wrap: wrap
+            }
+
+            .section-head input {
+                width: 100%
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <div class="shell">
-        <aside class="sidebar" data-nav></aside>
-        <main class="content">
-            <header class="page-header">
-                <div>
-                    <p class="eyebrow">ADMINISTRAÇÃO</p>
-                    <h1>Cadastros e importações</h1>
-                    <p class="muted">Áreas, cargos, listas e demandas são mantidos pelo perfil administrador.</p>
+<body><a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <div class="wrap">
+        <header class="top">
+            <div class="header-art" aria-hidden="true"></div>
+            <div class="header-line"><a class="brand-home" href="inicio.html"><span class="brand-mark"
+                        aria-hidden="true">IF</span><span>CONCURSOS IFBA<small>GESTÃO INSTITUCIONAL</small></span></a>
+                <nav class="topnav" aria-label="Menu principal"><span class="demo">Dados demonstrativos</span>
+                    <details class="portal-menu" id="portal-menu">
+                        <summary aria-controls="portal-links"><svg class="nav-icon" viewBox="0 0 24 24"
+                                aria-hidden="true">
+                                <rect x="3" y="3" width="7" height="7" rx="1" />
+                                <rect x="14" y="3" width="7" height="7" rx="1" />
+                                <rect x="3" y="14" width="7" height="7" rx="1" />
+                                <rect x="14" y="14" width="7" height="7" rx="1" />
+                            </svg>Navegar<svg class="nav-icon chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg></summary>
+                        <div class="portal-panel" id="portal-links">
+                            <div class="portal-caption">Portais do sistema</div><a href="inicio.html"
+                                data-icon="home">Início</a><a href="dashboard.html" data-icon="grid">Painel Geral</a><a
+                                href="docentes.html" data-icon="school">Concurso Docente</a><a href="tae.html"
+                                data-icon="brief">Concurso TAE</a><a href="demandas.html"
+                                data-icon="folder">Demandas</a><a href="convocacoes.html"
+                                data-icon="calendar">Convocações</a><a href="cadastros.html" aria-current="page"
+                                data-icon="users">Cadastros</a><a href="documentacao.html"
+                                data-icon="file">Documentação</a>
+                            <div class="nav-end"><a href="index.html" data-icon="exit">Voltar ao login</a></div>
+                        </div>
+                    </details>
+                </nav>
+            </div>
+            <div class="top-title"><span class="eyebrow">ADMINISTRAÇÃO · CONFERÊNCIA · AUDITORIA</span>
+                <h1>Cadastros e importações</h1>
+                <p>Organize as bases, confira as listas e preserve o histórico de cada alteração.</p>
+            </div>
+        </header>
+        <main id="conteudo">
+            <p class="crumb"><a href="inicio.html">Início</a> / Cadastros e importações</p>
+            <div class="notice"><b>Protótipo local · perfil Administrador demonstrativo</b><br>Utilize apenas dados
+                fictícios. Esta página mantém sua própria base no navegador; não grava no Supabase nem alimenta as
+                demais telas. A confirmação usa credenciais de demonstração, nunca sua senha institucional.</div>
+            <div class="tabs" role="tablist" aria-label="Cadastros"><button id="tab-candidates" role="tab"
+                    aria-selected="true" aria-controls="pane-candidates">Candidatos e importações</button><button
+                    id="tab-catalogs" role="tab" aria-selected="false" aria-controls="pane-catalogs"
+                    tabindex="-1">Cadastros do sistema</button></div>
+            <section id="pane-candidates" role="tabpanel" aria-labelledby="tab-candidates">
+                <div class="kpis" id="stats"></div>
+                <section class="panel">
+                    <h2>1. Selecione a lista de destino</h2>
+                    <div class="formgrid"><label>Concurso<select id="contest"></select></label><label>Cargo<select
+                                id="job"></select></label><label>Área<select id="area"></select></label></div>
+                    <p class="meta">Importação inicial por concurso, cargo e área. AC considera a classificação geral;
+                        PP e PcD usam as classificações específicas. Um candidato pode integrar mais de uma lista.</p>
+                </section>
+                <div class="twocol lower">
+                    <section class="panel">
+                        <h2>2. Importar a lista inicial</h2>
+                        <p class="meta">CSV UTF-8, separado por ponto e vírgula ou vírgula. Máximo: 2 MB e 2.000
+                            candidatos. Não é permitido sobrescrever uma lista já cadastrada.</p>
+                        <div class="actions"><button id="model">Baixar modelo CSV</button></div><label
+                            class="field">Arquivo CSV<input type="file" id="csv" accept=".csv,text/csv"></label><button
+                            id="analyze" class="primary">Validar e visualizar</button>
+                        <p id="csvStatus" class="meta" role="status"></p>
+                    </section>
+                    <section class="panel">
+                        <h2>Manutenção de candidatos</h2>
+                        <p>Correção cadastral e atualização alteram somente nome, e-mail e contato. CPF, nota,
+                            classificação, cotas e lista permanecem protegidos.</p>
+                        <p class="meta">Inclusão excepcional, alteração de classificação ou eliminação exigem decisão
+                            judicial. Alteração e eliminação somente para candidato identificado como sub judice.</p>
+                        <button id="judicialNew">Incluir candidato sub judice</button>
+                        <p class="meta lower">Última importação neste recorte:</p>
+                        <div id="lastImport"></div>
+                    </section>
                 </div>
-            </header>
-            <section class="grid-two">
-                <article class="panel" id="importar">
-                    <h2>Importar lista oficial</h2>
-                    <p class="muted">Envie Excel ou CSV para validação antes da gravação.</p><label
-                        class="upload">Selecionar arquivo<input type="file" accept=".xlsx,.xls,.csv" hidden></label>
-                    <p class="small">Colunas esperadas: nome, CPF, e-mail, área/cargo, modalidade, classificação geral e
-                        por cota.</p>
-                </article>
-                <article class="panel">
-                    <h2>Novo candidato</h2>
-                    <form class="form-grid"><label>Concurso<select>
-                                <option>Docente</option>
-                                <option>TAE</option>
-                            </select></label><label>Área/cargo<input
-                                placeholder="Ex.: Informática"></label><label>Nome<input></label><label>CPF<input
-                                placeholder="000.000.000-00"></label><label>Modalidade<select>
-                                <option>AC</option>
-                                <option>PP</option>
-                                <option>PcD</option>
-                            </select></label><label>Class. geral<input type="number"></label><button
-                            class="button primary" type="button" data-save>Salvar candidato</button></form>
-                </article>
+                <section id="previewPanel" class="panel lower" hidden>
+                    <h2>3. Confira a prévia da importação</h2>
+                    <p id="previewInfo"></p>
+                    <div id="previewTable" class="table-wrap"></div>
+                    <div class="actions"><button id="prevRows">Anterior</button><span id="pageInfo"></span><button
+                            id="nextRows">Próxima</button></div><label class="check"><input type="checkbox"
+                            id="reviewImport">Conferi a lista de destino, os dados e as classificações
+                        apresentados.</label><button id="confirmImport" class="primary">Prosseguir para a segunda
+                        confirmação</button>
+                </section>
+                <section class="panel lower">
+                    <div class="section-head">
+                        <h2>Candidatos cadastrados no recorte</h2><input id="candidateSearch" type="search"
+                            placeholder="Buscar por nome ou CPF" aria-label="Buscar candidato">
+                    </div>
+                    <div id="candidatesTable" class="table-wrap"></div>
+                    <div class="actions"><button id="prevCandidates">Anterior</button><span
+                            id="candidatePage"></span><button id="nextCandidates">Próxima</button></div>
+                </section>
             </section>
-            <section class="panel" id="demanda">
-                <h2>Nova demanda de provimento</h2>
-                <form class="form-grid"><label>Concurso<select>
-                            <option>Docente</option>
-                            <option>TAE</option>
-                        </select></label><label>Área/cargo<input
-                            placeholder="Ex.: Técnico de TI"></label><label>Origem<select>
-                            <option>Vaga nova</option>
-                            <option>Vacância</option>
-                            <option>Aposentadoria</option>
-                            <option>Exoneração</option>
-                            <option>Redistribuição</option>
-                            <option>Outra</option>
-                        </select></label><label>Processo SEI<input placeholder="23278.000000/2026-00"></label><label
-                        class="wide">Campi previstos (selecione um ou mais)<select multiple>
-                            <option>Salvador</option>
-                            <option>Lauro de Freitas</option>
-                            <option>Barreiras</option>
-                            <option>Ilhéus</option>
-                        </select></label><label>Vagas AC<input type="number" min="0" value="0"></label><label>Vagas
-                        PP<input type="number" min="0" value="0"></label><label>Vagas PcD<input type="number" min="0"
-                            value="0"></label><label class="wide">Justificativa<textarea></textarea></label><button
-                        class="button primary" type="button" data-save>Cadastrar demanda</button></form>
+            <section id="pane-catalogs" role="tabpanel" aria-labelledby="tab-catalogs" hidden>
+                <section class="panel">
+                    <h2>Estruturas e parâmetros cadastráveis</h2>
+                    <p class="meta">Registros possuem código estável, nome, descrição e situação. Inativação preserva
+                        referências históricas. Permissões e transições de fluxo não são redefinidas pela edição de um
+                        nome.</p>
+                    <div class="filters"><label>Categoria<select id="category"></select></label><button id="newCatalog"
+                            class="primary">Novo registro</button></div>
+                    <div id="catalogTable" class="table-wrap"></div>
+                </section>
             </section>
+            <section class="panel lower">
+                <h2>Registro das operações</h2>
+                <p class="meta">Histórico local com responsável demonstrativo, data, operação, justificativa,
+                    antes/depois e identificação do arquivo. Senhas não são registradas. A auditoria protegida no
+                    servidor depende da integração.</p>
+                <div id="audit"></div>
+            </section>
+            <div id="message" role="status" aria-live="polite" class="notice lower" hidden></div>
+            <dialog id="editDialog">
+                <form id="editForm">
+                    <h2 id="editTitle"></h2>
+                    <div id="editBody"></div>
+                    <div class="actions"><button type="button" id="cancelEdit">Cancelar</button><button class="primary"
+                            type="submit">Revisar alteração</button></div>
+                    <p id="editError" role="alert"></p>
+                </form>
+            </dialog>
+            <dialog id="confirmDialog">
+                <form id="confirmForm">
+                    <h2>Segunda confirmação</h2>
+                    <div id="confirmationReview"></div><label class="check"><input id="ack" type="checkbox"
+                            required>Revisei a operação e confirmo seu conteúdo.</label>
+                    <div class="notice">Acesso fictício para testar: <b>admin@demo.invalid</b> · senha
+                        <b>DEMONSTRACAO</b>. Não digite sua senha institucional. Esta etapa não autentica no Supabase.
+                    </div><label class="field">Redigite o login de demonstração<input id="loginConfirm" type="email"
+                            required autocomplete="off"></label><label class="field">Redigite a senha de
+                        demonstração<input id="passwordConfirm" type="password" required autocomplete="off"></label>
+                    <p id="confirmError" role="alert"></p>
+                    <div class="actions"><button type="button" id="cancelConfirm">Cancelar</button><button type="submit"
+                            id="commit" class="primary">Confirmar gravação local</button></div>
+                </form>
+            </dialog>
         </main>
+        <footer class="foot">IFBA · Cadastros e integridade das listas <a href="documentacao.html">Documentação</a>
+        </footer>
     </div>
-    <script src="assets/js/app.js"></script>
+    <script>
+        'use strict';
+        const $ = id => document.getElementById(id), esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const assert = (ok, msg) => { if (!ok) throw Error(msg); }, uid = () => crypto.randomUUID();
+        const HEADERS = ['nome', 'cpf', 'email', 'telefone', 'nota', 'classificacao_geral', 'classificacao_pp', 'classificacao_pcd', 'situacao_lista'];
+        const CATEGORIES = { campus: 'Campi', unit: 'Unidades e setores', contest: 'Concursos e editais', job: 'Cargos', area: 'Áreas e subáreas', quota: 'Listas e reservas de vagas', listStatus: 'Situações na lista', demandStatus: 'Situações de demanda', callStatus: 'Situações de convocação/admissão', origin: 'Origens de demanda', modality: 'Modalidades de provimento', priority: 'Graus de prioridade', regime: 'Regimes de trabalho', level: 'Níveis de classificação TAE', document: 'Tipos de documento', committee: 'Comissões e equipes', judicial: 'Situações judiciais', profile: 'Perfis de acesso' };
+        Object.assign(CATEGORIES, { vacancyCode: 'Códigos de vaga', course: 'Cursos atendidos', degree: 'Titulações e requisitos de formação', court: 'Órgãos julgadores', unsupported: 'Motivos de não atendimento pelo concurso' });
+        const PARENTS = { unit: 'campus', job: 'contest', area: 'job', vacancyCode: 'campus', course: 'campus' };
+        const FIXED = ['quota', 'listStatus', 'demandStatus', 'callStatus', 'profile', 'judicial'];
+        const EXTRA_FIELDS = { campus: [['sigla', 'Sigla'], ['municipio', 'Município']], contest: [['edital', 'Número do edital'], ['validade_inicio', 'Início da validade', 'date'], ['validade_fim', 'Fim da validade', 'date'], ['base_legal', 'Referência à legislação da época'], ['ordenamento', 'Referência ao anexo de ordenamento']], job: [['nivel', 'Nível de classificação / carreira']], area: [['titulacao', 'Titulação exigida']], vacancyCode: [['situacao_codigo', 'Situação do código de vaga']], unit: [['contato', 'Contato institucional']], committee: [['ato', 'Ato de designação']], degree: [['requisito', 'Descrição do requisito']] };
+        let state, db, staged = null, pending = null, editing = null, page = 0, cpage = 0, busy = false, fileToken = 0;
+        function seed() {
+            const catalogs = []; const add = (category, names) => names.forEach((name, i) => catalogs.push({ id: category + '-' + i, category, code: category.toUpperCase() + '_' + i, name, description: 'Parâmetro demonstrativo', active: true, system: FIXED.includes(category) }));
+            add('campus', ['Salvador', 'Lauro de Freitas', 'Barreiras']); add('contest', ['Concurso Docente — demonstração', 'Concurso TAE — demonstração']);
+            catalogs[3].type = 'Docente'; catalogs[4].type = 'TAE';
+            add('job', ['Professor EBTT', 'Assistente em Administração']); catalogs[5].parent = 'contest-0'; catalogs[6].parent = 'contest-1';
+            add('area', ['Informática', 'Geral']); catalogs[7].parent = 'job-0'; catalogs[8].parent = 'job-1';
+            add('quota', ['AC', 'PP', 'PcD']); add('listStatus', ['Aprovado no Número de Vagas', 'Lista de Espera']);
+            add('demandStatus', ['Rascunho', 'Enviada pelo campus', 'Em análise técnica', 'Aguardando complementação', 'Priorizada', 'Aprovada', 'Aguardando código de vaga', 'Apta para convocação', 'Convocada', 'Em exercício', 'Atendida por remoção ou redistribuição', 'Atendida por contratação substituta', 'Suspensa', 'Indeferida']);
+            add('callStatus', ['Aguardando convocação', 'Convocado', 'Aceitou a convocação', 'Entregou documentação', 'Realizou perícia', 'Nomeado em Diário Oficial', 'Tomou posse', 'Entrou em exercício', 'Pediu final de fila', 'Desistente']);
+            add('origin', ['Vaga nova', 'Vacância', 'Aposentadoria', 'Exoneração', 'Falecimento', 'Redistribuição', 'Criação ou expansão de curso', 'Aumento de matrícula', 'Afastamento ou licença', 'Reposição administrativa', 'Decisão judicial', 'Acordo judicial ou TAC', 'Determinação de órgão de controle', 'Reserva legal de vagas', 'Outra origem']);
+            add('modality', ['Vaga efetiva', 'Substituto', 'Temporário', 'Redistribuição', 'Remoção', 'Outra']); add('priority', ['Baixa', 'Média', 'Alta', 'Urgente', 'Cumprimento obrigatório']); add('regime', ['20h', '40h', 'Dedicação Exclusiva']); add('level', ['A', 'B', 'C', 'D', 'E']);
+            add('document', ['Solicitação do campus', 'Planejamento de carga horária', 'Vacância', 'Parecer ou despacho', 'Decisão judicial', 'Processo SEI', 'Termo de opção', 'DOU', 'Termo de posse', 'Termo de exercício']);
+            add('judicial', ['Sub judice ativo', 'Eliminado por decisão judicial']); add('profile', ['Administrador', 'Operador', 'Leitor', 'Direção de Ensino']);
+            return { id: 'cadastros', revision: 0, catalogs, candidates: [], logs: [] };
+        }
+        function scope() { return { contest: $('contest').value, job: $('job').value, area: $('area').value }; }
+        function key(s) { return [s.contest, s.job, s.area].join('|'); }
+        function label(id) { return state.catalogs.find(x => x.id === id)?.name || id; }
+        function scopeLabel(s) { return [s.contest, s.job, s.area].map(label).join(' / '); }
+        function validateScope(s, st = state) {
+            const by = id => st.catalogs.find(x => x.id === id && x.active);
+            const a = by(s.area), j = by(s.job), c = by(s.contest);
+            assert(c?.category === 'contest' && j?.category === 'job' && a?.category === 'area' && j.parent === c.id && a.parent === j.id, 'Selecione concurso, cargo e área ativos e vinculados.');
+        }
+        function cpfValid(cpf) {
+            if (!/^\d{11}$/.test(cpf) || /^(\d)\1{10}$/.test(cpf)) return false;
+            for (let n = 9; n <= 10; n++) { let sum = 0; for (let i = 0; i < n; i++)sum += Number(cpf[i]) * (n + 1 - i); let d = (sum * 10) % 11; if (d === 10) d = 0; if (d !== Number(cpf[n])) return false; } return true;
+        }
+        function parseCSV(text) {
+            text = text.replace(/^\uFEFF/, ''); assert(!text.includes('\0'), 'Arquivo contém caracteres inválidos.');
+            const first = text.split(/\r?\n/)[0], delimiter = first.includes(';') ? ';' : ',';
+            const rows = []; let row = [], value = '', quoted = false, closed = false;
+            for (let i = 0; i < text.length; i++) {
+                const ch = text[i];
+                if (quoted) { if (ch === '"') { if (text[i + 1] === '"') { value += '"'; i++; } else { quoted = false; closed = true; } } else value += ch; continue; }
+                if (ch === '"') { assert(!value && !closed, 'Aspas em posição inválida no CSV.'); quoted = true; }
+                else if (ch === delimiter) { row.push(value); value = ''; closed = false; }
+                else if (ch === '\n' || ch === '\r') { if (ch === '\r' && text[i + 1] === '\n') i++; row.push(value); if (row.some(v => v.trim())) rows.push(row); row = []; value = ''; closed = false; }
+                else { assert(!closed, 'Há conteúdo após o fechamento de aspas.'); value += ch; }
+            }
+            assert(!quoted, 'Campo com aspas não fechado.'); row.push(value); if (row.some(v => v.trim())) rows.push(row);
+            assert(rows.length > 1, 'O arquivo não contém candidatos.'); assert(rows.length <= 2001, 'Limite de 2.000 candidatos por arquivo.');
+            const headers = rows.shift().map(x => x.trim().toLowerCase()); assert(headers.length === HEADERS.length && new Set(headers).size === headers.length && HEADERS.every(x => headers.includes(x)), 'Cabeçalho inválido. Utilize o modelo CSV desta página.');
+            return rows.map((r, i) => ({ line: i + 2, data: Object.fromEntries(headers.map((h, j) => [h, (r[j] || '').trim()])), error: r.length !== headers.length ? 'Quantidade de colunas inválida.' : '' }));
+        }
+        function normalize(data) {
+            return { nome: data.nome.trim(), cpf: data.cpf.replace(/[.\-\s]/g, ''), email: data.email.trim(), telefone: data.telefone.trim(), nota: Number(data.nota.replace(',', '.')), classificacao_geral: Number(data.classificacao_geral), classificacao_pp: data.classificacao_pp ? Number(data.classificacao_pp) : null, classificacao_pcd: data.classificacao_pcd ? Number(data.classificacao_pcd) : null, situacao_lista: data.situacao_lista.trim() };
+        }
+        function validateCandidate(c) {
+            const errors = [];
+            if (!c.nome || c.nome.length > 180) errors.push('Nome obrigatório, até 180 caracteres.');
+            if (!cpfValid(c.cpf)) errors.push('CPF inválido.');
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email) || c.email.length > 254) errors.push('E-mail inválido.');
+            if (c.telefone.length > 30) errors.push('Contato muito longo.');
+            if (!Number.isFinite(c.nota) || c.nota < 0) errors.push('Nota inválida.');
+            for (const f of ['classificacao_geral', 'classificacao_pp', 'classificacao_pcd']) if ((f === 'classificacao_geral' || c[f] !== null) && (!Number.isSafeInteger(c[f]) || c[f] < 1)) errors.push('Classificação inválida: ' + f);
+            if (!['Aprovado no Número de Vagas', 'Lista de Espera'].includes(c.situacao_lista)) errors.push('Situação de lista inválida.');
+            return errors;
+        }
+        function conflicts(c, others) {
+            return others.filter(x => key(x.scope) === key(c.scope) && x.id !== c.id).flatMap(x => {
+                const errors = []; if (x.cpf === c.cpf) errors.push('CPF duplicado nesta lista.');
+                for (const f of ['classificacao_geral', 'classificacao_pp', 'classificacao_pcd']) if (c.active !== false && x.active !== false && c[f] !== null && x[f] === c[f]) errors.push('Posição duplicada: ' + f + '.');
+                return errors;
+            });
+        }
+        function notify(t) { $('message').textContent = t; $('message').hidden = false; }
+        function clearStage() { fileToken++; staged = null; $('previewPanel').hidden = true; $('reviewImport').checked = false; }
+        function selectCatalog(id, category, parent) {
+            const previous = $(id).value;
+            $(id).innerHTML = '<option value="">Selecione</option>' + state.catalogs.filter(x => x.category === category && x.active && (!PARENTS[category] || x.parent === parent)).map(x => '<option value="' + esc(x.id) + '">' + esc(x.name) + '</option>').join('');
+            if (Array.from($(id).options).some(x => x.value === previous)) $(id).value = previous;
+        }
+        function refreshScopes() { selectCatalog('contest', 'contest'); selectCatalog('job', 'job', $('contest').value); selectCatalog('area', 'area', $('job').value); }
+        function table(rows, head) { return '<table><thead><tr>' + head.map(x => '<th>' + esc(x) + '</th>').join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody></table>'; }
+        function render() {
+            if (!state) return;
+            const list = state.candidates.filter(x => key(x.scope) === key(scope())), search = $('candidateSearch').value.toLowerCase(), filtered = list.filter(x => (x.nome + ' ' + x.cpf).toLowerCase().includes(search));
+            cpage = Math.min(cpage, Math.max(0, Math.ceil(filtered.length / 25) - 1));
+            $('stats').innerHTML = [['Candidatos no recorte', list.length], ['Sub judice ativos', list.filter(x => x.subjudice && x.active).length], ['Importações concluídas', state.logs.filter(x => x.kind === 'import' && key(x.scope) === key(scope())).length]].map(([n, v]) => '<article class="kpi"><span>' + n + '</span><strong>' + v + '</strong></article>').join('');
+            const last = state.logs.filter(x => x.kind === 'import' && key(x.scope) === key(scope())).at(-1);
+            $('lastImport').textContent = last ? last.actor + ' · ' + new Date(last.at).toLocaleString('pt-BR') + ' · ' + last.filename + ' · ' + last.count + ' candidatos' : 'Nenhuma importação neste recorte.';
+            $('candidatesTable').innerHTML = table(filtered.slice(cpage * 25, (cpage + 1) * 25).map(c => '<tr><td>' + esc(c.nome) + '<br><small>' + esc(c.cpf) + ' · ' + esc(c.email) + '<br>' + esc(c.telefone) + '</small></td><td>' + c.nota + '</td><td>' + c.classificacao_geral + ' / ' + (c.classificacao_pp || '—') + ' / ' + (c.classificacao_pcd || '—') + '</td><td>' + esc(c.active ? (c.subjudice ? 'Sub judice' : 'Ativo') : 'Eliminado sub judice') + '</td><td>' + (c.active ? '<button data-edit="' + c.id + '">Dados cadastrais</button>' + (c.subjudice ? '<button data-judicial="' + c.id + '">Decisão judicial</button>' : '') : 'Histórico preservado') + '</td></tr>'), ['Candidato', 'Nota', 'Classificação AC / PP / PcD', 'Situação', 'Ações']);
+            $('candidatePage').textContent = (cpage + 1) + ' / ' + Math.max(1, Math.ceil(filtered.length / 25)); $('prevCandidates').disabled = cpage === 0; $('nextCandidates').disabled = (cpage + 1) * 25 >= filtered.length;
+            const cat = $('category').value;
+            $('newCatalog').disabled = FIXED.includes(cat);
+            $('catalogTable').innerHTML = table(state.catalogs.filter(x => x.category === cat).map(x => '<tr><td>' + esc(x.code) + '</td><td>' + esc(x.name) + '</td><td>' + esc(x.parent ? label(x.parent) : x.type || '—') + '</td><td>' + esc(x.description || '—') + '</td><td>' + (x.active ? 'Ativo' : 'Inativo') + '</td><td><button data-catalog="' + x.id + '">Editar</button></td></tr>'), ['Código', 'Nome', 'Vínculo / tipo', 'Descrição', 'Situação', 'Ação']) + (FIXED.includes(cat) ? '<p class="meta">Categoria estrutural: somente descrição pode ser alterada nesta tela. Novos estados, listas ou permissões exigem configuração do fluxo.</p>' : '');
+            $('audit').innerHTML = state.logs.slice(-40).reverse().map(l => '<details class="audit-item"><summary>' + esc(new Date(l.at).toLocaleString('pt-BR') + ' · ' + l.title + ' · ' + l.actor) + '</summary><p>' + esc(l.reason || 'Carga inicial CSV') + '</p>' + (l.filename ? '<p>Arquivo: ' + esc(l.filename) + ' · SHA-256: ' + esc(l.hash || '') + '</p>' : '') + (l.proof ? '<button data-proof="' + l.id + '">Baixar decisão judicial</button>' : '') + '<pre>' + esc(JSON.stringify({ processo: l.process, antes: l.before, depois: l.after }, null, 2)) + '</pre></details>').join('') || '<p class="meta">Nenhuma operação registrada.</p>';
+        }
+        async function analyze() {
+            try {
+                assert(db, 'Armazenamento indisponível.'); validateScope(scope()); clearStage(); const token = fileToken;
+                const f = $('csv').files[0]; assert(f && /\.csv$/i.test(f.name) && f.size <= 2 * 1024 * 1024, 'Selecione um CSV com até 2 MB.');
+                const scopeSnapshot = scope(), revision = state.revision;
+                const bytes = await f.arrayBuffer(), text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+                assert(token === fileToken, 'A seleção mudou. Valide novamente.');
+                const parsed = parseCSV(text), seen = [], rows = [];
+                const existing = state.candidates.some(x => key(x.scope) === key(scopeSnapshot));
+                for (const p of parsed) {
+                    const c = { ...normalize(p.data), id: uid(), scope: scopeSnapshot, active: true, subjudice: false };
+                    const errors = [...(p.error ? [p.error] : []), ...validateCandidate(c), ...conflicts(c, seen)];
+                    if (!p.data.nota) errors.push('Nota obrigatória.');
+                    if (existing) errors.push('A lista já possui cadastro. Utilize manutenção, não nova carga inicial.');
+                    seen.push(c); rows.push({ line: p.line, c, errors });
+                }
+                const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))).map(x => x.toString(16).padStart(2, '0')).join('');
+                assert(token === fileToken, 'A seleção mudou. Valide novamente.');
+                staged = { rows, scope: scopeSnapshot, revision, filename: f.name, hash }; page = 0; $('previewPanel').hidden = false; renderPreview();
+            } catch (e) { notify(e.message); }
+        }
+        function renderPreview() {
+            if (!staged) return;
+            const errors = staged.rows.filter(x => x.errors.length).length;
+            $('previewInfo').textContent = scopeLabel(staged.scope) + ' · ' + staged.rows.length + ' candidatos · ' + errors + ' linhas com erro. A gravação será integral; nenhuma linha será ignorada.';
+            $('previewTable').innerHTML = table(staged.rows.slice(page * 25, (page + 1) * 25).map(r => '<tr><td>' + r.line + '</td><td>' + esc(r.c.nome) + '<br>' + esc(r.c.cpf) + '<br>' + esc(r.c.email) + '<br>' + esc(r.c.telefone) + '</td><td>' + esc(r.c.nota) + '</td><td>' + esc(r.c.classificacao_geral) + ' / ' + esc(r.c.classificacao_pp || '—') + ' / ' + esc(r.c.classificacao_pcd || '—') + '</td><td>' + esc(r.c.situacao_lista) + '</td><td class="errors">' + esc(r.errors.join(' ') || 'Validado') + '</td></tr>'), ['Linha', 'Dados do candidato', 'Nota', 'AC / PP / PcD', 'Situação na lista', 'Validação']);
+            $('pageInfo').textContent = (page + 1) + ' / ' + Math.ceil(staged.rows.length / 25); $('prevRows').disabled = page === 0; $('nextRows').disabled = (page + 1) * 25 >= staged.rows.length;
+            $('confirmImport').disabled = errors > 0 || !$('reviewImport').checked;
+        }
+        const input = (id, label, value = '', type = 'text', locked = false) => '<label>' + label + '<input id="' + id + '" type="' + type + '" value="' + esc(value) + '" ' + (locked ? 'readonly' : 'required') + '></label>';
+        function candidateFields(c, judicialNew = false) {
+            const ranks = ['classificacao_geral', 'classificacao_pp', 'classificacao_pcd'];
+            return '<div class="formgrid">' + input('nome', 'Nome', c.nome || '') + input('cpf', 'CPF', c.cpf || '', 'text', !judicialNew) + input('email', 'E-mail', c.email || '', 'email') + input('telefone', 'Contato', c.telefone || '') + input('nota', 'Nota', c.nota ?? '', 'number', !judicialNew) + ranks.map(f => input(f, f, c[f] ?? '', 'number', !judicialNew)).join('') + '<label>Situação na lista<select id="situacao_lista" ' + (!judicialNew ? 'disabled' : '') + '>' + ['Aprovado no Número de Vagas', 'Lista de Espera'].map(x => '<option ' + (x === c.situacao_lista ? 'selected' : '') + '>' + x + '</option>').join('') + '</select></label></div>';
+        }
+        function editCandidate(id = null, judicial = false) {
+            try {
+                validateScope(scope()); const c = id ? state.candidates.find(x => x.id === id) : null;
+                assert(!c || c.active, 'Cadastro eliminado não pode ser alterado.'); assert(!judicial || !c || c.subjudice, 'Alteração judicial nesta tela é exclusiva de candidato sub judice.');
+                editing = { kind: judicial ? (c ? 'judicialEdit' : 'judicialNew') : 'edit', id, revision: state.revision, scope: scope() };
+                $('editTitle').textContent = judicial ? 'Registro de decisão judicial' : 'Alteração de dados cadastrais';
+                $('editBody').innerHTML = judicial ?
+                    '<p>CPF e lista permanecem imutáveis nos registros existentes. Alterações de classificação não renumeram terceiros automaticamente; posições conflitantes serão bloqueadas.</p>' +
+                    (c ? '<label>Operação<select id="judicialAction"><option value="rank">Alterar classificação sub judice</option><option value="eliminate">Eliminar da lista sub judice</option></select></label><p>' + esc(c.nome) + ' · ' + esc(c.cpf) + '</p><div id="rankFields">' + ['classificacao_geral', 'classificacao_pp', 'classificacao_pcd'].map(f => input(f, f, c[f] ?? '', 'number')).join('') + '</div>' : candidateFields({}, true)) +
+                    input('process', 'Número do processo judicial') + input('court', 'Órgão julgador') + input('decisionDate', 'Data da decisão', '', 'date') + '<label>Descrição da determinação<textarea id="reason" required maxlength="5000"></textarea></label><label>Decisão judicial (PDF, até 10 MB)<input id="decision" type="file" accept=".pdf" required></label>' :
+                    candidateFields(c) + '<label>Justificativa<select id="reason"><option>Erro no cadastro original do candidato</option><option>Atualização de cadastro</option></select></label>';
+                for (const f of ['classificacao_pp', 'classificacao_pcd', 'telefone']) if ($(f)) $(f).required = false;
+                if ($('nota')) $('nota').step = 'any';
+                for (const f of ['classificacao_geral', 'classificacao_pp', 'classificacao_pcd']) if ($(f)) { $(f).min = '1'; $(f).step = '1'; }
+                if ($('judicialAction')) $('judicialAction').onchange = () => { $('rankFields').hidden = $('judicialAction').value === 'eliminate'; $('rankFields').querySelectorAll('input').forEach(x => x.disabled = $('rankFields').hidden); };
+                $('editError').textContent = ''; $('editDialog').showModal();
+            } catch (e) { notify(e.message); }
+        }
+        function editCatalog(id = null) {
+            const c = id ? state.catalogs.find(x => x.id === id) : null, category = c?.category || $('category').value;
+            if (!c && FIXED.includes(category)) return;
+            editing = { kind: 'catalog', id, category, revision: state.revision };
+            $('editTitle').textContent = (c ? 'Editar ' : 'Novo registro · ') + CATEGORIES[category];
+            $('editBody').innerHTML = input('code', 'Código estável', c?.code || '', 'text', !!c) + input('name', 'Nome', c?.name || '', 'text', !!c?.system) + '<label>Descrição<textarea id="description" maxlength="1000">' + esc(c?.description || '') + '</textarea></label>' +
+                (PARENTS[category] ? '<label>Vínculo<select id="parent" required ' + (c ? 'disabled' : '') + '><option value="">Selecione</option>' + state.catalogs.filter(x => x.category === PARENTS[category] && (x.active || x.id === c?.parent)).map(x => '<option value="' + x.id + '" ' + (x.id === c?.parent ? 'selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select></label>' : '') +
+                (category === 'contest' ? '<label>Tipo<select id="contestType" ' + (c ? 'disabled' : '') + '><option>Docente</option><option ' + (c?.type === 'TAE' ? 'selected' : '') + '>TAE</option></select></label>' : '') +
+                '<label>Situação<select id="active" ' + (c?.system ? 'disabled' : '') + '><option value="true">Ativo</option><option value="false" ' + (c?.active === false ? 'selected' : '') + '>Inativo</option></select></label>';
+            for (const [id, label, type] of EXTRA_FIELDS[category] || []) { $('editBody').insertAdjacentHTML('beforeend', input('extra_' + id, label, c?.extra?.[id] || '', type || 'text')); $('extra_' + id).required = false; }
+            $('editError').textContent = ''; $('editDialog').showModal();
+        }
+        function openConfirm(operation) {
+            pending = structuredClone(operation); $('confirmForm').reset(); $('confirmError').textContent = '';
+            $('confirmationReview').innerHTML = '<b>' + esc(operation.title) + '</b><p>' + esc(operation.reason || 'Carga inicial CSV') + '</p><p>' + esc(operation.scope ? scopeLabel(operation.scope) : 'Cadastros do sistema') + '</p>' +
+                (operation.kind === 'import' ? '<p>' + operation.rows.length + ' candidatos · ' + esc(operation.filename) + '</p>' : '<pre>' + esc(JSON.stringify({ antes: operation.before, depois: operation.after }, null, 2)) + '</pre>');
+            $('confirmDialog').showModal();
+        }
+        function reviewEdit(e) {
+            e.preventDefault(); if (!$('editForm').reportValidity()) return;
+            try {
+                assert(editing.revision === state.revision, 'Os dados mudaram. Reabra a edição.');
+                const before = editing.id ? structuredClone((editing.kind === 'catalog' ? state.catalogs : state.candidates).find(x => x.id === editing.id)) : null;
+                let after;
+                if (editing.kind === 'catalog') {
+                    after = { ...(before || { id: uid(), category: editing.category }), code: $('code').value.trim(), name: $('name').value.trim(), description: $('description').value.trim(), active: $('active').value === 'true' };
+                    if ($('parent')) after.parent = $('parent').value; if ($('contestType')) after.type = $('contestType').value;
+                    after.extra = Object.fromEntries((EXTRA_FIELDS[editing.category] || []).map(([id]) => [id, $('extra_' + id).value.trim()]));
+                    if (after.extra.validade_inicio && after.extra.validade_fim) assert(after.extra.validade_inicio <= after.extra.validade_fim, 'O fim da validade antecede seu início.');
+                    assert(/^[A-Za-z0-9_-]{1,60}$/.test(after.code) && after.name.length > 0 && after.name.length <= 180, 'Código ou nome inválido.');
+                    assert(!state.catalogs.some(x => x.id !== after.id && x.category === after.category && x.code.toLowerCase() === after.code.toLowerCase()), 'Código já cadastrado nesta categoria.');
+                    assert(after.active || !state.catalogs.some(x => x.parent === after.id && x.active), 'Inative primeiro os registros dependentes ativos.');
+                } else if (editing.kind === 'edit') {
+                    after = { ...before, nome: $('nome').value.trim(), email: $('email').value.trim(), telefone: $('telefone').value.trim() };
+                } else if (editing.kind === 'judicialNew') {
+                    const raw = Object.fromEntries(HEADERS.map(f => [f, $(f).value])); after = { ...normalize(raw), id: uid(), scope: editing.scope, subjudice: true, active: true };
+                } else {
+                    after = { ...before };
+                    if ($('judicialAction').value === 'eliminate') after.active = false;
+                    else for (const f of ['classificacao_geral', 'classificacao_pp', 'classificacao_pcd']) after[f] = $(f).value ? Number($(f).value) : null;
+                }
+                if (editing.kind !== 'catalog') { const errors = validateCandidate(after).concat(conflicts(after, state.candidates)); assert(!errors.length, errors.join(' ')); }
+                const judicial = editing.kind.startsWith('judicial'), proof = judicial ? $('decision').files[0] : null;
+                if (judicial) { assert(proof && /\.pdf$/i.test(proof.name) && proof.size > 0 && proof.size <= 10 * 1024 * 1024, 'Anexe a decisão em PDF com até 10 MB.'); assert($('decisionDate').value <= new Date().toISOString().slice(0, 10), 'Data de decisão futura.'); }
+                const op = { ...editing, before, after, title: editing.kind === 'catalog' ? 'Manutenção de ' + CATEGORIES[editing.category] : judicial ? (!after.active ? 'Eliminação sub judice' : before ? 'Alteração sub judice' : 'Inclusão sub judice') : 'Atualização cadastral', reason: $('reason')?.value || 'Manutenção de cadastro', proof, process: judicial ? { number: $('process').value, court: $('court').value, date: $('decisionDate').value } : null };
+                $('editDialog').close(); openConfirm(op);
+            } catch (e) { $('editError').textContent = e.message; }
+        }
+        function applyOperation(s, op) {
+            assert(s.revision === op.revision, 'A base mudou. Refaça a revisão antes de gravar.');
+            if (op.kind === 'import') {
+                validateScope(op.scope, s); assert(!s.candidates.some(x => key(x.scope) === key(op.scope)), 'A lista já foi cadastrada.');
+                const added = [];
+                for (const c of op.rows) { assert(key(c.scope) === key(op.scope), 'Lista divergente.'); const errors = validateCandidate(c).concat(conflicts(c, added)); assert(!errors.length, errors.join(' ')); added.push(c); }
+                s.candidates.push(...added);
+            } else if (op.kind === 'catalog') {
+                const index = s.catalogs.findIndex(x => x.id === op.after.id), old = s.catalogs[index];
+                if (old) { for (const f of ['code', 'category', 'parent', 'type']) assert(old[f] === op.after[f], 'Vínculo ou código protegido.'); if (old.system) assert(old.name === op.after.name && old.active === op.after.active, 'Parâmetro estrutural protegido.'); }
+                else assert(!FIXED.includes(op.after.category), 'Categoria estrutural não permite inclusão livre.');
+                if (PARENTS[op.after.category]) assert(s.catalogs.some(x => x.id === op.after.parent && x.category === PARENTS[op.after.category]), 'Vínculo inválido.');
+                if (index < 0) s.catalogs.push(op.after); else s.catalogs[index] = op.after;
+            } else {
+                const index = s.candidates.findIndex(x => x.id === op.after.id), old = s.candidates[index];
+                if (op.kind === 'edit') {
+                    assert(old && old.active, 'Cadastro indisponível.');
+                    const allowed = ['nome', 'email', 'telefone']; for (const f of Object.keys(old)) if (!allowed.includes(f)) assert(JSON.stringify(old[f]) === JSON.stringify(op.after[f]), 'Campo protegido: ' + f);
+                    assert(['Erro no cadastro original do candidato', 'Atualização de cadastro'].includes(op.reason), 'Justificativa inválida.');
+                } else {
+                    assert(op.proof && op.process?.number && op.process?.court && op.process?.date && op.reason, 'Decisão judicial incompleta.');
+                    if (old) { assert(old.subjudice && old.active, 'Candidato não está sub judice ativo.'); for (const f of ['cpf', 'scope', 'nota', 'nome', 'email', 'telefone', 'situacao_lista']) assert(JSON.stringify(old[f]) === JSON.stringify(op.after[f]), 'Campo protegido no fluxo judicial: ' + f); }
+                    else assert(op.kind === 'judicialNew' && op.after.subjudice, 'Inclusão excepcional exige sub judice.');
+                }
+                const errors = validateCandidate(op.after).concat(conflicts(op.after, s.candidates)); assert(!errors.length, errors.join(' '));
+                if (index < 0) s.candidates.push(op.after); else s.candidates[index] = op.after;
+            }
+            s.logs.push({ id: uid(), kind: op.kind, title: op.title, at: new Date().toISOString(), actor: 'admin@demo.invalid (Administrador demonstrativo)', scope: op.scope, reason: op.reason, before: op.before || null, after: op.kind === 'import' ? op.rows : op.after, proof: op.proof || null, process: op.process || null, filename: op.filename || null, hash: op.hash || null, count: op.rows?.length });
+            return s;
+        }
+        async function commit(e) {
+            e.preventDefault(); if (busy || !pending || !$('confirmForm').reportValidity()) return;
+            try {
+                assert($('loginConfirm').value === 'admin@demo.invalid' && $('passwordConfirm').value === 'DEMONSTRACAO', 'Credenciais demonstrativas incorretas. Nenhuma gravação foi realizada.');
+                $('passwordConfirm').value = ''; assert(db, 'Armazenamento indisponível.');
+                const updated = applyOperation(structuredClone(state), pending); busy = true; $('commit').disabled = true; await persist(updated);
+                state = updated; pending = null; $('confirmDialog').close(); clearStage(); refreshScopes(); render(); notify('Operação local concluída. Responsável e alterações registrados no histórico.');
+            } catch (e) { $('passwordConfirm').value = ''; $('confirmError').textContent = e.message; }
+            finally { busy = false; $('commit').disabled = false; }
+        }
+        function persist(s) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('data', 'readwrite'), os = tx.objectStore('data'), r = os.get('cadastros'); let stale = false;
+                r.onsuccess = () => { if (r.result && r.result.revision !== s.revision) { stale = true; tx.abort(); return; } s.revision++; os.put(s); };
+                tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); tx.onabort = () => reject(Error(stale ? 'Outra aba alterou a base. Recarregue e revise novamente.' : 'Falha ao salvar. A operação não foi concluída.'));
+            });
+        }
+        async function init() {
+            db = await new Promise((resolve, reject) => { const r = indexedDB.open('ifba-cadastros-demo-v1', 1); r.onupgradeneeded = () => r.result.createObjectStore('data', { keyPath: 'id' }); r.onsuccess = () => resolve(r.result); r.onerror = () => reject(r.error); });
+            state = await new Promise((resolve, reject) => { const r = db.transaction('data').objectStore('data').get('cadastros'); r.onsuccess = () => resolve(r.result || seed()); r.onerror = () => reject(r.error); });
+            await persist(state); $('category').innerHTML = Object.entries(CATEGORIES).map(([k, v]) => '<option value="' + k + '">' + v + '</option>').join(''); refreshScopes(); render();
+        }
+        function activateTab(name) {
+            for (const n of ['candidates', 'catalogs']) { const active = name === n; $('tab-' + n).setAttribute('aria-selected', String(active)); $('tab-' + n).tabIndex = active ? 0 : -1; $('pane-' + n).hidden = !active; }
+        }
+        ['candidates', 'catalogs'].forEach(n => { $('tab-' + n).onclick = () => activateTab(n); $('tab-' + n).onkeydown = e => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) { e.preventDefault(); const target = e.key === 'Home' ? 'candidates' : e.key === 'End' ? 'catalogs' : n === 'candidates' ? 'catalogs' : 'candidates'; activateTab(target); $('tab-' + target).focus(); } }; });
+        ['contest', 'job', 'area'].forEach(id => $(id).onchange = () => { clearStage(); if (id === 'contest') { $('job').value = ''; $('area').value = ''; } if (id === 'job') $('area').value = ''; refreshScopes(); cpage = 0; render(); });
+        $('csv').onchange = clearStage; $('analyze').onclick = analyze; $('reviewImport').onchange = renderPreview;
+        $('prevRows').onclick = () => { page--; renderPreview(); }; $('nextRows').onclick = () => { page++; renderPreview(); };
+        $('prevCandidates').onclick = () => { cpage--; render(); }; $('nextCandidates').onclick = () => { cpage++; render(); }; $('candidateSearch').oninput = () => { cpage = 0; render(); };
+        $('confirmImport').onclick = () => { if (!staged || !$('reviewImport').checked || staged.rows.some(x => x.errors.length)) return; openConfirm({ kind: 'import', title: 'Importação inicial de candidatos', rows: staged.rows.map(x => x.c), scope: staged.scope, revision: staged.revision, filename: staged.filename, hash: staged.hash }); };
+        $('judicialNew').onclick = () => editCandidate(null, true); $('editForm').onsubmit = reviewEdit; $('confirmForm').onsubmit = commit;
+        $('cancelEdit').onclick = () => $('editDialog').close(); $('cancelConfirm').onclick = () => { if (!busy) $('confirmDialog').close(); };
+        $('confirmDialog').addEventListener('cancel', e => { if (busy) e.preventDefault(); }); $('confirmDialog').addEventListener('close', () => { $('passwordConfirm').value = ''; pending = null; });
+        $('category').onchange = render; $('newCatalog').onclick = () => editCatalog();
+        function download(blob, name) { const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
+        $('model').onclick = () => download(new Blob(['\uFEFF' + HEADERS.join(';') + '\r\n'], { type: 'text/csv;charset=utf-8' }), 'modelo-candidatos.csv');
+        document.addEventListener('click', e => {
+            const b = e.target.closest('button'); if (!b || !state) return;
+            if (b.dataset.edit) editCandidate(b.dataset.edit); if (b.dataset.judicial) editCandidate(b.dataset.judicial, true); if (b.dataset.catalog) editCatalog(b.dataset.catalog);
+            if (b.dataset.proof) { const f = state.logs.find(x => x.id === b.dataset.proof)?.proof; if (f) download(f, f.name); }
+        });
+        init().catch(e => notify('Não foi possível abrir o armazenamento local: ' + e.message));
+
+        const portalMenu = $('portal-menu'), portalTrigger = portalMenu.querySelector('summary');
+        const navPaths = { home: 'M3 10 12 3l9 7M5 9v12h14V9M9 21v-7h6v7', grid: 'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z', school: 'M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4', brief: 'M3 7h18v14H3ZM8 7V3h8v4M3 12l9 3 9-3', folder: 'M3 20V5h7l2 3h9v12ZM7 12h10M7 16h7', calendar: 'M4 5h16v16H4ZM8 3v4M16 3v4M4 11h16M8 15h3M8 18h7', users: 'M9 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0M6 21v-3a6 6 0 0 1 12 0v3M3 19v-1a5 5 0 0 1 2-4M21 19v-1a5 5 0 0 0-2-4', file: 'M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6', exit: 'M10 4H4v16h6M10 12h11m-4-4 4 4-4 4' };
+        portalMenu.querySelectorAll('[data-icon]').forEach(link => { link.insertAdjacentHTML('afterbegin', '<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + navPaths[link.dataset.icon] + '"/></svg>'); });
+        // Disclosure nativo: Enter/Espaço abre; Tab percorre links; Escape fecha e devolve foco.
+        document.addEventListener('keydown', event => { if (event.key === 'Escape' && portalMenu.open) { portalMenu.open = false; portalTrigger.focus(); } });
+        document.addEventListener('click', event => { if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false; });
+        document.addEventListener('focusin', event => { if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false; });
+
+        render();
+    </script>
 </body>
 
 </html>
