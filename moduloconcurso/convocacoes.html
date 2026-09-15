@@ -1,6 +1,1825 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Convocações | Concursos IFBA</title><link rel="stylesheet" href="assets/css/style.css"></head><body><div class="shell"><aside class="sidebar" data-nav></aside><main class="content">
-<header class="page-header"><div><p class="eyebrow">FLUXO SEQUENCIAL</p><h1>Convocações e admissões</h1><p class="muted">O próximo elegível é definido automaticamente pela lista.</p></div></header>
-<section class="notice"><b>Próximo candidato elegível — AC</b><span>Ana Beatriz Lima · 1ª posição atual · Docente de Informática</span><button class="button primary operator-action" data-demo="convocacao">Registrar convocação</button></section>
-<section class="panel"><div class="panel-title"><h2>Demanda DM-2026-018</h2><span class="badge amber">3 vagas</span></div><table><thead><tr><th>Candidato</th><th>Lista</th><th>Status atual</th><th>Etapa</th><th>Ação</th></tr></thead><tbody><tr><td>Ana Beatriz Lima</td><td>AC</td><td>Aguardando convocação</td><td>—</td><td><button class="link-button operator-action" data-demo="convocacao">Convocar</button></td></tr><tr><td>João Victor Almeida</td><td>PP</td><td>Entregou documentação</td><td>4 de 7</td><td><button class="link-button operator-action" data-demo="status">Atualizar</button></td></tr><tr><td>Marcela Rios</td><td>AC</td><td>Nomeado em DOU</td><td>5 de 7</td><td><button class="link-button operator-action" data-demo="dou">Registrar DOU</button></td></tr></tbody></table></section>
-<dialog id="actionDialog"><form method="dialog" class="dialog-card"><button class="close" value="cancel">×</button><h2 id="dialogTitle">Registrar movimentação</h2><div id="dialogBody"></div><menu><button class="button secondary" value="cancel">Cancelar</button><button class="button primary" value="default">Salvar</button></menu></form></dialog>
-</main></div><script src="assets/js/app.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Convocações e admissões | IFBA</title>
+    <style>
+        :root {
+            font: 16px/1.5 Arial, Helvetica, sans-serif;
+            color: #193223;
+            background: #f2f7f1;
+            --green: #25803b;
+            --dark: #153d26;
+            --lime: #dfee9a;
+            --mint: #7acb96;
+            --red: #b53131;
+            --line: #dfe8dc;
+            --muted: #617364
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0
+        }
+
+        button,
+        select {
+            font: inherit
+        }
+
+        button,
+        a,
+        select {
+            touch-action: manipulation
+        }
+
+        a {
+            color: var(--green);
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        :focus-visible {
+            outline: 3px solid #b53131;
+            outline-offset: 3px
+        }
+
+        .wrap {
+            max-width: 1480px;
+            margin: auto;
+            padding: 26px 32px
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            background: var(--dark);
+            border-radius: 8px;
+            color: white;
+            padding: 22px 27px
+        }
+
+        .eyebrow {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: #bcd5bd;
+            margin-bottom: 3px
+        }
+
+        .top h1 {
+            font-size: 26px;
+            letter-spacing: -.035em;
+            margin: 0
+        }
+
+        .topnav {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .topnav label {
+            font-size: 13px;
+            color: #d8e8d7
+        }
+
+        select {
+            border: 1px solid #c5d5c2;
+            border-radius: 6px;
+            background: white;
+            color: #233c28;
+            padding: 10px 12px;
+            min-height: 43px;
+            max-width: 100%
+        }
+
+        .topnav select {
+            min-width: 190px
+        }
+
+        .demo {
+            font-size: 12px;
+            background: var(--lime);
+            color: #233514;
+            padding: 7px 10px;
+            border-radius: 4px;
+            white-space: nowrap
+        }
+
+        .filters {
+            display: flex;
+            align-items: end;
+            gap: 14px;
+            padding: 23px 0 18px;
+            flex-wrap: wrap
+        }
+
+        .filters label {
+            font-size: 12px;
+            color: var(--muted);
+            display: grid;
+            gap: 5px
+        }
+
+        .filters select {
+            min-width: 170px
+        }
+
+        .filters p {
+            margin: 0 0 10px auto;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0 0 15px;
+            letter-spacing: -.025em
+        }
+
+        p {
+            margin-top: 0
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 23px
+        }
+
+        .kpi {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 18px 19px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .kpi:before {
+            content: "";
+            height: 4px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--green)
+        }
+
+        .kpi:nth-child(2):before {
+            background: #98b53a
+        }
+
+        .kpi:nth-child(3):before {
+            background: var(--red)
+        }
+
+        .kpi:nth-child(4):before {
+            background: var(--mint)
+        }
+
+        .kpi:nth-child(5):before {
+            background: var(--dark)
+        }
+
+        .kpi span {
+            font-size: 13px;
+            color: #425946
+        }
+
+        .kpi strong {
+            display: block;
+            font-size: 35px;
+            line-height: 1.3;
+            letter-spacing: -.045em;
+            margin: 8px 0
+        }
+
+        .kpi small {
+            font-size: 11px;
+            color: var(--muted);
+            display: block
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1.05fr 1.35fr 1fr;
+            gap: 18px;
+            margin-bottom: 22px
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 21px;
+            min-width: 0
+        }
+
+        .sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: -7px;
+            margin-bottom: 18px
+        }
+
+        .donut-wrap {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap
+        }
+
+        .donut {
+            width: 145px;
+            height: 145px;
+            flex: none;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #eff3eb;
+            position: relative
+        }
+
+        .donut:before {
+            content: "";
+            position: absolute;
+            inset: 23px;
+            background: white;
+            border-radius: 50%
+        }
+
+        .donut b {
+            position: relative;
+            font-size: 25px
+        }
+
+        .legend {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            flex: 1;
+            min-width: 100px
+        }
+
+        .legend li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 9px 0
+        }
+
+        .dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 2px;
+            background: var(--green)
+        }
+
+        .legend strong {
+            margin-left: auto
+        }
+
+        .progress-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 27px;
+            gap: 10px;
+            align-items: center;
+            font-size: 12px;
+            margin: 14px 0
+        }
+
+        .track {
+            height: 10px;
+            background: #e8eee5;
+            border-radius: 20px;
+            overflow: hidden
+        }
+
+        .bar {
+            height: 100%;
+            background: var(--green);
+            border-radius: 20px
+        }
+
+        .attention {
+            border-left: 3px solid var(--green);
+            background: #f0f6e9;
+            padding: 12px;
+            margin: 9px 0;
+            font-size: 13px;
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .attention b {
+            font-size: 24px
+        }
+
+        .attention.warn {
+            border-color: var(--red);
+            background: #fbf1ef
+        }
+
+        .attention span {
+            line-height: 1.4
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin: 4px 0 12px
+        }
+
+        .section-head h2 {
+            margin: 0
+        }
+
+        .section-head span {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .rankings {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px
+        }
+
+        .rank {
+            display: grid;
+            grid-template-columns: 20px 1fr 30px;
+            gap: 9px;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 13px
+        }
+
+        .rank small {
+            color: #81937e
+        }
+
+        .rank .track {
+            margin-top: 6px;
+            height: 7px
+        }
+
+        .rank b {
+            text-align: right
+        }
+
+        .rankings .panel:nth-child(2) .bar {
+            background: #b53131
+        }
+
+        .rankings .panel:nth-child(3) .bar {
+            background: #153d26
+        }
+
+        .bottom {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 18px
+        }
+
+        .trend {
+            width: 100%;
+            height: auto;
+            display: block
+        }
+
+        .trend text {
+            font: 12px Arial;
+            fill: #617364
+        }
+
+        .trendline {
+            fill: none;
+            stroke: #25803b;
+            stroke-width: 3
+        }
+
+        .table-wrap {
+            overflow: auto
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px
+        }
+
+        th {
+            text-align: left;
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        td,
+        th {
+            padding: 11px 7px;
+            border-bottom: 1px solid #edf1ea
+        }
+
+        td:last-child,
+        th:last-child {
+            text-align: right
+        }
+
+        .pill {
+            display: inline-block;
+            background: #edf5e8;
+            color: #215731;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px
+        }
+
+        .note {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 15px 0 0
+        }
+
+        .foot {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 23px;
+            padding-top: 17px;
+            border-top: 1px solid var(--line);
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        details {
+            margin-top: 18px;
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        summary {
+            cursor: pointer;
+            color: #335c3c;
+            font-weight: 600
+        }
+
+        details ul {
+            padding-left: 20px
+        }
+
+        .empty {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 20px 0
+        }
+
+        .sr {
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+            width: 1px;
+            height: 1px;
+            overflow: hidden
+        }
+
+        .skip {
+            position: absolute;
+            top: -100px;
+            background: white;
+            padding: 10px;
+            z-index: 2
+        }
+
+        .skip:focus {
+            top: 5px
+        }
+
+        @media(max-width:1150px) {
+            .kpis {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .row {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .row>.panel:last-child {
+                grid-column: 1/-1
+            }
+
+            .attention {
+                display: inline-flex;
+                min-width: 27%;
+                margin-right: 8px
+            }
+
+            .rankings {
+                grid-template-columns: 1fr
+            }
+
+            .rank {
+                margin: 12px 0
+            }
+
+            .donut-wrap {
+                gap: 15px
+            }
+
+            .bottom {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:650px) {
+            .wrap {
+                padding: 14px
+            }
+
+            .top {
+                display: block;
+                padding: 19px
+            }
+
+            .topnav {
+                margin-top: 17px;
+                flex-wrap: wrap
+            }
+
+            .topnav select {
+                min-width: 0;
+                flex: 1
+            }
+
+            .top h1 {
+                font-size: 25px
+            }
+
+            .filters {
+                gap: 10px
+            }
+
+            .filters label {
+                flex: 1
+            }
+
+            .filters select {
+                min-width: 0;
+                width: 100%
+            }
+
+            .filters p {
+                width: 100%;
+                margin: 0
+            }
+
+            .kpis {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px
+            }
+
+            .kpi {
+                padding: 15px
+            }
+
+            .kpi strong {
+                font-size: 29px
+            }
+
+            .row {
+                grid-template-columns: 1fr
+            }
+
+            .attention {
+                display: flex;
+                margin-right: 0
+            }
+
+            .panel {
+                padding: 17px
+            }
+
+            .progress-row {
+                grid-template-columns: 140px 1fr 25px
+            }
+
+            .section-head {
+                align-items: start;
+                flex-direction: column;
+                gap: 4px
+            }
+
+            .foot {
+                flex-direction: column;
+                gap: 5px
+            }
+        }
+
+        @media print {
+
+            .topnav,
+            .filters,
+            details {
+                display: none
+            }
+
+            .wrap {
+                padding: 0
+            }
+
+            .panel,
+            .kpi {
+                break-inside: avoid
+            }
+        }
+
+        /* Cabeçalho alinhado à identidade da página Início. */
+        /* O menu pertence ao contexto do cabeçalho: elevar apenas o menu não basta.
+   Cabeçalho acima do conteúdo; o recorte decorativo fica só em .header-art. */
+        .top {
+            display: block;
+            position: relative;
+            z-index: 1;
+            isolation: isolate;
+            overflow: visible;
+            border-radius: 16px;
+            padding: 0 28px;
+            background: linear-gradient(112deg, #102e1d 0%, #14532d 58%, #287940 100%)
+        }
+
+        #conteudo {
+            position: relative;
+            z-index: 0
+        }
+
+        .header-art {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: inherit;
+            z-index: -1;
+            pointer-events: none;
+            background: repeating-linear-gradient(150deg, transparent 0 90px, #ffffff04 91px 92px)
+        }
+
+        .header-art:after {
+            content: "";
+            position: absolute;
+            width: 460px;
+            height: 460px;
+            border: 1px solid #91c79a33;
+            border-radius: 50%;
+            right: -70px;
+            top: -285px;
+            box-shadow: 0 0 0 45px #ffffff04, 0 0 0 90px #ffffff04, 0 0 0 135px #ffffff03
+        }
+
+        .header-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 84px;
+            border-bottom: 1px solid #ffffff20
+        }
+
+        .brand-home {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .02em
+        }
+
+        .brand-home:hover {
+            text-decoration: none
+        }
+
+        .brand-home small {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .1em;
+            font-weight: 400;
+            color: #c1d6c6
+        }
+
+        .brand-mark {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: white;
+            color: #14532d;
+            position: relative
+        }
+
+        .brand-mark:after {
+            content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #c83232;
+            border: 2px solid #14532d;
+            position: absolute;
+            top: -3px;
+            right: -3px
+        }
+
+        .top-title {
+            padding: 25px 0 29px
+        }
+
+        .top-title .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            letter-spacing: .15em;
+            font-size: 11px;
+            margin-bottom: 8px
+        }
+
+        .top-title .eyebrow:before {
+            content: "";
+            width: 24px;
+            height: 3px;
+            background: #ed6d6d
+        }
+
+        .top h1 {
+            font-size: 34px;
+            line-height: 1.2
+        }
+
+        .top-title p {
+            color: #cde2d1;
+            font-size: 14px;
+            margin: 9px 0 0
+        }
+
+        .topnav {
+            position: relative;
+            margin: 0;
+            flex-wrap: nowrap
+        }
+
+        .demo {
+            background: #ffffff0a;
+            border: 1px solid #ffffff35;
+            color: #e2eee4;
+            border-radius: 20px;
+            font-size: 11px
+        }
+
+        .portal-menu {
+            margin: 0;
+            position: relative;
+            color: #193223;
+            font-size: 14px;
+            z-index: 20
+        }
+
+        .portal-menu summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 44px;
+            padding: 10px 15px;
+            border: 1px solid #ffffff55;
+            border-radius: 10px;
+            background: #ffffff14;
+            color: white;
+            font-size: 14px;
+            list-style: none;
+            user-select: none
+        }
+
+        .portal-menu summary::-webkit-details-marker {
+            display: none
+        }
+
+        .portal-menu summary:hover,
+        .portal-menu[open] summary {
+            background: #ffffff25;
+            border-color: #ffffff99
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex: none
+        }
+
+        .chevron {
+            width: 14px;
+            height: 14px;
+            transition: transform .15s
+        }
+
+        .portal-menu[open] .chevron {
+            transform: rotate(180deg)
+        }
+
+        .portal-panel {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 12px);
+            width: 304px;
+            max-width: calc(100vw - 44px);
+            max-height: 65vh;
+            overflow: auto;
+            background: #fff;
+            border: 1px solid #dce6d8;
+            border-radius: 16px;
+            box-shadow: 0 18px 55px #102e1d30;
+            padding: 9px
+        }
+
+        .portal-caption {
+            padding: 9px 11px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .13em;
+            color: #6b7c6a
+        }
+
+        .portal-panel a {
+            display: flex;
+            gap: 11px;
+            align-items: center;
+            padding: 10px 11px;
+            min-height: 43px;
+            color: #294531;
+            font-size: 14px;
+            border-radius: 9px
+        }
+
+        .portal-panel a:hover {
+            background: #f0f5ec;
+            text-decoration: none
+        }
+
+        .portal-panel a[aria-current=page] {
+            background: #e7f2e1;
+            color: #1f682d;
+            font-weight: 700
+        }
+
+        .portal-panel a[aria-current=page]:after {
+            content: "Atual";
+            font-size: 10px;
+            font-weight: 400;
+            margin-left: auto;
+            border: 1px solid #c6dfbf;
+            border-radius: 12px;
+            padding: 2px 7px
+        }
+
+        .portal-panel .nav-end {
+            border-top: 1px solid #e5ece0;
+            margin-top: 5px;
+            padding-top: 7px
+        }
+
+        .portal-panel .nav-end a {
+            color: #a43030
+        }
+
+        @media(max-width:650px) {
+            .top {
+                padding: 0 19px
+            }
+
+            .header-line {
+                min-height: 80px;
+                gap: 12px;
+                flex-wrap: wrap;
+                padding: 17px 0
+            }
+
+            .brand-home {
+                font-size: 13px
+            }
+
+            .brand-home small {
+                font-size: 9px
+            }
+
+            .topnav {
+                margin: 0;
+                margin-left: auto
+            }
+
+            .topnav .demo {
+                display: none
+            }
+
+            .portal-menu summary {
+                padding: 9px 11px;
+                gap: 8px
+            }
+
+            .top h1 {
+                font-size: 29px
+            }
+
+            .top-title {
+                padding: 22px 0
+            }
+
+            .top-title p {
+                font-size: 13px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .chevron {
+                transition: none
+            }
+        }
+
+        @media print {
+            .portal-panel {
+                display: none
+            }
+        }
+
+        input,
+        textarea,
+        button {
+            font: inherit
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid #c5d5c2;
+            border-radius: 8px;
+            padding: 10px;
+            background: white;
+            color: #193223
+        }
+
+        textarea {
+            min-height: 94px;
+            resize: vertical
+        }
+
+        button {
+            border: 1px solid #c5d5c2;
+            border-radius: 8px;
+            background: white;
+            padding: 10px 14px;
+            color: #254a30;
+            cursor: pointer
+        }
+
+        button:hover {
+            background: #edf6e9
+        }
+
+        button:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        .primary {
+            background: #25803b;
+            color: white;
+            border-color: #25803b
+        }
+
+        .primary:hover {
+            background: #1c642e
+        }
+
+        .top {
+            position: sticky;
+            top: 0;
+            z-index: 10
+        }
+
+        .top-title {
+            padding: 15px 0 19px
+        }
+
+        .top h1 {
+            font-size: 29px
+        }
+
+        .header-line {
+            min-height: 70px
+        }
+
+        .crumb {
+            font-size: 12px;
+            margin: 22px 0 14px
+        }
+
+        .notice {
+            background: #edf5e8;
+            border: 1px solid #cbdcc2;
+            border-left: 4px solid #25803b;
+            padding: 13px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px
+        }
+
+        .danger {
+            background: #fff3ef;
+            border-color: #e4bbb1;
+            border-left-color: #b53131;
+            color: #862f24
+        }
+
+        .filters input {
+            min-height: 43px
+        }
+
+        .filters {
+            padding-top: 4px
+        }
+
+        .kpis {
+            grid-template-columns: repeat(4, minmax(0, 1fr))
+        }
+
+        .workgrid {
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            gap: 20px;
+            align-items: start
+        }
+
+        .demands {
+            padding: 17px
+        }
+
+        .demand-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 10px 0;
+            padding: 15px
+        }
+
+        .demand-btn.selected {
+            border: 2px solid #25803b;
+            background: #f0f7eb
+        }
+
+        .demand-btn strong,
+        .demand-btn small {
+            display: block
+        }
+
+        .demand-btn small {
+            font-size: 12px;
+            color: #617364;
+            margin-top: 7px
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background: #edf5e8;
+            font-size: 11px;
+            white-space: nowrap
+        }
+
+        .badge.PPP {
+            background: #dfee9a;
+            color: #394a12
+        }
+
+        .badge.PcD {
+            background: #c9ead3;
+            color: #154c32
+        }
+
+        .badge.AC {
+            background: #e9efea;
+            color: #304838
+        }
+
+        .detail-head {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 15px
+        }
+
+        .detail-head h2 {
+            font-size: 21px
+        }
+
+        .meta {
+            font-size: 13px;
+            color: #617364;
+            line-height: 1.8
+        }
+
+        .actions {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 16px
+        }
+
+        .actions button {
+            font-size: 12px
+        }
+
+        .sequence {
+            display: flex;
+            gap: 7px;
+            overflow: auto;
+            padding: 5px 0 13px;
+            margin: 10px 0
+        }
+
+        .seq {
+            min-width: 59px;
+            text-align: center;
+            border: 1px solid #dce5d8;
+            border-radius: 9px;
+            padding: 9px 6px;
+            font-size: 12px
+        }
+
+        .seq strong {
+            display: block
+        }
+
+        .seq.used {
+            box-shadow: inset 0 -4px #25803b
+        }
+
+        .seq.next {
+            outline: 2px solid #25803b;
+            outline-offset: -2px
+        }
+
+        .slot {
+            margin-top: 16px;
+            border: 1px solid #dce5d8;
+            border-radius: 10px;
+            padding: 18px;
+            background: #fff
+        }
+
+        .slot-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px
+        }
+
+        .slot h3 {
+            font-size: 16px;
+            margin: 0 0 7px
+        }
+
+        .slot p {
+            font-size: 13px
+        }
+
+        .steps {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin: 15px 0
+        }
+
+        .steps span {
+            background: #f0f3ed;
+            color: #687965;
+            border-radius: 5px;
+            padding: 5px 8px;
+            font-size: 11px
+        }
+
+        .steps .done {
+            background: #d7edd4;
+            color: #215a2d
+        }
+
+        .candidate {
+            background: #f4f8f0;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 12px
+        }
+
+        .candidate strong {
+            font-size: 17px;
+            display: block
+        }
+
+        .audit {
+            font-size: 12px;
+            padding-left: 18px
+        }
+
+        .audit li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6ece0
+        }
+
+        .audit button {
+            padding: 2px 6px;
+            font-size: 11px
+        }
+
+        .lower {
+            margin-top: 22px
+        }
+
+        .rules {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        .rules h3 {
+            font-size: 14px
+        }
+
+        .rules p {
+            font-size: 13px;
+            color: #617364
+        }
+
+        .table-wrap td:last-child {
+            text-align: left
+        }
+
+        .message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            background: #153d26;
+            color: white;
+            padding: 15px 22px;
+            max-width: 90vw;
+            border-radius: 9px;
+            box-shadow: 0 8px 30px #0002
+        }
+
+        dialog {
+            border: 1px solid #dce5d8;
+            border-radius: 16px;
+            width: min(620px, 94vw);
+            max-height: 88vh;
+            padding: 24px;
+            color: #193223
+        }
+
+        dialog::backdrop {
+            background: #102e1d80
+        }
+
+        .dialoghead {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px
+        }
+
+        .dialoghead button {
+            padding: 0 10px;
+            font-size: 22px
+        }
+
+        .dialoghead h2 {
+            font-size: 20px
+        }
+
+        #actionBody label {
+            display: grid;
+            gap: 6px;
+            font-size: 13px;
+            margin: 14px 0
+        }
+
+        #actionBody .check {
+            display: flex;
+            align-items: start
+        }
+
+        #actionBody input[type=checkbox] {
+            width: auto;
+            margin-top: 5px
+        }
+
+        #actionBody select {
+            width: 100%
+        }
+
+        #actionBody p {
+            font-size: 13px
+        }
+
+        #actionBody small {
+            color: #617364
+        }
+
+        summary {
+            padding: 8px 0
+        }
+
+        [hidden] {
+            display: none !important
+        }
+
+        @media(max-width:1000px) {
+            .workgrid {
+                grid-template-columns: 1fr
+            }
+
+            .demands #demandList {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px
+            }
+
+            .demand-btn {
+                margin: 0
+            }
+
+            .rules {
+                grid-template-columns: 1fr;
+                gap: 5px
+            }
+        }
+
+        @media(max-width:650px) {
+            .kpis {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .demands #demandList {
+                grid-template-columns: 1fr
+            }
+
+            .top {
+                position: relative
+            }
+
+            .detail-head {
+                display: block
+            }
+
+            .filters label {
+                min-width: 42%
+            }
+
+            .slot {
+                padding: 13px
+            }
+
+            .panel {
+                padding: 15px
+            }
+        }
+    </style>
+</head>
+
+<body><a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <div class="wrap">
+        <header class="top">
+            <div class="header-art" aria-hidden="true"></div>
+            <div class="header-line"><a class="brand-home" href="inicio.html"><span class="brand-mark"
+                        aria-hidden="true">IF</span><span>CONCURSOS IFBA<small>GESTÃO INSTITUCIONAL</small></span></a>
+                <nav class="topnav" aria-label="Menu principal"><span class="demo">Dados demonstrativos</span>
+                    <details class="portal-menu" id="portal-menu">
+                        <summary aria-controls="portal-links"><svg class="nav-icon" viewBox="0 0 24 24"
+                                aria-hidden="true">
+                                <rect x="3" y="3" width="7" height="7" rx="1" />
+                                <rect x="14" y="3" width="7" height="7" rx="1" />
+                                <rect x="3" y="14" width="7" height="7" rx="1" />
+                                <rect x="14" y="14" width="7" height="7" rx="1" />
+                            </svg>Navegar<svg class="nav-icon chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg></summary>
+                        <div class="portal-panel" id="portal-links">
+                            <div class="portal-caption">Portais do sistema</div><a href="inicio.html"
+                                data-icon="home">Início</a><a href="dashboard.html" data-icon="grid">Painel Geral</a><a
+                                href="docentes.html" data-icon="school">Concurso Docente</a><a href="tae.html"
+                                data-icon="brief">Concurso TAE</a><a href="demandas.html"
+                                data-icon="folder">Demandas</a><a href="convocacoes.html" aria-current="page"
+                                data-icon="calendar">Convocações</a><a href="cadastros.html"
+                                data-icon="users">Cadastros</a><a href="documentacao.html"
+                                data-icon="file">Documentação</a>
+                            <div class="nav-end"><a href="index.html" data-icon="exit">Voltar ao login</a></div>
+                        </div>
+                    </details>
+                </nav>
+            </div>
+            <div class="top-title"><span class="eyebrow">PROVIMENTO · ORDEM · RASTREABILIDADE</span>
+                <h1>Convocações e admissões</h1>
+                <p>Da demanda ao exercício: acompanhe a ordem de chamada, a lotação e cada decisão.</p>
+            </div>
+        </header>
+        <main id="conteudo">
+            <p class="crumb"><a href="inicio.html">Início</a> / Convocações e admissões</p>
+            <div class="notice"><b>Ambiente de demonstração</b> · Movimentações e documentos são salvos apenas neste
+                navegador. Nenhuma comunicação, nomeação ou decisão institucional é enviada. Demandas locais aparecem
+                para triagem; a lista oficial e os perfis dependem da integração.</div>
+            <div class="filters"><label>Tipo de demanda<select id="typeFilter">
+                        <option value="">Docente e TAE</option>
+                        <option>Docente</option>
+                        <option>TAE</option>
+                    </select></label><label>Atendimento<select id="supportFilter">
+                        <option value="">Todas as situações</option>
+                        <option value="ready">Em acompanhamento</option>
+                        <option value="blocked">Não suprível pelo concurso</option>
+                    </select></label><label>Buscar demanda, área ou campus<input id="search" type="search"
+                        placeholder="Número, cargo ou campus"></label><label>Perfil de demonstração<select id="role">
+                        <option>Administrador</option>
+                        <option>Operador</option>
+                        <option>Leitor</option>
+                        <option>Direção de Ensino</option>
+                    </select></label></div>
+            <section class="kpis" id="kpis" aria-label="Indicadores do recorte"></section>
+            <div class="workgrid">
+                <section class="panel demands">
+                    <div class="section-head">
+                        <h2>Demandas em acompanhamento</h2><span id="count"></span>
+                    </div>
+                    <div id="demandList"></div>
+                </section>
+                <div id="detail"></div>
+            </div>
+            <section class="panel lower">
+                <h2>Regras de ordenamento e atendimento</h2>
+                <div class="rules">
+                    <div>
+                        <h3>1. Modalidade automática</h3>
+                        <p>A vaga mantém sua posição no anexo. A pessoa aprovada pela AC ocupa AC, mesmo que também
+                            integre lista reservada. Sua convocação bloqueia duplicidade nas demais listas.</p>
+                    </div>
+                    <div>
+                        <h3>2. Recusa e reposição</h3>
+                        <p>Primeira recusa de lotação: termo e final da mesma lista. Segunda recusa: desistência
+                            definitiva. A reposição antes do exercício conserva a modalidade de provimento da vaga, sem
+                            avançar o contador.</p>
+                    </div>
+                    <div>
+                        <h3>3. Vacância formal</h3>
+                        <p>Após a posse, o registro de ato formal de vacância encerra o vínculo e abre nova demanda para
+                            análise. A nova vaga seguirá o próximo ordinal; a chamada anterior permanece no histórico.
+                        </p>
+                    </div>
+                </div>
+                <details>
+                    <summary>Base, limites e decisões de configuração</summary>
+                    <p>Anexo III enviado: página 98 do Edital Docente nº 02/2022; tabela de 1 a 80. A sequência é
+                        reproduzida exatamente, sem extrapolação nem aplicação automática ao concurso TAE. PPP
+                        corresponde a PP nas demais telas.</p>
+                    <p>O arquivo recebido contém somente a tabela. Regras de recusa e reposição são as especificadas
+                        para este projeto e devem ser vinculadas aos respectivos dispositivos do edital completo antes
+                        do uso institucional. O escopo do contador (área/cargo ou outro agrupamento oficial), a validade
+                        e o histórico anterior precisam ser homologados na integração. Nesta simulação, o contador é por
+                        edital e área.</p>
+                    <p>Reversão para AC exige esgotamento da lista, motivação e documento; ausência temporária de
+                        elegível não equivale a esgotamento. Resultado pendente de comissão não elimina nem desvia
+                        automaticamente um candidato.</p>
+                    <p>A conferência de investidura inclui escolaridade/titulação, requisitos gerais, declarações e
+                        inspeção médica oficial. <a href="https://www.planalto.gov.br/ccivil_03/leis/l8112cons.htm"
+                            target="_blank" rel="noopener">Lei nº 8.112/1990, arts. 5º, 10, 13 a 15</a>. Prazos
+                        excepcionais exigem análise própria; não há eliminação automática por decurso de prazo.</p>
+                    <p>Perfis exibidos são simulações de interface. Em produção, autorização, anexos privados,
+                        auditoria, contadores e bloqueio de convocação duplicada deverão ser transacionais no Supabase.
+                    </p>
+                </details>
+            </section>
+            <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+            <dialog id="actionDialog">
+                <form id="actionForm">
+                    <div class="dialoghead">
+                        <h2 id="actionTitle"></h2><button type="button" id="closeDialog" aria-label="Fechar">×</button>
+                    </div>
+                    <div id="actionBody"></div>
+                    <p id="formError" class="notice danger" role="alert" hidden></p>
+                    <div class="actions"><button type="button" id="cancelAction">Cancelar</button><button
+                            class="primary" type="submit" id="confirmAction">Confirmar registro local</button></div>
+                </form>
+            </dialog>
+        </main>
+        <footer class="foot">IFBA · Gestão de concursos e provimento <a href="demandas.html">Consultar demandas</a>
+        </footer>
+    </div>
+    <script>
+        'use strict';
+        const $ = id => document.getElementById(id), escapeHTML = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const esc = escapeHTML, KEY = 'workspace', DB = 'ifba-convocacoes-demo-v2';
+        const PPP = [3, 8, 13, 18, 23, 28, 33, 38, 43, 48, 53, 58, 63, 68, 73, 78], PCD = [5, 21, 41, 61];
+        const ORDER = Array.from({ length: 80 }, (_, i) => PPP.includes(i + 1) ? 'PPP' : PCD.includes(i + 1) ? 'PcD' : 'AC');
+        const STAGES = ['Convocado', 'Aceitou a convocação', 'Entregou documentação', 'Conferências concluídas', 'Nomeado em DOU', 'Tomou posse', 'Entrou em exercício'];
+        const today = () => new Date().toISOString().slice(0, 10), uid = () => crypto.randomUUID(), assert = (ok, msg) => { if (!ok) throw new Error(msg); };
+        let state, db, selected = 'DEMO-DOC', modal = null, busy = false;
+        const canManage = () => ['Administrador', 'Operador'].includes($('role').value), isAdmin = () => $('role').value === 'Administrador';
+        function seed() {
+            const names = ['Pessoa exemplo 01', 'Pessoa exemplo 02', 'Pessoa exemplo 03', 'Pessoa exemplo 04', 'Pessoa exemplo 05', 'Pessoa exemplo 06', 'Pessoa exemplo 07', 'Pessoa exemplo 08', 'Pessoa exemplo 09', 'Pessoa exemplo 10', 'Pessoa exemplo 11', 'Pessoa exemplo 12'];
+            return { id: KEY, revision: 0, next: 1, demands: [{ id: 'DEMO-DOC', number: 'SIM-DOC-001', type: 'Docente', area: 'Informática', campus: 'Salvador / Lauro de Freitas', campi: { Salvador: 2, 'Lauro de Freitas': 1 }, quantity: 3, status: 'Apta para convocação', demo: true, sourceStatus: 'Apta para convocação', history: [] }, { id: 'DEMO-TAE', number: 'SIM-TAE-001', type: 'TAE', area: 'Assistente em Administração', campus: 'Salvador', campi: { Salvador: 1 }, quantity: 1, status: 'Em análise técnica', demo: true, sourceStatus: 'Em análise técnica', history: [] }], candidates: names.map((name, i) => ({ id: 'C' + i, name, score: 95 - i, rank: i + 1, group: i % 4 === 0 ? 'PPP' : i % 4 === 3 ? 'PcD' : 'AC', refusals: 0, status: 'waiting', tail: {} })), slots: [], history: [] };
+        }
+        function queue(s, list) {
+            return s.candidates.filter(c => c.status === 'waiting' && (!c.deferredList || c.deferredList === list) && (list === 'AC' || c.group === list)).sort((a, b) => (a.tail[list] || a.rank) - (b.tail[list] || b.rank) || a.rank - b.rank);
+        }
+        function eligible(s, list, excluded = []) { return queue(s, list).find(c => !excluded.includes(c.id)); }
+        function exhausted(s, list) { return !s.candidates.some(c => (list === 'AC' || c.group === list) && ['waiting', 'active'].includes(c.status)); }
+        function log(s, text, attachment = null) { s.history.push({ id: uid(), at: new Date().toISOString(), text, attachment, actor: $('role').value + ' (simulação)' }); }
+        function demand() { return state.demands.find(d => d.id === selected); }
+        function slotsFor(d) { return state.slots.filter(x => x.demandId === d.id); }
+        function currentCall(slot) { return slot.calls.at(-1); }
+        function capacity(s, d, campus, except = null) {
+            return (d.campi[campus] || 0) - s.slots.filter(x => x.demandId === d.id && x.id !== except && x.status !== 'vacated' && currentCall(x)?.chosenCampus === campus).length;
+        }
+        function canLaunch(d, replacement = false) {
+            if (d.unsupplied) return 'Atendimento suspenso neste concurso: ' + d.unsupplied.reason;
+            if (d.type === 'TAE') return 'Anexo de ordenamento do concurso TAE não vinculado. A tabela Docente não será aplicada.';
+            if (!d.demo) return 'Vinculação à lista oficial, validade e histórico de nomeações pendentes de integração.';
+            if (d.status !== 'Apta para convocação' && d.status !== 'Convocada') return 'A demanda precisa estar apta para convocação.';
+            if (!replacement && state.next > 80) return 'Fim da tabela anexada. É necessário novo ordenamento validado.';
+            return '';
+        }
+        function callInto(s, slot) {
+            const c = eligible(s, slot.list, slot.calls.map(x => x.candidateId));
+            assert(c, 'Não há próximo candidato elegível nesta lista. Verifique pendências ou esgotamento.');
+            c.status = 'active';
+            const rank = queue({ ...s, candidates: s.candidates.map(x => x.id === c.id ? { ...x, status: 'waiting' } : x) }, slot.list).findIndex(x => x.id === c.id) + 1;
+            const originalListRank = s.candidates.filter(x => slot.list === 'AC' || x.group === slot.list).sort((a, b) => a.rank - b.rank).findIndex(x => x.id === c.id) + 1;
+            slot.calls.push({ id: uid(), candidateId: c.id, name: c.name, stage: 0, at: today(), original: c.rank, originalListRank, current: rank, finalQueue: !!c.tail[slot.list], offered: [...slot.offered], initialCampus: slot.initialCampus, events: [] });
+            slot.status = 'active'; log(s, slot.ordinal + 'ª posição · ' + slot.list + ' · ' + c.name + ' convocado(a). Campus inicialmente ofertado: ' + slot.initialCampus + '.');
+        }
+        function reserve(s, d, count, offered, initial) {
+            assert(d.demo && d.type === 'Docente', 'Lista oficial não integrada.');
+            assert(!d.unsupplied, 'Demanda não suprível.');
+            assert(Number.isInteger(count) && count > 0 && count <= d.quantity - s.slots.filter(x => x.demandId === d.id).length, 'Quantidade superior ao saldo da demanda.');
+            assert(s.next + count - 1 <= 80, 'A tabela anexada termina na 80ª posição.');
+            assert(offered.length && offered.includes(initial), 'Informe campi disponíveis e o campus inicial.');
+            assert(offered.every(x => capacity(s, d, x) > 0), 'Há campus sem saldo.');
+            assert(offered.reduce((n, x) => n + capacity(s, d, x), 0) >= count, 'Campi selecionados não têm capacidade para o lote.');
+            for (let i = 0; i < count; i++) {
+                const slot = { id: uid(), demandId: d.id, ordinal: s.next++, originalList: ORDER[s.next - 2], list: ORDER[s.next - 2], offered, initialCampus: initial, status: 'pending', calls: [] };
+                callInto(s, slot); s.slots.push(slot);
+            }
+            d.status = 'Convocada';
+        }
+        function finishCall(s, slot, kind, attachment, reason) {
+            const call = currentCall(slot), c = s.candidates.find(x => x.id === call.candidateId);
+            assert(slot.status === 'active', 'Esta chamada já está encerrada.');
+            if (kind === 'refuse') {
+                assert(call.stage === 0, 'Recusa de lotação deve ocorrer antes do aceite.');
+                c.refusals++; c.status = c.refusals === 1 ? 'waiting' : 'eliminated';
+                if (c.refusals === 1) { c.tail[slot.list] = Math.max(0, ...s.candidates.map(x => x.tail[slot.list] || x.rank)) + 1; c.deferredList = slot.list; }
+                call.outcome = c.refusals === 1 ? 'Final de fila' : 'Desistente — segunda recusa';
+            } else {
+                assert(call.stage < 6, 'Após exercício, utilize vacância formal.');
+                c.status = 'eliminated'; call.outcome = 'Desistente';
+            }
+            call.closedAt = today(); call.events.push({ text: call.outcome + ' · ' + reason, attachment, at: today() }); slot.status = 'replacement';
+            log(s, slot.ordinal + 'ª posição · ' + call.name + ' · ' + call.outcome + '. Reposição permanece ' + slot.list + '. Campus de atribuição: ' + call.initialCampus + '.', attachment);
+        }
+        function formalVacancy(s, slot, attachment, reason) {
+            const call = currentCall(slot);
+            assert(slot.status === 'active' && call.stage >= 5, 'Vacância formal somente após posse.');
+            const d = s.demands.find(x => x.id === slot.demandId), c = s.candidates.find(x => x.id === call.candidateId);
+            c.status = 'vacated'; call.outcome = 'Vacância formal'; slot.status = 'vacated';
+            const id = uid(); s.demands.push({ id, number: 'SIM-VAC-' + id.slice(0, 6).toUpperCase(), type: d.type, area: d.area, campus: call.chosenCampus, campi: { [call.chosenCampus]: 1 }, quantity: 1, status: 'Em análise técnica', sourceStatus: 'Em análise técnica', demo: true, origin: 'Vacância', parentSlot: slot.id, history: [] });
+            log(s, 'Vacância formal de ' + call.name + ' em ' + call.chosenCampus + '. Nova demanda de análise criada; próximo ordinal disponível: ' + s.next + '. ' + reason, attachment);
+        }
+        function badge(list) { return '<span class="badge ' + esc(list) + '">' + esc(list) + '</span>'; }
+        function notify(text) { $('message').textContent = text; $('message').hidden = false; }
+        function render() {
+            if (!state) return;
+            const term = $('search').value.toLocaleLowerCase(), type = $('typeFilter').value, filter = $('supportFilter').value;
+            const ds = state.demands.filter(d => (!type || d.type === type) && (!filter || (filter === 'blocked' ? !!d.unsupplied : !d.unsupplied)) && [d.number, d.area, d.campus].join(' ').toLocaleLowerCase().includes(term));
+            if (!ds.some(d => d.id === selected)) selected = ds[0]?.id || '';
+            const ids = ds.map(x => x.id), ss = state.slots.filter(x => ids.includes(x.demandId));
+            $('kpis').innerHTML = [['Demandas', ds.length], ['Chamadas em andamento', ss.filter(x => x.status === 'active' && currentCall(x).stage < 6).length], ['Reposições pendentes', ss.filter(x => x.status === 'replacement').length], ['Não supríveis', ds.filter(x => x.unsupplied).length]].map(([label, n]) => '<article class="kpi"><span>' + label + '</span><strong>' + n + '</strong></article>').join('');
+            $('count').textContent = ds.length + ' demandas';
+            $('demandList').innerHTML = ds.map(d => '<button class="demand-btn ' + (d.id === selected ? 'selected' : '') + '" data-demand="' + esc(d.id) + '"><small>' + esc(d.number) + ' · ' + esc(d.type) + (d.demo ? ' · exemplo' : ' · local') + '</small><strong>' + esc(d.area) + '</strong><small>' + esc(d.campus) + '</small><small>' + esc(d.unsupplied ? 'Não suprível pelo concurso' : d.status) + '</small></button>').join('') || '<p class="empty">Nenhuma demanda neste recorte.</p>';
+            const d = demand(); if (!d) { $('detail').innerHTML = '<section class="panel">Selecione outro filtro para consultar as demandas.</section>'; return; }
+            const block = canLaunch(d), ssD = slotsFor(d), left = d.quantity - ssD.length;
+            $('detail').innerHTML = '<section class="panel"><div class="detail-head"><div><span class="eyebrow" style="color:#617364">' + esc(d.number) + ' · ' + esc(d.type) + '</span><h2>' + esc(d.area) + '</h2><p class="meta">' + esc(d.campus) + ' · ' + d.quantity + ' vaga(s)<br>Origem: ' + esc(d.origin || 'Expansão (exemplo)') + ' · Situação: ' + esc(d.status) + '</p></div><span class="badge">' + (d.demo ? 'Simulação independente' : 'Demanda cadastrada localmente') + '</span></div>' +
+                '<div class="notice ' + (block ? 'danger' : '') + '">' + esc(block || 'Lista e validade fictícias habilitadas para testar o fluxo. Não representam a validade real do Edital 02/2022.') + '</div>' +
+                (d.type === 'Docente' ? '<h3>Ordenamento · Anexo III / Docente</h3><p class="meta">Contador demonstrativo por edital e área · próximo ordinal: ' + state.next + ' · saldo desta demanda: ' + Math.max(0, left) + '. Reservar uma vaga avança o contador; repor mantém o ordinal.</p><div class="sequence">' + ORDER.slice(Math.max(0, state.next - 3), Math.min(80, state.next + 9)).map((x, i) => { const n = Math.max(0, state.next - 3) + i + 1; return '<div class="seq ' + (n < state.next ? 'used' : n === state.next ? 'next' : '') + '"><strong>' + n + 'ª</strong>' + badge(x) + '</div>'; }).join('') + '</div>' : '') +
+                '<div class="actions"><button class="primary" data-action="batch" ' + (!canManage() || block || left < 1 ? 'disabled' : '') + '>Preparar convocação / lote</button><button data-action="unsupported" ' + (!isAdmin() || d.unsupplied ? 'disabled' : '') + '>Sinalizar não suprível</button>' +
+                (d.unsupplied ? '<button data-action="reopen" ' + (!isAdmin() ? 'disabled' : '') + '>Reavaliar atendimento</button>' : '') +
+                (d.demo && d.parentSlot && d.status === 'Em análise técnica' ? '<button data-action="approve" ' + (!isAdmin() ? 'disabled' : '') + '>Registrar aptidão da nova demanda</button>' : '') + '</div>' +
+                (d.unsupplied ? '<p class="meta">Motivo: ' + esc(d.unsupplied.reason) + ' · ' + esc(d.unsupplied.note) + '</p>' : '') +
+                (ssD.length ? ssD.map(renderSlot).join('') : '<p class="empty">Ainda não há convocações vinculadas a esta demanda.</p>') +
+                (d.demo && d.type === 'Docente' ? renderQueue() : '') +
+                '<details><summary>Histórico e documentos da demanda</summary><ol class="audit">' + state.history.filter(h => h.demandId === d.id).map(h => '<li>' + esc(h.at.replace('T', ' ').slice(0, 19)) + ' · ' + esc(h.actor) + '<br>' + esc(h.text) + (h.attachment ? ' <button data-file="' + esc(h.id) + '">Baixar ' + esc(h.attachment.name) + '</button>' : '') + '</li>').join('') + '</ol></details></section>';
+        }
+        function renderQueue() {
+            return '<details><summary>Consultar ordem atual das listas demonstrativas</summary><div class="table-wrap"><table><thead><tr><th>Lista</th><th>Posição atual</th><th>Pessoa</th><th>Classificação original</th><th>Ordenação</th></tr></thead><tbody>' + ['AC', 'PPP', 'PcD'].flatMap(l => queue(state, l).map((c, i) => '<tr><td>' + badge(l) + '</td><td>' + (i + 1) + 'ª</td><td>' + esc(c.name) + '</td><td>' + c.rank + 'ª geral</td><td>' + (c.tail[l] ? 'Final de fila' : 'Original') + '</td></tr>')).join('') + '</tbody></table></div></details>';
+        }
+        function renderSlot(slot) {
+            const c = currentCall(slot), person = state.candidates.find(x => x.id === c.candidateId), next = eligible(state, slot.list, slot.calls.map(x => x.candidateId)), locked = !!demand().unsupplied;
+            const stage = c.outcome || STAGES[c.stage];
+            let actions = '';
+            const btn = (action, label, admin = false) => '<button data-action="' + action + '" data-slot="' + slot.id + '" ' + (!canManage() || locked || (admin && !isAdmin()) ? 'disabled' : '') + '>' + label + '</button>';
+            if (slot.status === 'replacement') {
+                actions = next ? btn('replace', 'Convocar próximo da mesma lista') : slot.list !== 'AC' && exhausted(state, slot.list) ? btn('reverse', 'Analisar reversão para AC', true) : '';
+            } else if (slot.status === 'active') {
+                const nextActions = ['accept', 'documents', 'checks', 'nominate', 'posse', 'exercise'];
+                if (c.stage < 6) actions += btn(nextActions[c.stage], ['Registrar escolha de campus', 'Receber documentação', 'Conferir requisitos', 'Registrar nomeação no DOU', 'Registrar posse', 'Registrar exercício'][c.stage], c.stage === 3);
+                if (c.stage === 0) actions += btn('refuse', person.refusals ? 'Registrar segunda recusa' : 'Registrar recusa / final de fila');
+                if (c.stage < 6) actions += btn('withdraw', 'Registrar desistência');
+                if (c.stage >= 5) actions += btn('vacancy', 'Registrar vacância formal', true);
+            }
+            return '<article class="slot"><div class="slot-head"><h3>' + slot.ordinal + 'ª posição ' + badge(slot.list) + '</h3><span class="badge">' + esc(slot.status === 'replacement' ? 'Reposição pendente' : slot.status === 'vacated' ? 'Nova demanda gerada' : 'Vaga em atendimento') + '</span></div><p class="meta">Modalidade original: ' + slot.originalList + (slot.originalList !== slot.list ? ' · Reversão documentada para ' + slot.list : '') + '<br>Campi ofertados: ' + esc(c.offered.join(', ')) + '<br>Campus inicialmente ofertado (atribuição da desistência): ' + esc(c.initialCampus) + '</p>' +
+                '<div class="candidate"><strong>' + esc(c.name) + '</strong><span class="meta">Nota ' + person.score + ' · ' + c.original + 'ª geral original · ' + (c.originalListRank || c.original) + 'ª original na modalidade · ' + c.current + 'ª posição na fila elegível da chamada · ' + (c.finalQueue ? 'Final de fila' : 'Ordem original') + '<br>Modalidade de provimento ' + slot.list + ' · Cadastro ' + person.group + (slot.list === 'AC' && person.group !== 'AC' ? ' — não consome reserva' : '') + '<br>' + esc(stage) + (c.chosenCampus ? ' · Campus ' + esc(c.chosenCampus) : '') + '</span></div>' +
+                '<div class="steps">' + STAGES.map((s, i) => '<span class="' + (i <= c.stage ? 'done' : '') + '">' + (i + 1) + '. ' + s + '</span>').join('') + '</div>' +
+                (slot.status === 'replacement' ? '<div class="notice">' + esc(next ? 'Próximo elegível: ' + next.name + ' · mesma posição ' + slot.ordinal + ' / ' + slot.list : exhausted(state, slot.list) ? 'Lista esgotada. É necessária decisão documentada sobre atendimento.' : 'Sem candidato disponível para esta reposição. Há candidato pendente, ativo ou já convocado nesta vaga; não há reversão automática.') + '</div>' : '') +
+                '<div class="actions">' + actions + '</div>' +
+                '<details><summary>Chamadas nesta vaga (' + slot.calls.length + ')</summary><ol class="audit">' + slot.calls.map(x => '<li>' + esc(x.name) + ' · ' + esc(x.outcome || STAGES[x.stage]) + ' · ' + esc(x.at) + '</li>').join('') + '</ol></details></article>';
+        }
+        const field = (id, label, type = 'text', required = true) => '<label>' + label + '<input id="' + id + '" type="' + type + '" ' + (required ? 'required' : '') + '></label>';
+        const select = (id, label, options) => '<label>' + label + '<select id="' + id + '" required><option value="">Selecione</option>' + options.map(x => '<option>' + esc(x) + '</option>').join('') + '</select></label>';
+        const note = () => '<label>Fundamentação / referência ao processo<textarea id="note" required maxlength="5000"></textarea></label>';
+        const file = label => field('proof', label + ' · PDF, até 10 MB', 'file');
+        const check = (id, label) => '<label class="check"><input type="checkbox" id="' + id + '" required>' + label + '</label>';
+        function openAction(action, slotId) {
+            if (busy) return;
+            const d = demand(), slot = state.slots.find(x => x.id === slotId), call = slot && currentCall(slot);
+            modal = { action, slotId, revision: state.revision }; let title = '', body = '';
+            if (action === 'batch') {
+                title = 'Preparar convocação automática';
+                body = '<p>O sistema reserva as próximas posições e escolhe o primeiro elegível de cada lista. Todos os candidatos do lote recebem a relação de campi ofertados; a escolha efetiva respeita a classificação.</p>' + field('amount', 'Quantidade de candidatos', 'number') +
+                    Object.entries(d.campi).map(([c]) => '<label class="check"><input type="checkbox" name="campi" value="' + esc(c) + '" ' + (capacity(state, d, c) < 1 ? 'disabled' : '') + '>' + esc(c) + ' · saldo ' + capacity(state, d, c) + '</label>').join('') +
+                    select('initial', 'Campus inicialmente ofertado ao lote', Object.keys(d.campi)) + '<p class="meta">O campus inicial será preservado para atribuir desistências. A escolha e a nomeação ficam registradas separadamente.</p>' + file('Documento de convocação') + note();
+            } else if (action === 'unsupported') {
+                title = 'Demanda não suprível pelo concurso vigente'; body = select('reason', 'Motivo', ['Concurso inexistente', 'Validade encerrada', 'Área/cargo não contemplado', 'Lista esgotada', 'Modalidade incompatível', 'Impedimento técnico ou jurídico', 'Outro motivo']) + note() + file('Parecer ou documento de suporte') + '<p>A demanda permanece aberta para outra solução. Esta decisão impede novas chamadas enquanto não houver reavaliação.</p>';
+            } else if (action === 'reopen' || action === 'approve') {
+                title = action === 'reopen' ? 'Reavaliar possibilidade de atendimento' : 'Registrar aptidão para nova convocação'; body = note() + file('Parecer de análise') + check('confirm', 'Confirmo a análise técnica, disponibilidade de vaga e possibilidade de provimento nesta simulação.');
+            } else if (action === 'replace') {
+                title = 'Reposição sem avanço do ordenamento'; body = '<p>Posição ' + slot.ordinal + ' · ' + slot.list + '. Próximo: ' + esc(eligible(state, slot.list, slot.calls.map(x => x.candidateId))?.name || 'indisponível') + '. A modalidade de provimento será preservada.</p>' + file('Nova convocação') + note();
+            } else if (action === 'reverse') {
+                title = 'Reversão excepcional para AC'; body = '<p>A modalidade original ' + slot.originalList + ' será preservada no histórico. O destino AC é definido pela regra, sem escolha manual.</p>' + check('confirm', 'Confirmo o esgotamento definitivo da lista, sem pendências ou recursos que mantenham elegibilidade.') + note() + file('Decisão fundamentada de reversão');
+            } else if (action === 'accept') {
+                title = 'Registrar opção de campus'; body = '<p>Registre a opção formal do candidato entre os campi ofertados com saldo. A nomeação confirmará a lotação.</p>' + select('campus', 'Campus escolhido', call.offered.filter(x => capacity(state, d, x, slot.id) > 0)) + file('Termo de opção / aceite');
+            } else if (action === 'refuse') {
+                title = state.candidates.find(x => x.id === call.candidateId).refusals ? 'Segunda recusa — desistência definitiva' : 'Primeira recusa — final de fila'; body = '<p>A recusa será atribuída ao campus inicial ' + esc(call.initialCampus) + '. A reposição permanece na lista ' + slot.list + '.</p>' + note() + file('Termo de opção assinado') + check('confirm', 'Confirmo a manifestação expressa do candidato.');
+            } else if (action === 'withdraw') {
+                title = 'Desistência anterior ao exercício'; body = '<p>A reposição manterá ' + slot.list + ' e a posição ' + slot.ordinal + '. Se houve posse e o fato é uma vacância formal, utilize o registro específico de vacância.</p>' + note() + file('Termo de desistência / ato de regularização') + check('confirm', 'Confirmo que o exercício não foi iniciado e que este evento não é uma vacância formal.');
+            } else if (action === 'documents') {
+                title = 'Recebimento de documentação'; body = file('Dossiê documental ou recibo') + note();
+            } else if (action === 'checks') {
+                title = 'Conferência dos requisitos'; body = check('title', 'Escolaridade e titulação atendem ao cargo/área e ao edital.') + check('general', 'Requisitos gerais de investidura e declarações conferidos.') + check('medical', 'Aptidão atestada em inspeção médica oficial.') +
+                    (slot.list === 'PPP' ? check('quota', 'Resultado favorável da comissão de heteroidentificação registrado.') : slot.list === 'PcD' ? check('quota', 'Enquadramento PcD confirmado por equipe multiprofissional em perícia presencial.') : '<p>Provimento pela AC: não consome vaga reservada.</p>') +
+                    '<p>Resultados pendentes ou desfavoráveis não autorizam este avanço. Não há exclusão automática; registre a decisão competente e eventuais recursos.</p>' + file('Parecer de conferência e referências aos resultados');
+            } else if (action === 'nominate') {
+                title = 'Nomeação no Diário Oficial da União'; body = '<p>Campus definido pela opção: <b>' + esc(call.chosenCampus) + '</b>. O administrador confirma uma única lotação, preservando a escolha formal.</p>' + field('eventDate', 'Data da publicação', 'date') + file('DOU de nomeação') + check('confirm', 'Confirmo a lotação no campus indicado e o ato de nomeação.');
+            } else if (action === 'posse' || action === 'exercise') {
+                title = action === 'posse' ? 'Registrar posse' : 'Registrar entrada em exercício'; body = '<p>Campus: ' + esc(call.chosenCampus) + '</p>' + field('eventDate', 'Data do ato', 'date') + file(action === 'posse' ? 'Termo de posse' : 'Termo de exercício');
+            } else if (action === 'vacancy') {
+                title = 'Vacância formal após a posse'; body = '<p>Será criada nova demanda de ' + esc(d.area) + ' para ' + esc(call.chosenCampus) + ', em análise técnica. A posição ' + slot.ordinal + ' será mantida no histórico e não será reutilizada.</p>' + field('eventDate', 'Data de efeito da vacância', 'date') + note() + file('Ato formal de vacância') + check('confirm', 'Confirmo tratar-se de vacância formal após a posse.');
+            }
+            $('actionTitle').textContent = title; $('actionBody').innerHTML = body; $('formError').hidden = true;
+            if ($('proof')) $('proof').accept = '.pdf';
+            if ($('amount')) { $('amount').min = 1; $('amount').step = 1; $('amount').max = d.quantity - slotsFor(d).length; $('amount').value = 1; }
+            if (action === 'batch') {
+                $('actionBody').insertAdjacentHTML('beforeend', '<div id="batchPreview" class="notice" aria-live="polite"></div>');
+                $('actionBody').onchange = previewBatch;
+                previewBatch();
+            } else $('actionBody').onchange = null;
+            $('actionDialog').showModal();
+        }
+        function previewBatch() {
+            if (!$('batchPreview')) return;
+            try {
+                const proposed = structuredClone(state), d = proposed.demands.find(x => x.id === selected), before = proposed.slots.length;
+                reserve(proposed, d, Number($('amount').value), Array.from(document.querySelectorAll('[name=campi]:checked')).map(x => x.value), $('initial').value);
+                $('batchPreview').innerHTML = '<b>Prévia automática do lote</b>' + proposed.slots.slice(before).map(x => '<p>' + x.ordinal + 'ª posição · ' + badge(x.list) + ' · ' + esc(currentCall(x).name) + '</p>').join('');
+            } catch (e) { $('batchPreview').textContent = 'Prévia: ' + e.message; }
+        }
+        async function saveAction(e) {
+            e.preventDefault(); if (busy || !modal || !$('actionForm').reportValidity()) return;
+            try {
+                assert(canManage(), 'Perfil sem permissão para movimentar convocações.');
+                const a = modal.action;
+                if (['unsupported', 'reopen', 'approve', 'nominate', 'vacancy', 'reverse'].includes(a)) assert(isAdmin(), 'Ação exclusiva do Administrador.');
+                assert(state.revision === modal.revision, 'Dados alterados. Feche e abra a ação novamente.');
+                const proof = $('proof')?.files[0]; assert(proof && /\.pdf$/i.test(proof.name) && proof.size > 0 && proof.size <= 10 * 1024 * 1024, 'Anexe um PDF com até 10 MB.');
+                const s = structuredClone(state), d = s.demands.find(x => x.id === selected), slot = s.slots.find(x => x.id === modal.slotId), call = slot && currentCall(slot), reason = $('note')?.value.trim() || '', eventDate = $('eventDate')?.value;
+                const historyStart = s.history.length;
+                if (['batch', 'replace'].includes(a)) assert(!canLaunch(d, a === 'replace'), 'Demanda impedida de convocação.');
+                if (slot) assert(!d.unsupplied, 'Reavalie o atendimento antes de movimentar esta demanda.');
+                if (eventDate) { assert(eventDate <= today(), 'A data do ato não pode estar no futuro.'); assert(eventDate >= (call.posseDate || call.douDate || call.at), 'A data não pode anteceder o último marco registrado.'); }
+                if (a === 'batch') reserve(s, d, Number($('amount').value), Array.from(document.querySelectorAll('[name=campi]:checked')).map(x => x.value), $('initial').value);
+                else if (a === 'unsupported') {
+                    assert(!s.slots.some(x => x.demandId === d.id && x.status === 'active'), 'Conclua ou regularize as chamadas ativas antes de declarar a demanda não suprível.');
+                    d.unsupplied = { reason: $('reason').value, note: reason, at: today() };
+                } else if (a === 'reopen') delete d.unsupplied;
+                else if (a === 'approve') { assert(d.demo && d.parentSlot, 'Demanda de origem não suportada.'); d.status = 'Apta para convocação'; }
+                else if (a === 'replace') { assert(slot.status === 'replacement', 'Reposição não pendente.'); callInto(s, slot); }
+                else if (a === 'reverse') { assert(slot.status === 'replacement' && slot.list !== 'AC' && exhausted(s, slot.list), 'A lista não está esgotada.'); slot.list = 'AC'; }
+                else if (a === 'refuse' || a === 'withdraw') finishCall(s, slot, a === 'refuse' ? 'refuse' : 'withdraw', proof, reason);
+                else if (a === 'vacancy') { formalVacancy(s, slot, proof, reason); call.vacancyDate = eventDate; }
+                else {
+                    const expected = { accept: 0, documents: 1, checks: 2, nominate: 3, posse: 4, exercise: 5 };
+                    assert(slot.status === 'active' && call.stage === expected[a], 'Transição inválida para a etapa atual.');
+                    if (a === 'accept') {
+                        const campus = $('campus').value;
+                        assert(call.offered.includes(campus) && capacity(s, d, campus, slot.id) > 0, 'Campus não ofertado ou sem saldo.');
+                        assert(!s.slots.some(x => x.demandId === d.id && x.ordinal < slot.ordinal && (x.status === 'replacement' || (x.status === 'active' && currentCall(x).stage === 0))), 'Aguarde a escolha dos candidatos convocados nas posições anteriores.');
+                        call.chosenCampus = campus;
+                    }
+                    if (a === 'nominate') { assert(!s.slots.some(x => x.ordinal < slot.ordinal && x.status !== 'vacated' && (x.status === 'replacement' || currentCall(x).stage < 4)), 'Aguarde a conclusão das nomeações nas posições anteriores.'); assert(call.chosenCampus, 'Campus não definido.'); call.douDate = eventDate; }
+                    if (a === 'posse') call.posseDate = eventDate;
+                    if (a === 'exercise') call.exerciseDate = eventDate;
+                    call.stage++;
+                    if (a === 'exercise') { s.candidates.find(x => x.id === call.candidateId).status = 'exercising'; if (s.slots.filter(x => x.demandId === d.id).length === d.quantity && s.slots.filter(x => x.demandId === d.id).every(x => currentCall(x).stage === 6)) d.status = 'Em exercício'; }
+                    call.events.push({ at: eventDate || today(), text: STAGES[call.stage], attachment: proof });
+                }
+                log(s, $('actionTitle').textContent + (call ? ' · ' + call.name : '') + (eventDate ? ' · Data: ' + eventDate : '') + (reason ? ' · ' + reason : ''), proof);
+                s.history.slice(historyStart).forEach(h => h.demandId = d.id);
+                busy = true; $('confirmAction').disabled = true;
+                await persist(s); state = s; $('actionDialog').close(); modal = null; render(); notify('Registro salvo nesta demonstração.');
+            } catch (err) { $('formError').textContent = err.message; $('formError').hidden = false; }
+            finally { busy = false; $('confirmAction').disabled = false; }
+        }
+        function openDB(name, store) {
+            return new Promise((resolve, reject) => { const r = indexedDB.open(name, 1); r.onupgradeneeded = () => r.result.createObjectStore(store, { keyPath: 'id' }); r.onsuccess = () => resolve(r.result); r.onerror = () => reject(r.error); });
+        }
+        function persist(s) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('state', 'readwrite'), os = tx.objectStore('state'), r = os.get(KEY); let conflict = false;
+                r.onsuccess = () => { if (r.result && r.result.revision !== s.revision) { conflict = true; tx.abort(); return; } s.revision++; os.put(s); };
+                tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); tx.onabort = () => reject(new Error(conflict ? 'Outra aba atualizou os dados. Recarregue a página antes de continuar.' : 'Não foi possível salvar. Os dados anteriores foram preservados.'));
+            });
+        }
+        async function init() {
+            db = await openDB(DB, 'state');
+            state = await new Promise((resolve, reject) => { const r = db.transaction('state').objectStore('state').get(KEY); r.onsuccess = () => resolve(r.result || seed()); r.onerror = () => reject(r.error); });
+            // Demandas reais do protótipo são apenas referenciadas, sem alterar sua base.
+            try {
+                const source = await openDB('ifba-demandas-demo-v1', 'demands');
+                const local = await new Promise((resolve, reject) => { const r = source.transaction('demands').objectStore('demands').getAll(); r.onsuccess = () => resolve(r.result); r.onerror = () => reject(r.error); });
+                source.close();
+                for (const x of local.filter(x => x.status !== 'Rascunho')) {
+                    const existing = state.demands.find(d => d.id === x.id);
+                    const mapped = { id: x.id, number: x.values.number, type: x.values.type, area: x.values.area || x.values.role || 'Área/cargo não informado', campus: x.values.campus, campi: { [x.values.campus]: Number(x.values.quantity) || 1 }, quantity: Number(x.values.quantity) || 1, status: x.status, sourceStatus: x.status, demo: false, origin: x.values.origin };
+                    if (existing) Object.assign(existing, mapped); else state.demands.push(mapped);
+                }
+            } catch { notify('Não foi possível consultar as demandas locais; os exemplos continuam disponíveis.'); }
+            await persist(state); render();
+        }
+        $('actionForm').addEventListener('submit', saveAction);
+        $('closeDialog').onclick = $('cancelAction').onclick = () => { if (!busy) $('actionDialog').close(); };
+        $('actionDialog').addEventListener('cancel', e => { if (busy) e.preventDefault(); });
+        ['typeFilter', 'supportFilter', 'role'].forEach(id => $(id).addEventListener('change', render)); $('search').addEventListener('input', render);
+        document.addEventListener('click', e => {
+            const d = e.target.closest('[data-demand]'), a = e.target.closest('[data-action]'), f = e.target.closest('[data-file]');
+            if (d) { selected = d.dataset.demand; render(); }
+            if (a && !a.disabled) openAction(a.dataset.action, a.dataset.slot);
+            if (f) { const attachment = state.history.find(h => h.id === f.dataset.file)?.attachment; if (attachment) { const url = URL.createObjectURL(attachment), link = document.createElement('a'); link.href = url; link.download = attachment.name; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); } }
+        });
+        init().catch(e => { $('detail').textContent = 'Armazenamento indisponível. Abra pelo servidor local e confira as permissões do navegador.'; notify(e.message); });
+
+        const portalMenu = $('portal-menu'), portalTrigger = portalMenu.querySelector('summary');
+        const navPaths = { home: 'M3 10 12 3l9 7M5 9v12h14V9M9 21v-7h6v7', grid: 'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z', school: 'M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4', brief: 'M3 7h18v14H3ZM8 7V3h8v4M3 12l9 3 9-3', folder: 'M3 20V5h7l2 3h9v12ZM7 12h10M7 16h7', calendar: 'M4 5h16v16H4ZM8 3v4M16 3v4M4 11h16M8 15h3M8 18h7', users: 'M9 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0M6 21v-3a6 6 0 0 1 12 0v3M3 19v-1a5 5 0 0 1 2-4M21 19v-1a5 5 0 0 0-2-4', file: 'M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6', exit: 'M10 4H4v16h6M10 12h11m-4-4 4 4-4 4' };
+        portalMenu.querySelectorAll('[data-icon]').forEach(link => { link.insertAdjacentHTML('afterbegin', '<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + navPaths[link.dataset.icon] + '"/></svg>'); });
+        // Disclosure nativo: Enter/Espaço abre; Tab percorre links; Escape fecha e devolve foco.
+        document.addEventListener('keydown', event => { if (event.key === 'Escape' && portalMenu.open) { portalMenu.open = false; portalTrigger.focus(); } });
+        document.addEventListener('click', event => { if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false; });
+        document.addEventListener('focusin', event => { if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false; });
+
+        render();
+    </script>
+</body>
+
+</html>
