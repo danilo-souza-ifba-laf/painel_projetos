@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+   <meta name="theme-color" content="#153d26">
+   <title>Demandas de vagas | IFBA</title>
+   <style>
+      :root {
+         font: 16px/1.5 Arial, Helvetica, sans-serif;
+         color: #193223;
+         background: #f2f7f1;
+         --green: #25803b;
+         --dark: #153d26;
+         --lime: #dfee9a;
+         --mint: #7acb96;
+         --red: #b53131;
+         --line: #dfe8dc;
+         --muted: #617364;
+         --card-bg: #ffffff;
+      }
+
+      * {
+         box-sizing: border-box
+      }
+
+      body {
+         margin: 0;
+         padding-bottom: 40px;
+      }
+
+      button,
+      select,
+      input {
+         font: inherit
+      }
+
+      button,
+      a,
+      select {
+         touch-action: manipulation
+      }
+
+      a {
+         color: var(--green);
+         text-decoration: none
+      }
+
+      a:hover {
+         text-decoration: underline
+      }
+
+      :focus-visible {
+         outline: 3px solid #b53131;
+         outline-offset: 3px
+      }
+
+      .wrap {
+         max-width: 1480px;
+         margin: auto;
+         padding: 0 32px 26px;
+      }
+
+      /* ------------------------------------
+         CABEÇALHO OFICIAL (IDÊNTICO À PÁGINA)
+         ------------------------------------ */
+      .top {
+         display: block;
+         position: sticky;
+         top: 0;
+         z-index: 20;
+         isolation: isolate;
+         overflow: visible;
+         border-radius: 0 0 16px 16px;
+         padding: 0 28px;
+         background: linear-gradient(112deg, #102e1d 0%, #14532d 58%, #287940 100%);
+         color: white;
+         box-shadow: 0 4px 18px rgba(16, 46, 29, 0.25);
+         margin-bottom: 20px;
+      }
+
+      .header-art {
+         position: absolute;
+         inset: 0;
+         overflow: hidden;
+         border-radius: inherit;
+         z-index: -1;
+         pointer-events: none;
+         background: repeating-linear-gradient(150deg, transparent 0 90px, #ffffff04 91px 92px)
+      }
+
+      .header-art:after {
+         content: "";
+         position: absolute;
+         width: 460px;
+         height: 460px;
+         border: 1px solid #91c79a33;
+         border-radius: 50%;
+         right: -70px;
+         top: -285px;
+         box-shadow: 0 0 0 45px #ffffff04, 0 0 0 90px #ffffff04, 0 0 0 135px #ffffff03
+      }
+
+      .header-line {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 20px;
+         min-height: 66px;
+         border-bottom: 1px solid #ffffff20
+      }
+
+      .brand-home {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         color: white;
+         font-size: 16px;
+         font-weight: 700;
+         letter-spacing: .02em
+      }
+
+      .brand-home:hover {
+         text-decoration: none
+      }
+
+      .brand-home small {
+         display: block;
+         font-size: 11px;
+         letter-spacing: .1em;
+         font-weight: 400;
+         color: #c1d6c6
+      }
+
+      .brand-mark {
+         width: 39px;
+         height: 39px;
+         display: grid;
+         place-items: center;
+         border-radius: 10px;
+         background: white;
+         color: #14532d;
+         position: relative;
+         font-weight: bold;
+      }
+
+      .brand-mark:after {
+         content: "";
+         width: 11px;
+         height: 11px;
+         border-radius: 50%;
+         background: #c83232;
+         border: 2px solid #14532d;
+         position: absolute;
+         top: -3px;
+         right: -3px
+      }
+
+      .top-title {
+         padding: 14px 0 17px
+      }
+
+      .top-title .eyebrow {
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         letter-spacing: .15em;
+         font-size: 11px;
+         margin-bottom: 8px;
+         text-transform: uppercase;
+         color: #bcd5bd;
+      }
+
+      .top-title .eyebrow:before {
+         content: "";
+         width: 24px;
+         height: 3px;
+         background: #ed6d6d
+      }
+
+      .top h1 {
+         font-size: 27px;
+         line-height: 1.2;
+         margin: 0;
+         letter-spacing: -.035em;
+      }
+
+      .top-title p {
+         color: #cde2d1;
+         font-size: 14px;
+         margin: 5px 0 0
+      }
+
+      .topnav {
+         position: relative;
+         margin: 0;
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         flex-wrap: nowrap
+      }
+
+      .demo {
+         background: #ffffff0a;
+         border: 1px solid #ffffff35;
+         color: #e2eee4;
+         border-radius: 20px;
+         font-size: 11px;
+         padding: 7px 12px;
+         white-space: nowrap;
+      }
+
+      .portal-menu {
+         margin: 0;
+         position: relative;
+         color: #193223;
+         font-size: 14px;
+         z-index: 20
+      }
+
+      .portal-menu summary {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 12px;
+         min-height: 44px;
+         padding: 10px 15px;
+         border: 1px solid #ffffff55;
+         border-radius: 10px;
+         background: #ffffff14;
+         color: white;
+         font-size: 14px;
+         list-style: none;
+         cursor: pointer;
+         user-select: none
+      }
+
+      .portal-menu summary::-webkit-details-marker {
+         display: none
+      }
+
+      .portal-menu summary:hover,
+      .portal-menu[open] summary {
+         background: #ffffff25;
+         border-color: #ffffff99
+      }
+
+      .nav-icon {
+         width: 18px;
+         height: 18px;
+         fill: none;
+         stroke: currentColor;
+         stroke-width: 1.7;
+         stroke-linecap: round;
+         stroke-linejoin: round;
+         flex: none
+      }
+
+      .chevron {
+         width: 14px;
+         height: 14px;
+         transition: transform .15s
+      }
+
+      .portal-menu[open] .chevron {
+         transform: rotate(180deg)
+      }
+
+      .portal-panel {
+         position: absolute;
+         right: 0;
+         top: calc(100% + 12px);
+         width: 304px;
+         max-width: calc(100vw - 44px);
+         max-height: 65vh;
+         overflow: auto;
+         background: #fff;
+         border: 1px solid #dce6d8;
+         border-radius: 16px;
+         box-shadow: 0 18px 55px #102e1d30;
+         padding: 9px
+      }
+
+      .portal-caption {
+         padding: 9px 11px 10px;
+         font-size: 11px;
+         text-transform: uppercase;
+         letter-spacing: .13em;
+         color: #6b7c6a
+      }
+
+      .portal-panel a {
+         display: flex;
+         gap: 11px;
+         align-items: center;
+         padding: 10px 11px;
+         min-height: 43px;
+         color: #294531;
+         font-size: 14px;
+         border-radius: 9px
+      }
+
+      .portal-panel a:hover {
+         background: #f0f5ec;
+         text-decoration: none
+      }
+
+      .portal-panel a[aria-current=page] {
+         background: #e7f2e1;
+         color: #1f682d;
+         font-weight: 700
+      }
+
+      .portal-panel a[aria-current=page]:after {
+         content: "Atual";
+         font-size: 10px;
+         font-weight: 400;
+         margin-left: auto;
+         border: 1px solid #c6dfbf;
+         border-radius: 12px;
+         padding: 2px 7px
+      }
+
+      .portal-panel .nav-end {
+         border-top: 1px solid #e5ece0;
+         margin-top: 5px;
+         padding-top: 7px
+      }
+
+      .portal-panel .nav-end a {
+         color: #a43030
+      }
+
+      /* ------------------------------------
+         AVISOS TÉCNICOS E INFRAESTRUTURA
+         ------------------------------------ */
+      .notices-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+         gap: 14px;
+         margin-bottom: 22px;
+      }
+
+      .notice-card {
+         background: #fdf2f2;
+         border: 1px solid #f8b4b4;
+         border-left: 4px solid var(--red);
+         border-radius: 8px;
+         padding: 12px 16px;
+         font-size: 13px;
+         color: #7f1d1d;
+      }
+
+      .notice-card.warning {
+         background: #fffbeb;
+         border-color: #fde68a;
+         border-left-color: #d97706;
+         color: #92400e;
+      }
+
+      .notice-card.info {
+         background: #edf6e7;
+         border-color: #c6dfbf;
+         border-left-color: var(--green);
+         color: #153d26;
+      }
+
+      .notice-card strong {
+         display: block;
+         margin-bottom: 3px;
+      }
+
+      /* ------------------------------------
+         PAINEL INTERATIVO & SIMULADOR
+         ------------------------------------ */
+      .dashboard-layout {
+         display: grid;
+         grid-template-columns: 320px 1fr;
+         gap: 20px;
+      }
+
+      @media (max-width: 980px) {
+         .dashboard-layout {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      .panel {
+         background: var(--card-bg);
+         border: 1px solid var(--line);
+         border-radius: 12px;
+         padding: 22px;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      }
+
+      .panel h3 {
+         font-size: 17px;
+         color: var(--dark);
+         margin: 0 0 12px;
+         padding-bottom: 8px;
+         border-bottom: 2px solid #eef4e7;
+      }
+
+      .field-group {
+         margin-bottom: 16px;
+      }
+
+      .field-group label {
+         display: block;
+         font-size: 13px;
+         font-weight: 600;
+         color: var(--muted);
+         margin-bottom: 6px;
+      }
+
+      select, input[type="text"] {
+         width: 100%;
+         padding: 10px 12px;
+         border: 1px solid #c5d5c2;
+         border-radius: 8px;
+         background: #ffffff;
+         color: #193223;
+         min-height: 43px;
+      }
+
+      .btn {
+         border: 1px solid #c6d7c1;
+         border-radius: 8px;
+         padding: 10px 16px;
+         min-height: 43px;
+         background: white;
+         color: #245b30;
+         font-weight: 600;
+         cursor: pointer;
+         font-size: 14px;
+         width: 100%;
+         transition: all 0.15s ease;
+      }
+
+      .btn.primary {
+         background: var(--green);
+         border-color: var(--green);
+         color: white;
+      }
+
+      .btn.primary:hover:not(:disabled) {
+         background: var(--dark);
+      }
+
+      .btn:disabled {
+         opacity: 0.55;
+         cursor: not-allowed;
+      }
+
+      /* Card da Demanda Ativa */
+      .demand-box {
+         background: #f8faf7;
+         border: 2px dashed var(--green);
+         border-radius: 10px;
+         padding: 16px;
+         margin-top: 15px;
+      }
+
+      .badge-prov {
+         display: inline-block;
+         background: var(--lime);
+         color: #233514;
+         font-size: 11px;
+         font-weight: bold;
+         padding: 3px 8px;
+         border-radius: 12px;
+         margin-bottom: 8px;
+      }
+
+      .status-pill {
+         display: inline-block;
+         padding: 4px 10px;
+         border-radius: 6px;
+         font-weight: bold;
+         font-size: 12px;
+         color: white;
+         background: var(--green);
+         margin-top: 6px;
+      }
+
+      /* Mapa dos 14 Estados */
+      .status-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+         gap: 12px;
+         margin-top: 15px;
+      }
+
+      .status-card {
+         background: #ffffff;
+         border: 1px solid var(--line);
+         border-radius: 8px;
+         padding: 12px;
+         position: relative;
+         cursor: pointer;
+         transition: all 0.2s ease;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         min-height: 85px;
+      }
+
+      .status-card:hover {
+         border-color: var(--green);
+         transform: translateY(-2px);
+         box-shadow: 0 4px 12px rgba(37, 128, 59, 0.1);
+      }
+
+      .status-card.active {
+         border: 2px solid var(--green);
+         background: #edf6e7;
+         box-shadow: 0 0 10px rgba(37, 128, 59, 0.2);
+      }
+
+      .status-card.active::before {
+         content: "📍 Posição Atual";
+         position: absolute;
+         top: -9px;
+         right: 10px;
+         background: var(--green);
+         color: white;
+         font-size: 10px;
+         font-weight: bold;
+         padding: 2px 7px;
+         border-radius: 10px;
+      }
+
+      .status-card .st-title {
+         font-size: 13px;
+         font-weight: 700;
+         color: #193223;
+      }
+
+      .status-card .st-desc {
+         font-size: 11px;
+         color: var(--muted);
+         margin-top: 4px;
+      }
+
+      .actions-container {
+         margin-top: 22px;
+         padding-top: 16px;
+         border-top: 1px solid var(--line);
+      }
+
+      .actions-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+         gap: 10px;
+         margin-top: 12px;
+      }
+
+      .action-btn {
+         background: #ffffff;
+         border: 1px solid var(--green);
+         color: var(--green);
+         font-weight: 600;
+         padding: 10px;
+         border-radius: 8px;
+         cursor: pointer;
+         font-size: 13px;
+      }
+
+      .action-btn:hover {
+         background: var(--green);
+         color: white;
+      }
+
+      /* Console de Log */
+      .history-log {
+         margin-top: 20px;
+         background: #153d26;
+         color: #d8e8d7;
+         border-radius: 8px;
+         padding: 12px;
+         font-family: monospace;
+         font-size: 12px;
+         max-height: 150px;
+         overflow-y: auto;
+      }
+
+      .history-item {
+         margin-bottom: 5px;
+         border-bottom: 1px solid #235235;
+         padding-bottom: 3px;
+      }
+
+      .history-item .highlight {
+         color: #7acb96;
+         font-weight: bold;
+      }
+
+      footer.foot {
+         display: flex;
+         justify-content: space-between;
+         gap: 15px;
+         margin-top: 30px;
+         padding-top: 17px;
+         border-top: 1px solid var(--line);
+         font-size: 12px;
+         color: var(--muted);
+      }
+
+      @media(max-width:650px) {
+         .wrap { padding: 0 14px 20px; }
+         .top { padding: 0 19px; border-radius: 0 0 12px 12px; }
+         .header-line { min-height: 55px; padding: 10px 0; }
+         .brand-home { font-size: 13px; }
+         .brand-home small { font-size: 9px; }
+         .top h1 { font-size: 22px; }
+         .top-title p { display: none; }
+      }
+   </style>
+</head>
+
+<body>
+
+   <!-- BANNER DO CABEÇALHO (EXATO DA PÁGINA) -->
+   <header class="top">
+      <div class="header-art" aria-hidden="true"></div>
+      <div class="header-line">
+         <a class="brand-home" href="inicio.html">
+            <span class="brand-mark" aria-hidden="true">IF</span>
+            <span>CONCURSOS IFBA<small>GESTÃO INSTITUCIONAL</small></span>
+         </a>
+         <nav class="topnav" aria-label="Menu principal">
+            <span class="demo">Dados demonstrativos</span>
+            <details class="portal-menu" id="portal-menu">
+               <summary aria-controls="portal-links">
+                  <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                     <rect x="3" y="3" width="7" height="7" rx="1" />
+                     <rect x="14" y="3" width="7" height="7" rx="1" />
+                     <rect x="3" y="14" width="7" height="7" rx="1" />
+                     <rect x="14" y="14" width="7" height="7" rx="1" />
+                  </svg>
+                  Navegar
+                  <svg class="nav-icon chevron" viewBox="0 0 24 24" aria-hidden="true">
+                     <path d="m6 9 6 6 6-6" />
+                  </svg>
+               </summary>
+               <div class="portal-panel" id="portal-links">
+                  <div class="portal-caption">Portais do sistema</div>
+                  <a href="inicio.html" data-icon="home">Início</a>
+                  <a href="dashboard.html" data-icon="grid">Painel Geral</a>
+                  <a href="docentes.html" data-icon="school">Concurso Docente</a>
+                  <a href="tae.html" data-icon="brief">Concurso TAE</a>
+                  <a href="demandas.html" aria-current="page" data-icon="folder">Demandas</a>
+                  <a href="convocacoes.html" data-icon="calendar">Convocações</a>
+                  <a href="cadastros.html" data-icon="users">Cadastros</a>
+                  <a href="documentacao.html" data-icon="file">Documentação</a>
+                  <div class="nav-end"><a href="index.html" data-icon="exit">Voltar ao login</a></div>
+               </div>
+            </details>
+         </nav>
+      </div>
+      <div class="top-title">
+         <span class="eyebrow">PLANEJAMENTO E PROVIMENTO</span>
+         <h1>Demandas de vagas</h1>
+         <p>Registre a necessidade do campus e acompanhe a análise institucional.</p>
+      </div>
+   </header>
+
+   <div class="wrap">
+
+      <!-- QUADROS DE DIRETRIZES TÉCNICAS E REGRAS -->
+      <div class="notices-grid">
+         <div class="notice-card">
+            <strong>🛡️ Validação de Servidor Obrigatória</strong>
+            O servidor valida o vínculo ao campus, elegibilidade e transições. O perfil <u>não é definido pelo navegador</u>.
+         </div>
+         <div class="notice-card warning">
+            <strong>⚠️ Identificador Provisório Local</strong>
+            O número exibido na tela é um <strong>identificador provisório local</strong>, não um protocolo oficial.
+         </div>
+         <div class="notice-card info">
+            <strong>🗄️ Migração SQL Requerida</strong>
+            O SQL inicial requer migração para os novos campos, anexos, histórico, perfil e estados. Não execute o esquema antigo!
+         </div>
+      </div>
+
+      <!-- PAINEL CENTRAL DE SIMULAÇÃO -->
+      <div class="dashboard-layout">
+         
+         <!-- Coluna Esquerda: Perfis e Demanda -->
+         <div class="panel">
+            <h3>🎮 Perfil em Simulação</h3>
+            <p style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">
+               Alterne o perfil para testar as permissões e regras da interface:
+            </p>
+
+            <div class="field-group">
+               <label for="userRole">Perfil em Simulação:</label>
+               <select id="userRole" onchange="changeRole()">
+                  <option value="DIRECAO">🏫 Direção de Ensino (Próprio Campus)</option>
+                  <option value="ADMIN">🛡️ Administrador (Análise e Encaminhamentos)</option>
+                  <option value="OPERADOR">⚙️ Operador (Atribuições Regimentais)</option>
+                  <option value="LEITOR">👁️ Leitor (Apenas Consulta)</option>
+               </select>
+            </div>
+
+            <hr style="border:0; border-top: 1px solid var(--line); margin: 15px 0;">
+
+            <h3 style="border:none; padding:0; margin-bottom: 8px;">📄 Demanda Atual</h3>
+            <div class="demand-box">
+               <span class="badge-prov" id="demandId">LOCAL-2026-8492</span>
+               <p style="font-size: 13px; font-weight: bold; margin: 4px 0 0;" id="campusLabel">Campus: IFBA - Jacobina</p>
+               <span class="status-pill" id="statusPill">Rascunho</span>
+               <p style="font-size: 12px; color: var(--muted); margin-top: 10px;" id="roleAccessNotice">
+                  Você pode registrar, editar rascunhos e submeter demandas do seu campus.
+               </p>
+            </div>
+
+            <div style="margin-top: 15px;">
+               <button class="btn primary" id="btnNewDraft" onclick="createNewDraft()">✨ Criar Novo Rascunho</button>
+            </div>
+         </div>
+
+         <!-- Coluna Direita: Mapa dos 14 Estados e Ações -->
+         <div class="panel">
+            <h3 style="border:none; padding:0; margin-bottom: 4px;">🗺️ Fluxo das Situações Suportadas (14 Estados)</h3>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 0;">
+               * Os encaminhamentos dependem da análise; esta relação não representa uma sequência obrigatória. As decisões de análise não são feitas pelo campus nesta tela.
+            </p>
+
+            <!-- Grid com os 14 Estados -->
+            <div class="status-grid" id="statusGrid"></div>
+
+            <!-- Painel de Ações Dinâmicas -->
+            <div class="actions-container">
+               <h4 style="font-size: 14px; margin: 0; color: var(--dark);">⚡ Ações do Perfil Atual</h4>
+               <div class="actions-grid" id="actionButtons"></div>
+            </div>
+
+            <!-- Logger de Auditoria -->
+            <h4 style="margin-top: 20px; font-size: 13px; color: var(--muted);">📜 Histórico Local & Auditoria de Transições</h4>
+            <div class="history-log" id="historyLog">
+               <div class="history-item">
+                  <span style="color:#94a3b8;">[Sistema]</span> Demanda provisória iniciada localmente.
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+
+      <footer class="foot">
+         <span>IFBA · Planejamento e provimento de vagas</span>
+         <a href="inicio.html">Voltar ao início</a>
+      </footer>
+   </div>
+
+   <script>
+      // 14 Situações Suportadas
+      const STATUSES = [
+         { id: "RASCUNHO", name: "Rascunho", desc: "Criado pelo campus", color: "#617364" },
+         { id: "ENVIADA", name: "Enviada pelo campus", desc: "Aguardando triagem", color: "#0284c7" },
+         { id: "ANALISE", name: "Em análise técnica", desc: "Avaliação institucional", color: "#d97706" },
+         { id: "COMPLEMENTACAO", name: "Aguardando complementação", desc: "Devolvido p/ adequação", color: "#b45309" },
+         { id: "PRIORIZADA", name: "Priorizada", desc: "Fila de atendimento", color: "#d97706" },
+         { id: "APROVADA", name: "Aprovada", desc: "Validado em análise", color: "#25803b" },
+         { id: "AGUARDANDO_CODIGO", name: "Aguardando código de vaga", desc: "Reserva de vaga oficial", color: "#153d26" },
+         { id: "APTA_CONVOCACAO", name: "Apta para convocação", desc: "Liberada p/ convocação", color: "#25803b" },
+         { id: "CONVOCADA", name: "Convocada", desc: "Convocação efetuada", color: "#153d26" },
+         { id: "EM_EXERCICIO", name: "Em exercício", desc: "Servidor em posto", color: "#153d26" },
+         { id: "REMOCAO_REDIST", name: "Atendida por remoção ou redistribuição", desc: "Atendida por movimentação", color: "#0f766e" },
+         { id: "CONTRATACAO_SUBST", name: "Atendida por contratação substituta", desc: "Atendida por substituto", color: "#0f766e" },
+         { id: "SUSPENSA", name: "Suspensa", desc: "Pausada temporariamente", color: "#7c3aed" },
+         { id: "INDEFERIDA", name: "Indeferida", desc: "Solicitação indeferida", color: "#b53131" }
+      ];
+
+      let currentStatus = "RASCUNHO";
+      let currentRole = "DIRECAO";
+      let currentLocalId = generateLocalId();
+
+      function generateLocalId() {
+         return "LOCAL-2026-" + Math.floor(1000 + Math.random() * 9000);
+      }
+
+      function init() {
+         renderStatusGrid();
+         updateUI();
+         logEvent("Simulador iniciado com o perfil 'Direção de Ensino'.");
+      }
+
+      function renderStatusGrid() {
+         const grid = document.getElementById("statusGrid");
+         grid.innerHTML = "";
+
+         STATUSES.forEach(st => {
+            const div = document.createElement("div");
+            div.className = `status-card ${st.id === currentStatus ? 'active' : ''}`;
+            div.id = `node-${st.id}`;
+            div.onclick = () => selectStatusManual(st.id);
+            
+            div.innerHTML = `
+               <div class="st-title">${st.name}</div>
+               <div class="st-desc">${st.desc}</div>
+            `;
+            grid.appendChild(div);
+         });
+      }
+
+      function changeRole() {
+         currentRole = document.getElementById("userRole").value;
+         
+         const noticeMap = {
+            "DIRECAO": "Você pode registrar, editar rascunhos e submeter demandas do seu campus.",
+            "ADMIN": "Você pode acompanhar análises, gerenciar complementações e direcionar encaminhamentos.",
+            "OPERADOR": "Modo Operador: Consulta e execução conforme atribuições regimentais específicas.",
+            "LEITOR": "Modo Leitor: Somente visualização de dados e histórico."
+         };
+
+         document.getElementById("roleAccessNotice").innerText = noticeMap[currentRole];
+         logEvent(`Perfil alterado na simulação para: <strong>${currentRole}</strong> (Validação pelo Servidor)`);
+         updateUI();
+      }
+
+      function selectStatusManual(statusId) {
+         if (currentRole === "LEITOR" || currentRole === "OPERADOR") {
+            alert("🔒 O perfil selecionado permite apenas consulta nesta tela.");
+            return;
+         }
+         setStatus(statusId, "Transição manual no simulador");
+      }
+
+      function setStatus(newStatus, reason) {
+         const prevStatus = currentStatus;
+         currentStatus = newStatus;
+         renderStatusGrid();
+         updateUI();
+         logEvent(`Transição: <span class="highlight">${prevStatus}</span> ➔ <span class="highlight">${newStatus}</span> (${reason})`);
+      }
+
+      function updateUI() {
+         document.getElementById("demandId").innerText = currentLocalId;
+         
+         const statusObj = STATUSES.find(s => s.id === currentStatus);
+         const pill = document.getElementById("statusPill");
+         pill.innerText = statusObj.name;
+         pill.style.backgroundColor = statusObj.color;
+
+         const actionsContainer = document.getElementById("actionButtons");
+         actionsContainer.innerHTML = "";
+
+         const btnDraft = document.getElementById("btnNewDraft");
+
+         // Regras da Direção de Ensino
+         if (currentRole === "DIRECAO") {
+            btnDraft.disabled = false;
+
+            if (currentStatus === "RASCUNHO" || currentStatus === "COMPLEMENTACAO") {
+               createActionButton("✏️ Editar Rascunho", () => logEvent("Edição de rascunho salva localmente."));
+               createActionButton("📤 Submeter Demanda", () => setStatus("ENVIADA", "Submetida pelo campus"));
+            } else {
+               actionsContainer.innerHTML = `<p style="font-size:13px; color:var(--muted);">As decisões de análise para a situação '<strong>${statusObj.name}</strong>' são realizadas pela gestão central/administrador.</p>`;
+            }
+         } 
+         // Regras do Administrador
+         else if (currentRole === "ADMIN") {
+            btnDraft.disabled = true;
+
+            if (currentStatus === "ENVIADA") {
+               createActionButton("🔍 Iniciar Análise Técnica", () => setStatus("ANALISE", "Início de análise técnica"));
+            } else if (currentStatus === "ANALISE") {
+               createActionButton("💬 Solicitar Complementação", () => setStatus("COMPLEMENTACAO", "Solicitada adequação ao campus"));
+               createActionButton("⭐ Priorizar Demanda", () => setStatus("PRIORIZADA", "Demanda colocada em prioridade"));
+               createActionButton("✅ Aprovar Demanda", () => setStatus("APROVADA", "Demanda aprovada em análise"));
+               createActionButton("❌ Indeferir Demanda", () => setStatus("INDEFERIDA", "Análise técnica indeferiu"));
+            } else if (currentStatus === "APROVADA") {
+               createActionButton("🔢 Aguardar Código de Vaga", () => setStatus("AGUARDANDO_CODIGO", "Encaminhado para alocação de vaga"));
+            } else if (currentStatus === "AGUARDANDO_CODIGO") {
+               createActionButton("📢 Tornar Apta p/ Convocação", () => setStatus("APTA_CONVOCACAO", "Vaga oficial vinculada"));
+            } else if (currentStatus === "APTA_CONVOCACAO") {
+               createActionButton("✉️ Convocar Candidato/Servidor", () => setStatus("CONVOCADA", "Convocação formalizada"));
+            } else if (currentStatus === "CONVOCADA") {
+               createActionButton("💼 Confirmar Exercício", () => setStatus("EM_EXERCICIO", "Servidor assumiu o posto"));
+               createActionButton("🔄 Atender p/ Remoção/Redist.", () => setStatus("REMOCAO_REDIST", "Atendida via movimentação"));
+               createActionButton("📝 Atender p/ Contratação Subst.", () => setStatus("CONTRATACAO_SUBST", "Atendida via substituto"));
+            } else if (currentStatus !== "SUSPENSA" && currentStatus !== "INDEFERIDA") {
+               createActionButton("⏸️ Suspender Demanda", () => setStatus("SUSPENSA", "Processo suspenso"));
+            } else if (currentStatus === "SUSPENSA") {
+               createActionButton("▶️ Reativar Análise", () => setStatus("ANALISE", "Reativada pelo Administrador"));
+            }
+         } 
+         // Operador / Leitor
+         else {
+            btnDraft.disabled = true;
+            actionsContainer.innerHTML = `<p style="font-size:13px; color:var(--muted);">🔒 O perfil <strong>${currentRole}</strong> possui acesso apenas de consulta conforme suas atribuições regimentais.</p>`;
+         }
+      }
+
+      function createActionButton(text, onClick) {
+         const container = document.getElementById("actionButtons");
+         const btn = document.createElement("button");
+         btn.className = "action-btn";
+         btn.innerHTML = text;
+         btn.onclick = onClick;
+         container.appendChild(btn);
+      }
+
+      function createNewDraft() {
+         if (currentRole !== "DIRECAO") {
+            alert("Apenas a Direção de Ensino pode registrar novos rascunhos de demandas.");
+            return;
+         }
+         currentLocalId = generateLocalId();
+         setStatus("RASCUNHO", "Novo rascunho de demanda criado pelo Campus");
+      }
+
+      function logEvent(msg) {
+         const log = document.getElementById("historyLog");
+         const entry = document.createElement("div");
+         entry.className = "history-item";
+         const timestamp = new Date().toLocaleTimeString();
+         entry.innerHTML = `<span style="color:#94a3b8;">[${timestamp}]</span> ${msg}`;
+         log.prepend(entry);
+      }
+
+      // Inicialização do Menu Dropdown Navegar (Lógica Oficial da Página)
+      const portalMenu = document.getElementById('portal-menu');
+      const portalTrigger = portalMenu.querySelector('summary');
+      const navPaths = {
+         home: 'M3 10 12 3l9 7M5 9v12h14V9M9 21v-7h6v7',
+         grid: 'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z',
+         school: 'M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4',
+         brief: 'M3 7h18v14H3ZM8 7V3h8v4M3 12l9 3 9-3',
+         folder: 'M3 20V5h7l2 3h9v12ZM7 12h10M7 16h7',
+         calendar: 'M4 5h16v16H4ZM8 3v4M16 3v4M4 11h16M8 15h3M8 18h7',
+         users: 'M9 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0M6 21v-3a6 6 0 0 1 12 0v3M3 19v-1a5 5 0 0 1 2-4M21 19v-1a5 5 0 0 0-2-4',
+         file: 'M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6',
+         exit: 'M10 4H4v16h6M10 12h11m-4-4 4 4-4 4'
+      };
+
+      portalMenu.querySelectorAll('[data-icon]').forEach(link => {
+         link.insertAdjacentHTML('afterbegin', '<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + navPaths[link.dataset.icon] + '"/></svg>');
+      });
+
+      document.addEventListener('keydown', event => {
+         if (event.key === 'Escape' && portalMenu.open) {
+            portalMenu.open = false;
+            portalTrigger.focus();
+         }
+      });
+      document.addEventListener('click', event => {
+         if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false;
+      });
+      document.addEventListener('focusin', event => {
+         if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false;
+      });
+
+      window.onload = init;
+   </script>
+</body>
+
+</html>

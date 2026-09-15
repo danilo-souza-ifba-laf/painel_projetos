@@ -1,263 +1,1964 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#153d26"><title>Demandas de vagas | IFBA</title><style>
-:root{font:16px/1.5 Arial,Helvetica,sans-serif;color:#193223;background:#f2f7f1;--green:#25803b;--dark:#153d26;--lime:#dfee9a;--mint:#7acb96;--red:#b53131;--line:#dfe8dc;--muted:#617364}*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button,a,select{touch-action:manipulation}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}:focus-visible{outline:3px solid #b53131;outline-offset:3px}.wrap{max-width:1480px;margin:auto;padding:26px 32px}.top{display:flex;align-items:center;justify-content:space-between;gap:24px;background:var(--dark);border-radius:8px;color:white;padding:22px 27px}.eyebrow{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#bcd5bd;margin-bottom:3px}.top h1{font-size:26px;letter-spacing:-.035em;margin:0}.topnav{display:flex;align-items:center;gap:12px}.topnav label{font-size:13px;color:#d8e8d7}select{border:1px solid #c5d5c2;border-radius:6px;background:white;color:#233c28;padding:10px 12px;min-height:43px;max-width:100%}.topnav select{min-width:190px}.demo{font-size:12px;background:var(--lime);color:#233514;padding:7px 10px;border-radius:4px;white-space:nowrap}.filters{display:flex;align-items:end;gap:14px;padding:23px 0 18px;flex-wrap:wrap}.filters label{font-size:12px;color:var(--muted);display:grid;gap:5px}.filters select{min-width:170px}.filters p{margin:0 0 10px auto;font-size:13px;color:var(--muted)}h2{font-size:16px;margin:0 0 15px;letter-spacing:-.025em}p{margin-top:0}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-bottom:23px}.kpi{background:white;border:1px solid var(--line);border-radius:7px;padding:18px 19px;position:relative;overflow:hidden}.kpi:before{content:"";height:4px;position:absolute;top:0;left:0;right:0;background:var(--green)}.kpi:nth-child(2):before{background:#98b53a}.kpi:nth-child(3):before{background:var(--red)}.kpi:nth-child(4):before{background:var(--mint)}.kpi:nth-child(5):before{background:var(--dark)}.kpi span{font-size:13px;color:#425946}.kpi strong{display:block;font-size:35px;line-height:1.3;letter-spacing:-.045em;margin:8px 0}.kpi small{font-size:11px;color:var(--muted);display:block}.row{display:grid;grid-template-columns:1.05fr 1.35fr 1fr;gap:18px;margin-bottom:22px}.panel{background:white;border:1px solid var(--line);border-radius:7px;padding:21px;min-width:0}.sub{font-size:12px;color:var(--muted);margin-top:-7px;margin-bottom:18px}.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}.donut{width:145px;height:145px;flex:none;border-radius:50%;display:grid;place-items:center;background:#eff3eb;position:relative}.donut:before{content:"";position:absolute;inset:23px;background:white;border-radius:50%}.donut b{position:relative;font-size:25px}.legend{list-style:none;margin:0;padding:0;font-size:13px;flex:1;min-width:100px}.legend li{display:flex;align-items:center;gap:8px;margin:9px 0}.dot{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--green)}.legend strong{margin-left:auto}.progress-row{display:grid;grid-template-columns:150px 1fr 27px;gap:10px;align-items:center;font-size:12px;margin:14px 0}.track{height:10px;background:#e8eee5;border-radius:20px;overflow:hidden}.bar{height:100%;background:var(--green);border-radius:20px}.attention{border-left:3px solid var(--green);background:#f0f6e9;padding:12px;margin:9px 0;font-size:13px;display:flex;gap:12px;align-items:center}.attention b{font-size:24px}.attention.warn{border-color:var(--red);background:#fbf1ef}.attention span{line-height:1.4}.section-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin:4px 0 12px}.section-head h2{margin:0}.section-head span{font-size:12px;color:var(--muted)}.rankings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:22px}.rank{display:grid;grid-template-columns:20px 1fr 30px;gap:9px;align-items:center;margin:15px 0;font-size:13px}.rank small{color:#81937e}.rank .track{margin-top:6px;height:7px}.rank b{text-align:right}.rankings .panel:nth-child(2) .bar{background:#b53131}.rankings .panel:nth-child(3) .bar{background:#153d26}.bottom{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}.trend{width:100%;height:auto;display:block}.trend text{font:12px Arial;fill:#617364}.trendline{fill:none;stroke:#25803b;stroke-width:3}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;font-size:11px;color:var(--muted);font-weight:500}td,th{padding:11px 7px;border-bottom:1px solid #edf1ea}td:last-child,th:last-child{text-align:right}.pill{display:inline-block;background:#edf5e8;color:#215731;padding:3px 8px;border-radius:5px;font-size:12px}.note{font-size:12px;color:var(--muted);margin:15px 0 0}.foot{display:flex;justify-content:space-between;gap:15px;margin-top:23px;padding-top:17px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}details{margin-top:18px;font-size:12px;color:var(--muted)}summary{cursor:pointer;color:#335c3c;font-weight:600}details ul{padding-left:20px}.empty{font-size:13px;color:var(--muted);padding:20px 0}.sr{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}.skip{position:absolute;top:-100px;background:white;padding:10px;z-index:2}.skip:focus{top:5px}
-@media(max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}.row{grid-template-columns:1fr 1fr}.row>.panel:last-child{grid-column:1/-1}.attention{display:inline-flex;min-width:27%;margin-right:8px}.rankings{grid-template-columns:1fr}.rank{margin:12px 0}.donut-wrap{gap:15px}.bottom{grid-template-columns:1fr}}@media(max-width:650px){.wrap{padding:14px}.top{display:block;padding:19px}.topnav{margin-top:17px;flex-wrap:wrap}.topnav select{min-width:0;flex:1}.top h1{font-size:25px}.filters{gap:10px}.filters label{flex:1}.filters select{min-width:0;width:100%}.filters p{width:100%;margin:0}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{padding:15px}.kpi strong{font-size:29px}.row{grid-template-columns:1fr}.attention{display:flex;margin-right:0}.panel{padding:17px}.progress-row{grid-template-columns:140px 1fr 25px}.section-head{align-items:start;flex-direction:column;gap:4px}.foot{flex-direction:column;gap:5px}}@media print{.topnav,.filters,details{display:none}.wrap{padding:0}.panel,.kpi{break-inside:avoid}}
-/* Cabeçalho alinhado à identidade da página Início. */
-/* O menu pertence ao contexto do cabeçalho: elevar apenas o menu não basta.
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+   <meta name="theme-color" content="#153d26">
+   <title>Demandas de vagas | IFBA</title>
+   <style>
+      :root {
+         font: 16px/1.5 Arial, Helvetica, sans-serif;
+         color: #193223;
+         background: #f2f7f1;
+         --green: #25803b;
+         --dark: #153d26;
+         --lime: #dfee9a;
+         --mint: #7acb96;
+         --red: #b53131;
+         --line: #dfe8dc;
+         --muted: #617364
+      }
+
+      * {
+         box-sizing: border-box
+      }
+
+      body {
+         margin: 0
+      }
+
+      button,
+      select {
+         font: inherit
+      }
+
+      button,
+      a,
+      select {
+         touch-action: manipulation
+      }
+
+      a {
+         color: var(--green);
+         text-decoration: none
+      }
+
+      a:hover {
+         text-decoration: underline
+      }
+
+      :focus-visible {
+         outline: 3px solid #b53131;
+         outline-offset: 3px
+      }
+
+      .wrap {
+         max-width: 1480px;
+         margin: auto;
+         padding: 26px 32px
+      }
+
+      .top {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 24px;
+         background: var(--dark);
+         border-radius: 8px;
+         color: white;
+         padding: 22px 27px
+      }
+
+      .eyebrow {
+         display: block;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         color: #bcd5bd;
+         margin-bottom: 3px
+      }
+
+      .top h1 {
+         font-size: 26px;
+         letter-spacing: -.035em;
+         margin: 0
+      }
+
+      .topnav {
+         display: flex;
+         align-items: center;
+         gap: 12px
+      }
+
+      .topnav label {
+         font-size: 13px;
+         color: #d8e8d7
+      }
+
+      select {
+         border: 1px solid #c5d5c2;
+         border-radius: 6px;
+         background: white;
+         color: #233c28;
+         padding: 10px 12px;
+         min-height: 43px;
+         max-width: 100%
+      }
+
+      .topnav select {
+         min-width: 190px
+      }
+
+      .demo {
+         font-size: 12px;
+         background: var(--lime);
+         color: #233514;
+         padding: 7px 10px;
+         border-radius: 4px;
+         white-space: nowrap
+      }
+
+      .filters {
+         display: flex;
+         align-items: end;
+         gap: 14px;
+         padding: 23px 0 18px;
+         flex-wrap: wrap
+      }
+
+      .filters label {
+         font-size: 12px;
+         color: var(--muted);
+         display: grid;
+         gap: 5px
+      }
+
+      .filters select {
+         min-width: 170px
+      }
+
+      .filters p {
+         margin: 0 0 10px auto;
+         font-size: 13px;
+         color: var(--muted)
+      }
+
+      h2 {
+         font-size: 16px;
+         margin: 0 0 15px;
+         letter-spacing: -.025em
+      }
+
+      p {
+         margin-top: 0
+      }
+
+      .kpis {
+         display: grid;
+         grid-template-columns: repeat(5, minmax(0, 1fr));
+         gap: 14px;
+         margin-bottom: 23px
+      }
+
+      .kpi {
+         background: white;
+         border: 1px solid var(--line);
+         border-radius: 7px;
+         padding: 18px 19px;
+         position: relative;
+         overflow: hidden
+      }
+
+      .kpi:before {
+         content: "";
+         height: 4px;
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         background: var(--green)
+      }
+
+      .kpi:nth-child(2):before {
+         background: #98b53a
+      }
+
+      .kpi:nth-child(3):before {
+         background: var(--red)
+      }
+
+      .kpi:nth-child(4):before {
+         background: var(--mint)
+      }
+
+      .kpi:nth-child(5):before {
+         background: var(--dark)
+      }
+
+      .kpi span {
+         font-size: 13px;
+         color: #425946
+      }
+
+      .kpi strong {
+         display: block;
+         font-size: 35px;
+         line-height: 1.3;
+         letter-spacing: -.045em;
+         margin: 8px 0
+      }
+
+      .kpi small {
+         font-size: 11px;
+         color: var(--muted);
+         display: block
+      }
+
+      .row {
+         display: grid;
+         grid-template-columns: 1.05fr 1.35fr 1fr;
+         gap: 18px;
+         margin-bottom: 22px
+      }
+
+      .panel {
+         background: white;
+         border: 1px solid var(--line);
+         border-radius: 7px;
+         padding: 21px;
+         min-width: 0
+      }
+
+      .sub {
+         font-size: 12px;
+         color: var(--muted);
+         margin-top: -7px;
+         margin-bottom: 18px
+      }
+
+      .donut-wrap {
+         display: flex;
+         align-items: center;
+         gap: 24px;
+         flex-wrap: wrap
+      }
+
+      .donut {
+         width: 145px;
+         height: 145px;
+         flex: none;
+         border-radius: 50%;
+         display: grid;
+         place-items: center;
+         background: #eff3eb;
+         position: relative
+      }
+
+      .donut:before {
+         content: "";
+         position: absolute;
+         inset: 23px;
+         background: white;
+         border-radius: 50%
+      }
+
+      .donut b {
+         position: relative;
+         font-size: 25px
+      }
+
+      .legend {
+         list-style: none;
+         margin: 0;
+         padding: 0;
+         font-size: 13px;
+         flex: 1;
+         min-width: 100px
+      }
+
+      .legend li {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         margin: 9px 0
+      }
+
+      .dot {
+         display: inline-block;
+         width: 9px;
+         height: 9px;
+         border-radius: 2px;
+         background: var(--green)
+      }
+
+      .legend strong {
+         margin-left: auto
+      }
+
+      .progress-row {
+         display: grid;
+         grid-template-columns: 150px 1fr 27px;
+         gap: 10px;
+         align-items: center;
+         font-size: 12px;
+         margin: 14px 0
+      }
+
+      .track {
+         height: 10px;
+         background: #e8eee5;
+         border-radius: 20px;
+         overflow: hidden
+      }
+
+      .bar {
+         height: 100%;
+         background: var(--green);
+         border-radius: 20px
+      }
+
+      .attention {
+         border-left: 3px solid var(--green);
+         background: #f0f6e9;
+         padding: 12px;
+         margin: 9px 0;
+         font-size: 13px;
+         display: flex;
+         gap: 12px;
+         align-items: center
+      }
+
+      .attention b {
+         font-size: 24px
+      }
+
+      .attention.warn {
+         border-color: var(--red);
+         background: #fbf1ef
+      }
+
+      .attention span {
+         line-height: 1.4
+      }
+
+      .section-head {
+         display: flex;
+         justify-content: space-between;
+         gap: 15px;
+         align-items: center;
+         margin: 4px 0 12px
+      }
+
+      .section-head h2 {
+         margin: 0
+      }
+
+      .section-head span {
+         font-size: 12px;
+         color: var(--muted)
+      }
+
+      .rankings {
+         display: grid;
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+         gap: 18px;
+         margin-bottom: 22px
+      }
+
+      .rank {
+         display: grid;
+         grid-template-columns: 20px 1fr 30px;
+         gap: 9px;
+         align-items: center;
+         margin: 15px 0;
+         font-size: 13px
+      }
+
+      .rank small {
+         color: #81937e
+      }
+
+      .rank .track {
+         margin-top: 6px;
+         height: 7px
+      }
+
+      .rank b {
+         text-align: right
+      }
+
+      .rankings .panel:nth-child(2) .bar {
+         background: #b53131
+      }
+
+      .rankings .panel:nth-child(3) .bar {
+         background: #153d26
+      }
+
+      .bottom {
+         display: grid;
+         grid-template-columns: 1.4fr 1fr;
+         gap: 18px
+      }
+
+      .trend {
+         width: 100%;
+         height: auto;
+         display: block
+      }
+
+      .trend text {
+         font: 12px Arial;
+         fill: #617364
+      }
+
+      .trendline {
+         fill: none;
+         stroke: #25803b;
+         stroke-width: 3
+      }
+
+      .table-wrap {
+         overflow: auto
+      }
+
+      table {
+         border-collapse: collapse;
+         width: 100%;
+         font-size: 13px
+      }
+
+      th {
+         text-align: left;
+         font-size: 11px;
+         color: var(--muted);
+         font-weight: 500
+      }
+
+      td,
+      th {
+         padding: 11px 7px;
+         border-bottom: 1px solid #edf1ea
+      }
+
+      td:last-child,
+      th:last-child {
+         text-align: right
+      }
+
+      .pill {
+         display: inline-block;
+         background: #edf5e8;
+         color: #215731;
+         padding: 3px 8px;
+         border-radius: 5px;
+         font-size: 12px
+      }
+
+      .note {
+         font-size: 12px;
+         color: var(--muted);
+         margin: 15px 0 0
+      }
+
+      .foot {
+         display: flex;
+         justify-content: space-between;
+         gap: 15px;
+         margin-top: 23px;
+         padding-top: 17px;
+         border-top: 1px solid var(--line);
+         font-size: 12px;
+         color: var(--muted)
+      }
+
+      details {
+         margin-top: 18px;
+         font-size: 12px;
+         color: var(--muted)
+      }
+
+      summary {
+         cursor: pointer;
+         color: #335c3c;
+         font-weight: 600
+      }
+
+      details ul {
+         padding-left: 20px
+      }
+
+      .empty {
+         font-size: 13px;
+         color: var(--muted);
+         padding: 20px 0
+      }
+
+      .sr {
+         position: absolute;
+         clip: rect(0, 0, 0, 0);
+         width: 1px;
+         height: 1px;
+         overflow: hidden
+      }
+
+      .skip {
+         position: absolute;
+         top: -100px;
+         background: white;
+         padding: 10px;
+         z-index: 2
+      }
+
+      .skip:focus {
+         top: 5px
+      }
+
+      @media(max-width:1150px) {
+         .kpis {
+            grid-template-columns: repeat(3, 1fr)
+         }
+
+         .row {
+            grid-template-columns: 1fr 1fr
+         }
+
+         .row>.panel:last-child {
+            grid-column: 1/-1
+         }
+
+         .attention {
+            display: inline-flex;
+            min-width: 27%;
+            margin-right: 8px
+         }
+
+         .rankings {
+            grid-template-columns: 1fr
+         }
+
+         .rank {
+            margin: 12px 0
+         }
+
+         .donut-wrap {
+            gap: 15px
+         }
+
+         .bottom {
+            grid-template-columns: 1fr
+         }
+      }
+
+      @media(max-width:650px) {
+         .wrap {
+            padding: 14px
+         }
+
+         .top {
+            display: block;
+            padding: 19px
+         }
+
+         .topnav {
+            margin-top: 17px;
+            flex-wrap: wrap
+         }
+
+         .topnav select {
+            min-width: 0;
+            flex: 1
+         }
+
+         .top h1 {
+            font-size: 25px
+         }
+
+         .filters {
+            gap: 10px
+         }
+
+         .filters label {
+            flex: 1
+         }
+
+         .filters select {
+            min-width: 0;
+            width: 100%
+         }
+
+         .filters p {
+            width: 100%;
+            margin: 0
+         }
+
+         .kpis {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px
+         }
+
+         .kpi {
+            padding: 15px
+         }
+
+         .kpi strong {
+            font-size: 29px
+         }
+
+         .row {
+            grid-template-columns: 1fr
+         }
+
+         .attention {
+            display: flex;
+            margin-right: 0
+         }
+
+         .panel {
+            padding: 17px
+         }
+
+         .progress-row {
+            grid-template-columns: 140px 1fr 25px
+         }
+
+         .section-head {
+            align-items: start;
+            flex-direction: column;
+            gap: 4px
+         }
+
+         .foot {
+            flex-direction: column;
+            gap: 5px
+         }
+      }
+
+      @media print {
+
+         .topnav,
+         .filters,
+         details {
+            display: none
+         }
+
+         .wrap {
+            padding: 0
+         }
+
+         .panel,
+         .kpi {
+            break-inside: avoid
+         }
+      }
+
+      /* Cabeçalho alinhado à identidade da página Início. */
+      /* O menu pertence ao contexto do cabeçalho: elevar apenas o menu não basta.
    Cabeçalho acima do conteúdo; o recorte decorativo fica só em .header-art. */
-.top{display:block;position:relative;z-index:1;isolation:isolate;overflow:visible;border-radius:16px;padding:0 28px;background:linear-gradient(112deg,#102e1d 0%,#14532d 58%,#287940 100%)}
-#conteudo{position:relative;z-index:0}
-.header-art{position:absolute;inset:0;overflow:hidden;border-radius:inherit;z-index:-1;pointer-events:none;background:repeating-linear-gradient(150deg,transparent 0 90px,#ffffff04 91px 92px)}
-.header-art:after{content:"";position:absolute;width:460px;height:460px;border:1px solid #91c79a33;border-radius:50%;right:-70px;top:-285px;box-shadow:0 0 0 45px #ffffff04,0 0 0 90px #ffffff04,0 0 0 135px #ffffff03}
-.header-line{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:84px;border-bottom:1px solid #ffffff20}.brand-home{display:flex;align-items:center;gap:12px;color:white;font-size:16px;font-weight:700;letter-spacing:.02em}.brand-home:hover{text-decoration:none}.brand-home small{display:block;font-size:11px;letter-spacing:.1em;font-weight:400;color:#c1d6c6}.brand-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:10px;background:white;color:#14532d;position:relative}.brand-mark:after{content:"";width:11px;height:11px;border-radius:50%;background:#c83232;border:2px solid #14532d;position:absolute;top:-3px;right:-3px}.top-title{padding:25px 0 29px}.top-title .eyebrow{display:flex;align-items:center;gap:9px;letter-spacing:.15em;font-size:11px;margin-bottom:8px}.top-title .eyebrow:before{content:"";width:24px;height:3px;background:#ed6d6d}.top h1{font-size:34px;line-height:1.2}.top-title p{color:#cde2d1;font-size:14px;margin:9px 0 0}.topnav{position:relative;margin:0;flex-wrap:nowrap}.demo{background:#ffffff0a;border:1px solid #ffffff35;color:#e2eee4;border-radius:20px;font-size:11px}
-.portal-menu{margin:0;position:relative;color:#193223;font-size:14px;z-index:20}.portal-menu summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:10px 15px;border:1px solid #ffffff55;border-radius:10px;background:#ffffff14;color:white;font-size:14px;list-style:none;user-select:none}.portal-menu summary::-webkit-details-marker{display:none}.portal-menu summary:hover,.portal-menu[open] summary{background:#ffffff25;border-color:#ffffff99}.nav-icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}.chevron{width:14px;height:14px;transition:transform .15s}.portal-menu[open] .chevron{transform:rotate(180deg)}
-.portal-panel{position:absolute;right:0;top:calc(100% + 12px);width:304px;max-width:calc(100vw - 44px);max-height:65vh;overflow:auto;background:#fff;border:1px solid #dce6d8;border-radius:16px;box-shadow:0 18px 55px #102e1d30;padding:9px}.portal-caption{padding:9px 11px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#6b7c6a}.portal-panel a{display:flex;gap:11px;align-items:center;padding:10px 11px;min-height:43px;color:#294531;font-size:14px;border-radius:9px}.portal-panel a:hover{background:#f0f5ec;text-decoration:none}.portal-panel a[aria-current=page]{background:#e7f2e1;color:#1f682d;font-weight:700}.portal-panel a[aria-current=page]:after{content:"Atual";font-size:10px;font-weight:400;margin-left:auto;border:1px solid #c6dfbf;border-radius:12px;padding:2px 7px}.portal-panel .nav-end{border-top:1px solid #e5ece0;margin-top:5px;padding-top:7px}.portal-panel .nav-end a{color:#a43030}
-@media(max-width:650px){.top{padding:0 19px}.header-line{min-height:80px;gap:12px;flex-wrap:wrap;padding:17px 0}.brand-home{font-size:13px}.brand-home small{font-size:9px}.topnav{margin:0;margin-left:auto}.topnav .demo{display:none}.portal-menu summary{padding:9px 11px;gap:8px}.top h1{font-size:29px}.top-title{padding:22px 0}.top-title p{font-size:13px}}@media(prefers-reduced-motion:reduce){.chevron{transition:none}}@media print{.portal-panel{display:none}}
+      .top {
+         display: block;
+         position: relative;
+         z-index: 1;
+         isolation: isolate;
+         overflow: visible;
+         border-radius: 16px;
+         padding: 0 28px;
+         background: linear-gradient(112deg, #102e1d 0%, #14532d 58%, #287940 100%)
+      }
 
-/* Formulário de demandas, restrito a esta página. */
-.top{position:sticky;top:0;z-index:5}.top-title{padding:14px 0 17px}.top h1{font-size:27px}.header-line{min-height:66px}.top-title p{margin-top:5px}.wrap{padding-top:14px}.breadcrumb{font-size:13px;color:var(--muted);margin:20px 0 12px}.page-actions{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:20px}.page-actions h2{font-size:25px;margin:0}.page-actions p{font-size:14px;color:var(--muted);margin:5px 0}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #c6d7c1;border-radius:8px;padding:10px 15px;min-height:43px;background:white;color:#245b30;font-weight:600;cursor:pointer;font-size:14px}.btn.primary{background:#247b36;border-color:#247b36;color:white}.btn:disabled{opacity:.55;cursor:default}.local-note{font-size:13px;padding:12px 15px;background:#eef4e7;border-left:3px solid #8cac55;margin:15px 0}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:20px}.steps button{background:white;border:1px solid var(--line);border-radius:9px;display:flex;align-items:center;gap:9px;text-align:left;min-height:62px;padding:12px;color:#526752;cursor:pointer;font:inherit;font-size:13px}.steps b{border-radius:50%;background:#edf3e8;padding:4px 10px}.steps button[aria-current=step]{border-color:#247b36;background:#edf6e7;color:#205e2d}.steps button[aria-current=step] b{background:#247b36;color:white}.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px}.form-card{background:white;padding:23px;border:1px solid var(--line);border-radius:12px;margin-bottom:16px}.form-card h3{font-size:18px;margin:0 0 6px}.help{color:var(--muted);font-size:13px;margin-bottom:18px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.field{display:flex;flex-direction:column;gap:6px;font-size:14px;color:#304c37}.field label{font-weight:600}.field input,.field textarea,.field select{width:100%;font:inherit;font-size:14px;padding:10px;border:1px solid #c5d5c2;border-radius:7px;background:#fff;min-height:43px;color:#213f2a}.field input[readonly]{background:#f4f7ef;color:#536650}.field textarea{min-height:105px;resize:vertical}.field.wide{grid-column:1/-1}.field small{font-size:12px;color:#6b7c6c}.field.required label:after{content:" *";color:#a43030}.field input[type=checkbox]{width:18px;min-height:18px;accent-color:#247b36}.origin-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.origin-option{display:flex;align-items:center;gap:8px;border:1px solid #d5e1cd;border-radius:8px;padding:12px;font-size:13px;cursor:pointer}.origin-option:has(input:checked){border-color:#247b36;background:#eef6e7;color:#20582b}.origin-option input{accent-color:#247b36}.side-summary{position:sticky;top:205px;height:max-content;background:white;border:1px solid var(--line);border-radius:12px;padding:19px}.side-summary h3{font-size:16px;margin:0 0 15px}.side-summary dl{margin:0;font-size:13px}.side-summary dt{color:#6a7d6b;font-size:12px;margin-top:12px}.side-summary dd{margin:2px 0 0;font-weight:600;overflow-wrap:anywhere}.calc{background:#eaf5e3;border:1px solid #d2e5c4;border-radius:9px;padding:16px;margin-top:17px}.calc strong{font-size:29px;display:block;color:#205a2c}.warning{background:#fff4df;border-left:3px solid #b98026;padding:11px;font-size:13px;margin:12px 0 0}.warning.danger{background:#faeeea;border-color:#b53131;color:#92352f}.step-footer{display:flex;justify-content:space-between;gap:12px;margin:16px 0}.file-list{margin:7px 0 0;padding:0;list-style:none;font-size:12px}.file-list li{padding:7px;background:#f3f7ef;margin:5px 0;overflow-wrap:anywhere;display:flex;align-items:center;gap:9px;flex-wrap:wrap}.file-list button{border:0;background:none;text-decoration:underline;color:#32653c;cursor:pointer;font:inherit}.file-list span{flex:1}.review-section{margin-bottom:20px}.review-section h4{font-size:15px;color:#275d33;border-bottom:1px solid #dfe8db;padding-bottom:7px;margin:15px 0}.review-line{display:grid;grid-template-columns:minmax(150px,35%) 1fr;gap:12px;padding:7px 0;font-size:13px;border-bottom:1px solid #f0f3ed}.review-line span{color:#627764}.review-line b{font-weight:400;white-space:pre-wrap;overflow-wrap:anywhere}.confirm{display:flex;align-items:start;gap:10px;font-size:14px;padding:16px;background:#eef5e9;border-radius:8px}.confirm input{accent-color:#247b36;margin-top:4px}.messages{padding:13px 16px;background:#e9f3e2;border-left:3px solid #247b36;border-radius:5px;margin:15px 0;font-size:14px}.messages.error{border-color:#b53131;background:#fbefea;color:#85362e}.messages[hidden],[hidden]{display:none!important}.filters-list{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.filters-list label{font-size:13px;display:grid;gap:5px}.cards-list{display:grid;gap:12px}.request-card{background:white;border:1px solid var(--line);border-radius:10px;padding:19px;display:flex;align-items:center;justify-content:space-between;gap:15px}.request-card h3{font-size:16px;margin:0 0 7px}.request-card p{font-size:13px;margin:5px 0;color:#5d745f}.status-badge{background:#eaf2e3;color:#235a30;padding:4px 9px;border-radius:6px;font-size:12px}.profile{font-size:12px;color:#526d54}.judicial-title{color:#963732}fieldset{border:0;padding:0;margin:0;min-width:0}fieldset:disabled{opacity:.85}dialog{border:1px solid #cfddc7;border-radius:14px;max-width:460px;padding:25px;color:#23422b}dialog::backdrop{background:#102e1d70}dialog h3{margin-top:0}.live-rank{background:#f2f6ef;padding:12px;border-radius:8px;font-size:13px}
-@media(max-width:1000px){.form-layout{grid-template-columns:1fr}.side-summary{position:static;grid-row:1}.side-summary dl{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.side-summary dt{margin-top:0}.origin-choices{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.fields{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.form-card{padding:16px}.origin-choices{grid-template-columns:1fr}.top-title p{display:none}.top-title{padding:9px 0 13px}.top h1{font-size:22px}.top{top:0}.header-line{min-height:55px;padding:10px 0}.review-line{grid-template-columns:1fr;gap:2px}.request-card{align-items:start;flex-direction:column}.side-summary{display:none}.page-actions h2{font-size:22px}.profile{display:none}}
-</style></head><body><div class="wrap"><header class="top"><div class="header-art" aria-hidden="true"></div><div class="header-line"><a class="brand-home" href="inicio.html"><span class="brand-mark" aria-hidden="true">IF</span><span>CONCURSOS IFBA<small>GESTÃO INSTITUCIONAL</small></span></a><nav class="topnav" aria-label="Menu principal"><span class="demo">Dados demonstrativos</span><details class="portal-menu" id="portal-menu"><summary aria-controls="portal-links"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Navegar<svg class="nav-icon chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="portal-panel" id="portal-links"><div class="portal-caption">Portais do sistema</div><a href="inicio.html" data-icon="home">Início</a><a href="dashboard.html" data-icon="grid">Painel Geral</a><a href="docentes.html" data-icon="school">Concurso Docente</a><a href="tae.html" data-icon="brief">Concurso TAE</a><a href="demandas.html" aria-current="page" data-icon="folder">Demandas</a><a href="convocacoes.html" data-icon="calendar">Convocações</a><a href="cadastros.html" data-icon="users">Cadastros</a><a href="documentacao.html" data-icon="file">Documentação</a><div class="nav-end"><a href="index.html" data-icon="exit">Voltar ao login</a></div></div></details></nav></div><div class="top-title"><span class="eyebrow">PLANEJAMENTO E PROVIMENTO</span><h1>Demandas de vagas</h1><p>Registre a necessidade do campus e acompanhe a análise institucional.</p></div></header><main id="conteudo">
-<div class="breadcrumb"><a href="inicio.html">Início</a> / <a href="#lista" id="crumb-list">Demandas</a> <span id="crumb-new" hidden>/ Nova Demanda de Vaga</span></div>
-<p class="local-note">Demonstração local · rascunhos e anexos são armazenados somente neste navegador. “Enviar para análise” simula o protocolo; não envia informações à Reitoria.</p>
-<div id="message" class="messages" role="status" aria-live="polite" hidden></div>
-<section id="list-view">
-<div class="page-actions"><div><h2>Demandas do campus</h2><p>Consulte os registros e prepare uma nova solicitação de provimento.</p><span class="profile">Perfil desta demonstração: Direção de Ensino · vínculo ao campus será definido pela autenticação.</span></div><button class="btn primary" id="new">Nova demanda de vaga</button></div>
-<div class="filters-list"><label>Tipo<select id="list-type"><option value="">Todos</option><option>Docente</option><option>TAE</option></select></label><label>Situação<select id="list-status"><option value="">Todas</option></select></label></div><div id="requests" class="cards-list"></div>
-</section>
-<section id="form-view" hidden>
-<div class="page-actions"><div><h2 id="form-title">Nova Demanda de Vaga</h2><p>Informe a necessidade, fundamente o pedido e anexe os documentos para análise.</p></div><div class="actions"><button class="btn" id="draft">Salvar rascunho</button><button class="btn" id="cancel">Cancelar</button><button class="btn primary" id="send">Enviar para análise</button></div></div>
-<nav class="steps" aria-label="Etapas do cadastro"><button type="button" data-step="0"><b>1</b>Identificação da demanda</button><button type="button" data-step="1"><b>2</b>Perfil e justificativa</button><button type="button" data-step="2"><b>3</b>Anexos e documentos</button><button type="button" data-step="3"><b>4</b>Revisão e envio</button></nav>
-<div class="form-layout"><form id="form" novalidate><fieldset id="editable">
-<div data-page="0"><section class="form-card"><h3>Identificação da demanda</h3><p class="help">Campos com * são obrigatórios para envio. Rascunhos podem ser salvos incompletos.</p><div class="fields" id="identification"></div></section>
-<section class="form-card"><h3>Origem da necessidade</h3><p class="help">Selecione a origem principal. Informe os fatores complementares na justificativa.</p><div id="origins" class="origin-choices"></div><div class="fields" id="other-origin" hidden></div></section>
-<section class="form-card" id="judicial-card" hidden><h3 class="judicial-title">Cumprimento de decisão judicial</h3><p class="help">Todos os campos desta seção e o documento comprobatório são obrigatórios.</p><div class="fields" id="judicial"></div></section>
-<section class="form-card"><h3>Dados da vaga e disponibilidade</h3><div class="fields" id="vacancy"></div></section></div>
-<div data-page="1" hidden><section class="form-card" id="teacher-card"><h3>Dimensionamento da Demanda Docente</h3><p class="help">Informe horas semanais na mesma unidade. A cobertura efetiva é a soma da cobertura regular e da provisória, sem duplicar horas.</p><div class="fields" id="teacher"></div><div class="calc"><span>Carga horária semanal sem cobertura</span><strong id="hours">0 h/semana</strong><small id="formula"></small></div><div id="hours-alert" class="warning" hidden></div></section>
-<section class="form-card" id="tae-card" hidden><h3>Dimensionamento da Demanda TAE</h3><div class="fields" id="tae"></div></section>
-<section class="form-card"><h3>Justificativa e impacto institucional</h3><p class="help">Descreva o motivo, as consequências da não reposição, os impactos em cursos, estudantes ou serviços, a relação com o planejamento institucional e a fundamentação da prioridade.</p><div class="fields" id="justification"></div></section>
-<section class="form-card"><h3>Concurso e possibilidade de convocação</h3><p class="help">A indicação de candidato é informativa. A convocação deverá respeitar a ordem oficial e a elegibilidade, sem escolha livre pelo solicitante.</p><div class="fields" id="contest"></div><div class="fields" id="contest-details"></div><p class="live-rank">Próximo candidato elegível: <strong>a apurar pela lista oficial</strong>. Classificação original e posição atual: a apurar após integração. Não são preenchidas livremente pelo campus.</p><div class="warning" id="contest-alert" hidden></div></section></div>
-<div data-page="2" hidden><section class="form-card"><h3>Documentos e anexos</h3><p class="help">PDF, DOCX, XLSX, CSV, PNG ou JPG · até 10 MB por arquivo e 40 MB por demanda. Anexe ao menos um documento de solicitação. Para demanda Docente, anexe o planejamento de carga horária.</p><div class="fields" id="attachments"></div></section></div>
-<div data-page="3" hidden><section class="form-card"><h3>Revisão da demanda</h3><p class="help">Confira todas as informações antes de enviar. Utilize as etapas acima para corrigir os dados.</p><div id="review"></div><label class="confirm"><input type="checkbox" id="declaration">Declaro que as informações apresentadas são compatíveis com a necessidade institucional do campus e que os documentos comprobatórios foram anexados.</label></section></div>
-</fieldset><div class="step-footer"><button class="btn" type="button" id="prev">Voltar</button><button class="btn primary" type="button" id="next">Continuar</button></div></form>
-<aside class="side-summary" aria-label="Resumo atualizado da demanda"><h3>Resumo da demanda</h3><div id="summary"></div></aside></div>
-</section>
-<details><summary>Fluxo e permissões previstos na integração</summary><p>Direção de Ensino registra, edita rascunhos e submete demandas do próprio campus. Administrador acompanha a análise e os encaminhamentos; Operador e Leitor consultam conforme suas atribuições. O servidor deve validar o vínculo ao campus, a elegibilidade e as transições. O perfil não pode ser definido pelo navegador.</p><p id="workflow"></p><p>O número exibido é um identificador local provisório, não um protocolo oficial. O SQL inicial do projeto precisa de migração para contemplar este novo perfil, os campos, anexos, histórico e estados. Não execute o esquema antigo como se já implementasse esta tela.</p></details>
-<dialog id="cancel-dialog"><h3>Cancelar a edição?</h3><p>As alterações desde o último salvamento serão descartadas. O rascunho já salvo será preservado.</p><div class="actions"><button class="btn" id="keep-editing">Continuar editando</button><button class="btn" id="discard">Descartar alterações</button></div></dialog>
-</main><footer class="foot">IFBA · Planejamento e provimento de vagas <a href="inicio.html">Voltar ao início</a></footer></div><script>
-const $=id=>document.getElementById(id);
-const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const STATUSES=['Rascunho','Enviada pelo campus','Em análise técnica','Aguardando complementação','Priorizada','Aprovada','Aguardando código de vaga','Apta para convocação','Convocada','Em exercício','Atendida por remoção ou redistribuição','Atendida por contratação substituta','Suspensa','Indeferida'];
-const CAMPI=['Barreiras','Brumado','Camaçari','Campo Formoso','Euclides da Cunha','Eunápolis','Feira de Santana','Ilhéus','Irecê','Jacobina','Jaguaquara','Jequié','Juazeiro','Lauro de Freitas','Paulo Afonso','Poções','Porto Seguro','Salvador','Santo Amaro','Santo Antônio de Jesus','Seabra','Simões Filho','Ubaitaba','Valença','Vitória da Conquista'];
-const ORIGINS=['Vacância','Aposentadoria','Exoneração','Falecimento','Redistribuição','Criação ou expansão de curso','Aumento de matrícula','Afastamento ou licença','Reposição administrativa','Decisão judicial','Acordo judicial ou TAC','Determinação de órgão de controle','Reserva legal de vagas','Outra origem'];
-// Tuple: id, label, type/options, required, optional hint.
-const SECTIONS={
- identification:[
- ['number','Número da demanda','readonly'],['campus','Campus solicitante',CAMPI,true],['unit','Unidade ou setor demandante','text',true],['requester','Nome do solicitante','text',true],['email','E-mail institucional do solicitante','email',true],['date','Data de registro','readonly'],['type','Tipo de vaga',['Docente','TAE'],true],['modality','Modalidade',['Vaga efetiva','Substituto','Temporário','Redistribuição','Remoção','Outra'],true],['modalityOther','Descreva a outra modalidade','text'],['priority','Grau de prioridade',['Baixa','Média','Alta','Urgente','Cumprimento obrigatório'],true],['desiredDate','Prazo desejado para provimento','date'],['state','Situação da solicitação','readonly']],
- 'other-origin':[['originOther','Descreva a outra origem','text',true]],
- judicial:[['judicialNumber','Número do processo judicial','text',true],['court','Órgão julgador','text',true],['orderType','Tipo de determinação','text',true],['judicialDeadline','Prazo para cumprimento','date',true],['injunction','Existe liminar?',['Sim','Não'],true],['legalUnit','Unidade responsável pelo acompanhamento jurídico','text',true],['obligation','Descrição objetiva da obrigação','textarea',true],['judicialDoc','Decisão ou documento comprobatório','file',true]],
- vacancy:[['quantity','Quantidade de vagas demandadas','integer',true],['hasCode','Há código de vaga disponível?',['Sim','Não','Em análise'],true],['vacancyCode','Código de vaga','text'],['codeState','Situação do código',['Disponível','Ocupado','Bloqueado','Aguardando liberação','Inexistente'],true],['formerServer','Servidor anteriormente vinculado','text'],['vacancyDate','Data da vacância','date'],['sei','Processo SEI relacionado','text'],['alternative','Possibilidade de atendimento alternativo','textarea',false,'Indique redistribuição, remoção interna ou contratação substituta.'],['technicalNotes','Observações técnicas','textarea']],
- teacher:[['area','Área/subárea de conhecimento','text',true],['workCampus','Campus de exercício',CAMPI,true],['academicUnit','Departamento, coordenação ou área acadêmica','text',true],['courses','Cursos atendidos','textarea',true],['components','Componentes curriculares afetados','textarea',true],['shifts','Turno(s) de atuação','text',true,'Ex.: matutino, vespertino e noturno.'],['semesters','Semestre(s) impactado(s)','text',true,'Ex.: 2026.2 e 2027.1.'],['regime','Regime de trabalho requerido',['20h','40h','Dedicação Exclusiva'],true],['plannedHours','Carga horária semanal prevista no planejamento','hours',true],['coveredHours','Carga horária semanal já coberta (regular)','hours',true],['temporaryHours','Carga horária semanal coberta provisoriamente','hours',true],['totalHours','Carga horária total demandada para a área no campus','hours',true,'Informe o total semanal demandado, que poderá subsidiar mais de uma vaga.'],['students','Quantidade estimada de estudantes impactados','integer',true],['absentTeachers','Docentes afastados, em licença ou com previsão de desligamento','textarea',true,'Informe os casos ou registre “Não se aplica”.'],['adopted','Alternativas já adotadas pelo campus','textarea',true,'Redistribuição de carga, substituto, remanejamento interno ou oferta concentrada.'],['mandatoryRisk','Afeta componentes obrigatórios?',['Sim','Não'],true],['courseRisk','Pode comprometer a oferta regular dos cursos?',['Sim','Não'],true]],
- tae:[['role','Cargo','text',true],['level','Nível de classificação',['A','B','C','D','E'],true],['workUnit','Unidade ou setor de exercício','text',true],['technicalProfile','Perfil técnico desejado','textarea',true],['currentStaff','Quantidade atual de servidores no setor','integer',true],['neededStaff','Quantidade necessária para funcionamento adequado','integer',true],['activities','Atividades e processos afetados','textarea',true],['servicesRisk','Serviços com risco de interrupção','textarea',true],['publicServed','Público atendido','text',true],['taeAlternative','Possibilidade de redistribuição, remanejamento interno ou terceirização','textarea',true],['adminImpact','Justificativa do impacto administrativo','textarea',true]],
- justification:[['justificationText','Justificativa e impacto institucional','textarea',true]],
- contest:[['hasContest','Existe concurso vigente para o cargo ou área?',['Sim','Não','Em consulta'],true]],
- 'contest-details':[['notice','Edital vinculado','text'],['noticeRole','Área/cargo do edital','text'],['validity','Prazo de validade do concurso','date'],['hasCandidate','Há candidato homologado disponível?',['Sim','Não']],['listType','Tipo de lista',['AC — Ampla Concorrência','PP — Pretos e Pardos','PcD — Pessoa com Deficiência','Outra']],['candidateOtherCampus','Observação sobre candidato já em exercício em outro campus','textarea',false,'Candidato já nomeado/em exercício não fica elegível para nova convocação nesta consulta.'],['otherContest','Possibilidade de aproveitamento de concurso de outra instituição','textarea']],
- attachments:[['requestDoc','Documento de solicitação do campus','file',true],['planningDoc','Planejamento de carga horária ou matriz de oferta','file'],['vacancyDoc','Documento de vacância','file'],['opinionDoc','Parecer ou despacho','file'],['controlDoc','Decisão judicial, TAC ou documento de órgão de controle','file'],['seiDoc','Processo SEI','file'],['otherDocs','Outros documentos comprobatórios','file']]
-};
-const FILE_IDS=Object.values(SECTIONS).flat().filter(f=>f[2]==='file').map(f=>f[0]);
-let step=0,current=null,records=[],dirty=false,files={},db=null,busy=false;
-function localDate(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');}
-function notify(text,error=false){$('message').textContent=text;$('message').hidden=false;$('message').classList.toggle('error',error);}
-function makeFields(){
- for(const [section,fields] of Object.entries(SECTIONS)){
- $(section).innerHTML=fields.map(f=>{
- const [id,label,kind,required,hint]=f,wide=kind==='textarea'||kind==='file';let input;
- const common=' id="'+id+'" name="'+id+'" '+(required?'required ':'');
- if(Array.isArray(kind))input='<select'+common+'><option value="">Selecione</option>'+kind.map(x=>'<option>'+esc(x)+'</option>').join('')+'</select>';
- else if(kind==='textarea')input='<textarea'+common+' maxlength="10000"></textarea>';
- else if(kind==='file')input='<input'+common+' type="file" multiple accept=".pdf,.docx,.xlsx,.csv,.png,.jpg,.jpeg"><ul class="file-list" id="'+id+'-files"></ul>';
- else input='<input'+common+' type="'+(['integer','hours'].includes(kind)?'number':kind==='readonly'?'text':kind)+'" '+(kind==='readonly'?'readonly ':'')+(['integer','hours'].includes(kind)?'min="0" step="'+(kind==='integer'?'1':'0.5')+'" ':'')+(!['integer','hours','date'].includes(kind)?'maxlength="500"':'')+'>';
- return '<div class="field '+(wide?'wide ':'')+(required?'required':'')+'" data-field="'+id+'"><label for="'+id+'">'+esc(label)+'</label>'+input+(hint?'<small>'+esc(hint)+'</small>':'')+'</div>';
- }).join('');
- }
- $('origins').innerHTML=ORIGINS.map((o,i)=>'<label class="origin-option"><input type="radio" name="origin" value="'+esc(o)+'" id="origin-'+i+'">'+esc(o)+'</label>').join('');
- $('list-status').innerHTML+='<option>'+STATUSES.join('</option><option>')+'</option>';
- $('workflow').textContent='Situações suportadas: '+STATUSES.join(' · ')+'. Os encaminhamentos dependem da análise; esta relação não representa uma sequência obrigatória. As decisões de análise não são feitas pelo campus nesta tela.';
-}
-function origin(){return document.querySelector('[name=origin]:checked')?.value||'';}
-function num(id){return Number($(id).value||0);}
-function workload(){const planned=num('plannedHours'),regular=num('coveredHours'),temporary=num('temporaryHours');return {planned,covered:regular+temporary,gap:Math.max(0,Math.round((planned-regular-temporary)*100)/100),inconsistent:regular+temporary>planned};}
-function activeField(section,id){
- const teacher=$('type').value==='Docente',judicial=origin()==='Decisão judicial';
- if(section==='teacher'&&!teacher)return false;
- if(section==='tae'&&$('type').value!=='TAE')return false;
- if(section==='judicial'&&!judicial)return false;
- if(section==='other-origin'&&origin()!=='Outra origem')return false;
- if(id==='modalityOther'&&$('modality').value!=='Outra')return false;
- return true;
-}
-function mandatory(section,f){
- if(!activeField(section,f[0]))return false;
- if(f[0]==='planningDoc')return $('type').value==='Docente';
- if(f[0]==='vacancyCode')return $('hasCode').value==='Sim';
- if(['notice','noticeRole','validity','hasCandidate','listType'].includes(f[0]))return $('hasContest').value==='Sim';
- if(f[0]==='modalityOther')return $('modality').value==='Outra';
- return !!f[3];
-}
-function update(){
- const teacher=$('type').value==='Docente';
- $('teacher-card').hidden=!teacher;$('tae-card').hidden=$('type').value!=='TAE';
- $('judicial-card').hidden=origin()!=='Decisão judicial';$('other-origin').hidden=origin()!=='Outra origem';
- document.querySelector('[data-field=modalityOther]').hidden=$('modality').value!=='Outra';
- for(const [s,fields] of Object.entries(SECTIONS))for(const f of fields){
- const req=mandatory(s,f);$(f[0]).required=req;
- document.querySelector('[data-field="'+f[0]+'"]').classList.toggle('required',req);
- }
- const w=workload();$('hours').textContent=w.gap.toLocaleString('pt-BR')+' h/semana';
- $('formula').textContent=w.planned+' h previstas − ('+num('coveredHours')+' h regulares + '+num('temporaryHours')+' h provisórias) = '+(w.planned-w.covered)+' h.';
- const danger=$('mandatoryRisk').value==='Sim'||$('courseRisk').value==='Sim';
- $('hours-alert').hidden=!w.gap&&!w.inconsistent;
- $('hours-alert').classList.toggle('danger',danger||w.inconsistent);
- $('hours-alert').textContent=w.inconsistent?'A cobertura informada supera o planejamento. Revise os valores antes de enviar.':w.gap+' h semanais sem cobertura.'+(danger?' Há risco para componentes obrigatórios ou para a oferta regular.':' Descreva o impacto e as alternativas adotadas.');
- const expired=$('hasContest').value==='Sim'&&$('validity').value&&$('validity').value<localDate();
- $('contest-alert').hidden=!expired;$('contest-alert').textContent='A validade informada está vencida. Confira se houve prorrogação. A demanda pode ser analisada, mas não deve ser tratada como apta para convocação com base nesta validade.';
- const values=[['Tipo de vaga',$('type').value],['Campus',$('campus').value],['Área/cargo',teacher?$('area').value:$('role').value],['Origem',origin()],['Prioridade',$('priority').value],...(teacher?[['Carga sem cobertura',w.gap+' h/semana']]:[]),['Código de vaga',$('hasCode').value],['Concurso vigente',$('hasContest').value+(expired?' · validade vencida':'')],['Situação',current?.status||'Rascunho']];
- $('summary').innerHTML='<dl>'+values.map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v||'Não informado')+'</dd></div>').join('')+'</dl>';
- if(step===3)renderReview();
-}
-function collect(){
- const values={};for(const fields of Object.values(SECTIONS))for(const f of fields)if(f[2]!=='file')values[f[0]]=$(f[0]).value;
- values.origin=origin();values.declaration=$('declaration').checked;
- return values;
-}
-function snapshot(targetStatus){
- const values=collect(),storedFiles={};
- for(const [s,fields] of Object.entries(SECTIONS))for(const f of fields){
- if(!activeField(s,f[0])){delete values[f[0]];continue;}
- if(f[2]==='file')storedFiles[f[0]]=files[f[0]]||[];
- }
- values.state=targetStatus;
- return {...current,status:targetStatus,values,files:storedFiles,updatedAt:new Date().toISOString(),coverage:$('type').value==='Docente'?workload():null};
-}
-function renderReview(){
- const labels={identification:'Identificação da demanda',judicial:'Decisão judicial',vacancy:'Vaga e disponibilidade',teacher:'Dimensionamento Docente',tae:'Dimensionamento TAE',justification:'Justificativa',contest:'Concurso','contest-details':'Concurso e candidatos',attachments:'Documentos','other-origin':'Outra origem'};
- let html='<div class="review-line"><span>Origem da necessidade</span><b>'+esc(origin()||'Não informada')+'</b></div>';
- for(const [s,fields] of Object.entries(SECTIONS)){
- const visible=fields.filter(f=>activeField(s,f[0]));
- if(!visible.length)continue;
- html+='<div class="review-section"><h4>'+labels[s]+'</h4>'+visible.map(f=>{
- const value=f[2]==='file'?(files[f[0]]||[]).map(a=>a.name).join(', '):$(f[0]).value;
- return '<div class="review-line"><span>'+esc(f[1])+'</span><b>'+esc(value||'Não informado')+'</b></div>';
- }).join('')+'</div>';
- }
- if($('type').value==='Docente')html+='<div class="calc">Carga semanal sem cobertura<strong>'+workload().gap+' h/semana</strong></div>';
- if(current?.history?.length)html+='<div class="review-section"><h4>Histórico local</h4>'+current.history.map(h=>'<p class="help">'+esc(new Date(h.at).toLocaleString('pt-BR'))+' · '+esc(h.action)+' · '+esc(h.actor)+'</p>').join('')+'</div>';
- $('review').innerHTML=html;
-}
-function showStep(n){
- step=Math.max(0,Math.min(3,n));
- document.querySelectorAll('[data-page]').forEach(el=>el.hidden=Number(el.dataset.page)!==step);
- document.querySelectorAll('[data-step]').forEach(el=>{if(Number(el.dataset.step)===step)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');});
- $('prev').disabled=step===0;$('next').hidden=step===3;update();
-}
-function stepFor(section){return ['identification','judicial','vacancy','other-origin'].includes(section)?0:['teacher','tae','justification','contest','contest-details'].includes(section)?1:2;}
-function fail(message,id,section){
- showStep(stepFor(section));notify(message,true);
- $(id)?.focus();$(id)?.scrollIntoView({block:'center',behavior:'smooth'});return false;
-}
-function validate(){
- for(const [s,fields] of Object.entries(SECTIONS))for(const f of fields){
- if(!activeField(s,f[0]))continue;const el=$(f[0]),req=mandatory(s,f);
- if(f[2]==='file'){if(req&&!(files[f[0]]||[]).length)return fail('Anexe: '+f[1]+'.',f[0],s);continue;}
- if(req&&!el.value.trim())return fail('Preencha: '+f[1]+'.',f[0],s);
- if(el.value&&!el.checkValidity())return fail('Revise o campo: '+f[1]+'.',f[0],s);
- }
- if(!origin())return fail('Selecione a origem da necessidade.','origin-0','identification');
- if(num('quantity')<1)return fail('Informe ao menos uma vaga demandada.','quantity','vacancy');
- if($('type').value==='Docente'&&workload().inconsistent)return fail('A cobertura total não pode superar a carga horária prevista.','coveredHours','teacher');
- if($('hasCode').value==='Não'&&$('codeState').value==='Disponível')return fail('Há inconsistência entre ausência de código e situação disponível.','codeState','vacancy');
- if(!$('declaration').checked){showStep(3);notify('Revise as informações e marque a declaração antes de enviar.',true);$('declaration').focus();return false;}
- return true;
-}
-function openDatabase(){
- return new Promise((resolve,reject)=>{const req=indexedDB.open('ifba-demandas-demo-v1',1);req.onupgradeneeded=()=>req.result.createObjectStore('demands',{keyPath:'id'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});
-}
-function dbCall(mode,action){return new Promise((resolve,reject)=>{const tx=db.transaction('demands',mode);let result;const req=action(tx.objectStore('demands'));req.onsuccess=()=>result=req.result;tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('Gravação cancelada'));});}
-async function loadList(){
- records=await dbCall('readonly',s=>s.getAll());renderList();
-}
-function renderList(){
- const filtered=records.filter(r=>(!$('list-type').value||r.values.type===$('list-type').value)&&(!$('list-status').value||r.status===$('list-status').value)).sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
- $('requests').innerHTML=filtered.length?filtered.map(r=>'<article class="request-card"><div><h3>'+esc(r.values.number)+' · '+esc(r.values.type||'Tipo não informado')+'</h3><p>'+esc(r.values.campus||'Campus não informado')+' · '+esc(r.values.area||r.values.role||'Área/cargo não informado')+'</p><p>'+esc(r.values.origin||'Origem não informada')+' · Prioridade: '+esc(r.values.priority||'Não informada')+'</p><span class="status-badge">'+esc(r.status)+'</span></div><button class="btn" type="button" data-open="'+esc(r.id)+'">'+(r.status==='Rascunho'?'Editar rascunho':'Visualizar')+'</button></article>').join(''):'<div class="form-card"><h3>Nenhuma demanda neste recorte</h3><p class="help">Cadastre uma nova solicitação ou ajuste os filtros. Não há dados institucionais carregados.</p></div>';
-}
-function fileList(id){
- $(id+'-files').innerHTML=(files[id]||[]).map((f,i)=>'<li><span>'+esc(f.name)+' · '+Math.ceil(f.size/1024)+' KB</span><button type="button" data-download="'+id+'" data-index="'+i+'">Baixar</button>'+(current?.status==='Rascunho'?'<button type="button" data-remove="'+id+'" data-index="'+i+'">Remover</button>':'')+'</li>').join('');
-}
-function totalBytes(){return Object.values(files).flat().reduce((n,f)=>n+f.size,0);}
-function editable(){return current?.status==='Rascunho';}
-function openForm(record=null){
- $('form').reset();files={};dirty=false;
- const id=record?.id||crypto.randomUUID();
- current=record||{id,status:'Rascunho',createdAt:new Date().toISOString(),history:[],values:{number:'LOCAL-'+new Date().getFullYear()+'-'+id.slice(0,8).toUpperCase(),date:localDate(),type:'Docente',priority:'Média',state:'Rascunho'},files:{}};
- for(const fields of Object.values(SECTIONS))for(const f of fields){
- if(f[2]==='file'){files[f[0]]=[...(current.files[f[0]]||[])];fileList(f[0]);}
- else $(f[0]).value=current.values[f[0]]??'';
- }
- const radio=document.querySelector('[name=origin][value="'+(current.values.origin||'')+'"]');if(radio)radio.checked=true;
- $('declaration').checked=!!current.values.declaration;
- $('editable').disabled=false;
- $('editable').querySelectorAll('input,textarea,select,button').forEach(el=>el.disabled=!editable()&&!el.hasAttribute('data-download'));$('draft').hidden=!editable();$('send').hidden=!editable();$('cancel').textContent=editable()?'Cancelar':'Voltar às demandas';
- $('form-title').textContent=record?'Demanda de Vaga':'Nova Demanda de Vaga';
- $('list-view').hidden=true;$('form-view').hidden=false;$('crumb-new').hidden=false;$('message').hidden=true;
- showStep(editable()?0:3);
+      #conteudo {
+         position: relative;
+         z-index: 0
+      }
 
-}
-async function save(send){
- if(!editable()||busy)return;
- if(send&&!validate())return;
- if(!db){notify('Armazenamento local indisponível. Não foi possível salvar.',true);return;}
- busy=true;$('draft').disabled=true;$('send').disabled=true;
- try{
- const status=send?'Enviada pelo campus':'Rascunho',record=snapshot(status);
- record.history=[...(current.history||[]),{at:new Date().toISOString(),action:send?'Submissão simulada':'Rascunho salvo',status,actor:$('requester').value||'Direção de Ensino (demonstração)'}];
- await dbCall('readwrite',s=>s.put(record));current=record;dirty=false;await loadList();
- if(send){$('form-view').hidden=true;$('list-view').hidden=false;$('crumb-new').hidden=true;notify('Demanda salva como “Enviada pelo campus” nesta demonstração. Nenhum envio à Reitoria foi realizado.');}
- else notify('Rascunho e anexos salvos neste navegador.');
- }catch(e){notify('Não foi possível salvar. Verifique o espaço disponível ou as permissões do navegador. Os dados continuam no formulário.',true);}
- finally{busy=false;$('draft').disabled=false;$('send').disabled=false;}
-}
-function leave(){if(busy)return;$('form-view').hidden=true;$('list-view').hidden=false;$('crumb-new').hidden=true;dirty=false;current=null;renderList();}
-function cancel(){if(dirty&&editable())$('cancel-dialog').showModal();else leave();}
-makeFields();
-document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>showStep(Number(b.dataset.step))));
-$('prev').addEventListener('click',()=>showStep(step-1));$('next').addEventListener('click',()=>showStep(step+1));
-$('form').addEventListener('submit',e=>e.preventDefault());
-$('form').addEventListener('input',()=>{if(editable()){dirty=true;update();}});
-$('form').addEventListener('change',()=>{if(editable()){dirty=true;update();}});
-$('new').addEventListener('click',()=>openForm());
-$('draft').addEventListener('click',()=>save(false));$('send').addEventListener('click',()=>save(true));$('cancel').addEventListener('click',cancel);
-$('crumb-list').addEventListener('click',e=>{e.preventDefault();if(!$('form-view').hidden)cancel();});
-$('keep-editing').addEventListener('click',()=>$('cancel-dialog').close());$('discard').addEventListener('click',()=>{$('cancel-dialog').close();leave();});
-['list-type','list-status'].forEach(id=>$(id).addEventListener('change',renderList));
-$('requests').addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)openForm(records.find(r=>r.id===b.dataset.open));});
-for(const id of FILE_IDS)$(id).addEventListener('change',()=>{
- if(!editable())return;const added=Array.from($(id).files);
- if(added.some(f=>!/\.(pdf|docx|xlsx|csv|png|jpe?g)$/i.test(f.name)||f.size>10*1024*1024)||totalBytes()+added.reduce((n,f)=>n+f.size,0)>40*1024*1024){notify('Arquivo não aceito. Confira o formato e os limites de 10 MB por arquivo e 40 MB por demanda.',true);$(id).value='';return;}
- files[id]=[...(files[id]||[]),...added];$(id).value='';dirty=true;fileList(id);update();
-});
-document.addEventListener('click',e=>{
- const rm=e.target.closest('[data-remove]'),dl=e.target.closest('[data-download]');
- if(rm&&editable()){files[rm.dataset.remove].splice(Number(rm.dataset.index),1);fileList(rm.dataset.remove);dirty=true;update();}
- if(dl){const file=files[dl.dataset.download]?.[Number(dl.dataset.index)];if(file){const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}}
-});
-window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
-openDatabase().then(result=>{db=result;return loadList();}).catch(()=>{notify('Este navegador não disponibilizou o armazenamento local. Você pode preencher a tela, mas não salvar ou enviar nesta demonstração.',true);records=[];renderList();});
+      .header-art {
+         position: absolute;
+         inset: 0;
+         overflow: hidden;
+         border-radius: inherit;
+         z-index: -1;
+         pointer-events: none;
+         background: repeating-linear-gradient(150deg, transparent 0 90px, #ffffff04 91px 92px)
+      }
 
-const portalMenu=$('portal-menu'), portalTrigger=portalMenu.querySelector('summary');
-const navPaths={home:'M3 10 12 3l9 7M5 9v12h14V9M9 21v-7h6v7',grid:'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z',school:'M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4',brief:'M3 7h18v14H3ZM8 7V3h8v4M3 12l9 3 9-3',folder:'M3 20V5h7l2 3h9v12ZM7 12h10M7 16h7',calendar:'M4 5h16v16H4ZM8 3v4M16 3v4M4 11h16M8 15h3M8 18h7',users:'M9 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0M6 21v-3a6 6 0 0 1 12 0v3M3 19v-1a5 5 0 0 1 2-4M21 19v-1a5 5 0 0 0-2-4',file:'M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6',exit:'M10 4H4v16h6M10 12h11m-4-4 4 4-4 4'};
-portalMenu.querySelectorAll('[data-icon]').forEach(link=>{link.insertAdjacentHTML('afterbegin','<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="'+navPaths[link.dataset.icon]+'"/></svg>');});
-// Disclosure nativo: Enter/Espaço abre; Tab percorre links; Escape fecha e devolve foco.
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&portalMenu.open){portalMenu.open=false;portalTrigger.focus();}});
-document.addEventListener('click',event=>{if(portalMenu.open&&!portalMenu.contains(event.target))portalMenu.open=false;});
-document.addEventListener('focusin',event=>{if(portalMenu.open&&!portalMenu.contains(event.target))portalMenu.open=false;});
+      .header-art:after {
+         content: "";
+         position: absolute;
+         width: 460px;
+         height: 460px;
+         border: 1px solid #91c79a33;
+         border-radius: 50%;
+         right: -70px;
+         top: -285px;
+         box-shadow: 0 0 0 45px #ffffff04, 0 0 0 90px #ffffff04, 0 0 0 135px #ffffff03
+      }
 
-</script></body></html>
+      .header-line {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 20px;
+         min-height: 84px;
+         border-bottom: 1px solid #ffffff20
+      }
+
+      .brand-home {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         color: white;
+         font-size: 16px;
+         font-weight: 700;
+         letter-spacing: .02em
+      }
+
+      .brand-home:hover {
+         text-decoration: none
+      }
+
+      .brand-home small {
+         display: block;
+         font-size: 11px;
+         letter-spacing: .1em;
+         font-weight: 400;
+         color: #c1d6c6
+      }
+
+      .brand-mark {
+         width: 39px;
+         height: 39px;
+         display: grid;
+         place-items: center;
+         border-radius: 10px;
+         background: white;
+         color: #14532d;
+         position: relative
+      }
+
+      .brand-mark:after {
+         content: "";
+         width: 11px;
+         height: 11px;
+         border-radius: 50%;
+         background: #c83232;
+         border: 2px solid #14532d;
+         position: absolute;
+         top: -3px;
+         right: -3px
+      }
+
+      .top-title {
+         padding: 25px 0 29px
+      }
+
+      .top-title .eyebrow {
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         letter-spacing: .15em;
+         font-size: 11px;
+         margin-bottom: 8px
+      }
+
+      .top-title .eyebrow:before {
+         content: "";
+         width: 24px;
+         height: 3px;
+         background: #ed6d6d
+      }
+
+      .top h1 {
+         font-size: 34px;
+         line-height: 1.2
+      }
+
+      .top-title p {
+         color: #cde2d1;
+         font-size: 14px;
+         margin: 9px 0 0
+      }
+
+      .topnav {
+         position: relative;
+         margin: 0;
+         flex-wrap: nowrap
+      }
+
+      .demo {
+         background: #ffffff0a;
+         border: 1px solid #ffffff35;
+         color: #e2eee4;
+         border-radius: 20px;
+         font-size: 11px
+      }
+
+      .portal-menu {
+         margin: 0;
+         position: relative;
+         color: #193223;
+         font-size: 14px;
+         z-index: 20
+      }
+
+      .portal-menu summary {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 12px;
+         min-height: 44px;
+         padding: 10px 15px;
+         border: 1px solid #ffffff55;
+         border-radius: 10px;
+         background: #ffffff14;
+         color: white;
+         font-size: 14px;
+         list-style: none;
+         user-select: none
+      }
+
+      .portal-menu summary::-webkit-details-marker {
+         display: none
+      }
+
+      .portal-menu summary:hover,
+      .portal-menu[open] summary {
+         background: #ffffff25;
+         border-color: #ffffff99
+      }
+
+      .nav-icon {
+         width: 18px;
+         height: 18px;
+         fill: none;
+         stroke: currentColor;
+         stroke-width: 1.7;
+         stroke-linecap: round;
+         stroke-linejoin: round;
+         flex: none
+      }
+
+      .chevron {
+         width: 14px;
+         height: 14px;
+         transition: transform .15s
+      }
+
+      .portal-menu[open] .chevron {
+         transform: rotate(180deg)
+      }
+
+      .portal-panel {
+         position: absolute;
+         right: 0;
+         top: calc(100% + 12px);
+         width: 304px;
+         max-width: calc(100vw - 44px);
+         max-height: 65vh;
+         overflow: auto;
+         background: #fff;
+         border: 1px solid #dce6d8;
+         border-radius: 16px;
+         box-shadow: 0 18px 55px #102e1d30;
+         padding: 9px
+      }
+
+      .portal-caption {
+         padding: 9px 11px 10px;
+         font-size: 11px;
+         text-transform: uppercase;
+         letter-spacing: .13em;
+         color: #6b7c6a
+      }
+
+      .portal-panel a {
+         display: flex;
+         gap: 11px;
+         align-items: center;
+         padding: 10px 11px;
+         min-height: 43px;
+         color: #294531;
+         font-size: 14px;
+         border-radius: 9px
+      }
+
+      .portal-panel a:hover {
+         background: #f0f5ec;
+         text-decoration: none
+      }
+
+      .portal-panel a[aria-current=page] {
+         background: #e7f2e1;
+         color: #1f682d;
+         font-weight: 700
+      }
+
+      .portal-panel a[aria-current=page]:after {
+         content: "Atual";
+         font-size: 10px;
+         font-weight: 400;
+         margin-left: auto;
+         border: 1px solid #c6dfbf;
+         border-radius: 12px;
+         padding: 2px 7px
+      }
+
+      .portal-panel .nav-end {
+         border-top: 1px solid #e5ece0;
+         margin-top: 5px;
+         padding-top: 7px
+      }
+
+      .portal-panel .nav-end a {
+         color: #a43030
+      }
+
+      @media(max-width:650px) {
+         .top {
+            padding: 0 19px
+         }
+
+         .header-line {
+            min-height: 80px;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 17px 0
+         }
+
+         .brand-home {
+            font-size: 13px
+         }
+
+         .brand-home small {
+            font-size: 9px
+         }
+
+         .topnav {
+            margin: 0;
+            margin-left: auto
+         }
+
+         .topnav .demo {
+            display: none
+         }
+
+         .portal-menu summary {
+            padding: 9px 11px;
+            gap: 8px
+         }
+
+         .top h1 {
+            font-size: 29px
+         }
+
+         .top-title {
+            padding: 22px 0
+         }
+
+         .top-title p {
+            font-size: 13px
+         }
+      }
+
+      @media(prefers-reduced-motion:reduce) {
+         .chevron {
+            transition: none
+         }
+      }
+
+      @media print {
+         .portal-panel {
+            display: none
+         }
+      }
+
+      /* Formulário de demandas, restrito a esta página. */
+      .top {
+         position: sticky;
+         top: 0;
+         z-index: 5
+      }
+
+      .top-title {
+         padding: 14px 0 17px
+      }
+
+      .top h1 {
+         font-size: 27px
+      }
+
+      .header-line {
+         min-height: 66px
+      }
+
+      .top-title p {
+         margin-top: 5px
+      }
+
+      .wrap {
+         padding-top: 14px
+      }
+
+      .breadcrumb {
+         font-size: 13px;
+         color: var(--muted);
+         margin: 20px 0 12px
+      }
+
+      .page-actions {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 15px;
+         flex-wrap: wrap;
+         margin-bottom: 20px
+      }
+
+      .page-actions h2 {
+         font-size: 25px;
+         margin: 0
+      }
+
+      .page-actions p {
+         font-size: 14px;
+         color: var(--muted);
+         margin: 5px 0
+      }
+
+      .actions {
+         display: flex;
+         gap: 8px;
+         flex-wrap: wrap
+      }
+
+      .btn {
+         border: 1px solid #c6d7c1;
+         border-radius: 8px;
+         padding: 10px 15px;
+         min-height: 43px;
+         background: white;
+         color: #245b30;
+         font-weight: 600;
+         cursor: pointer;
+         font-size: 14px
+      }
+
+      .btn.primary {
+         background: #247b36;
+         border-color: #247b36;
+         color: white
+      }
+
+      .btn:disabled {
+         opacity: .55;
+         cursor: default
+      }
+
+      .local-note {
+         font-size: 13px;
+         padding: 12px 15px;
+         background: #eef4e7;
+         border-left: 3px solid #8cac55;
+         margin: 15px 0
+      }
+
+      .steps {
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         gap: 9px;
+         margin-bottom: 20px
+      }
+
+      .steps button {
+         background: white;
+         border: 1px solid var(--line);
+         border-radius: 9px;
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         text-align: left;
+         min-height: 62px;
+         padding: 12px;
+         color: #526752;
+         cursor: pointer;
+         font: inherit;
+         font-size: 13px
+      }
+
+      .steps b {
+         border-radius: 50%;
+         background: #edf3e8;
+         padding: 4px 10px
+      }
+
+      .steps button[aria-current=step] {
+         border-color: #247b36;
+         background: #edf6e7;
+         color: #205e2d
+      }
+
+      .steps button[aria-current=step] b {
+         background: #247b36;
+         color: white
+      }
+
+      .form-layout {
+         display: grid;
+         grid-template-columns: minmax(0, 1fr) 290px;
+         gap: 20px
+      }
+
+      .form-card {
+         background: white;
+         padding: 23px;
+         border: 1px solid var(--line);
+         border-radius: 12px;
+         margin-bottom: 16px
+      }
+
+      .form-card h3 {
+         font-size: 18px;
+         margin: 0 0 6px
+      }
+
+      .help {
+         color: var(--muted);
+         font-size: 13px;
+         margin-bottom: 18px
+      }
+
+      .fields {
+         display: grid;
+         grid-template-columns: repeat(2, minmax(0, 1fr));
+         gap: 17px
+      }
+
+      .field {
+         display: flex;
+         flex-direction: column;
+         gap: 6px;
+         font-size: 14px;
+         color: #304c37
+      }
+
+      .field label {
+         font-weight: 600
+      }
+
+      .field input,
+      .field textarea,
+      .field select {
+         width: 100%;
+         font: inherit;
+         font-size: 14px;
+         padding: 10px;
+         border: 1px solid #c5d5c2;
+         border-radius: 7px;
+         background: #fff;
+         min-height: 43px;
+         color: #213f2a
+      }
+
+      .field input[readonly] {
+         background: #f4f7ef;
+         color: #536650
+      }
+
+      .field textarea {
+         min-height: 105px;
+         resize: vertical
+      }
+
+      .field.wide {
+         grid-column: 1/-1
+      }
+
+      .field small {
+         font-size: 12px;
+         color: #6b7c6c
+      }
+
+      .field.required label:after {
+         content: " *";
+         color: #a43030
+      }
+
+      .field input[type=checkbox] {
+         width: 18px;
+         min-height: 18px;
+         accent-color: #247b36
+      }
+
+      .origin-choices {
+         display: grid;
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+         gap: 8px
+      }
+
+      .origin-option {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         border: 1px solid #d5e1cd;
+         border-radius: 8px;
+         padding: 12px;
+         font-size: 13px;
+         cursor: pointer
+      }
+
+      .origin-option:has(input:checked) {
+         border-color: #247b36;
+         background: #eef6e7;
+         color: #20582b
+      }
+
+      .origin-option input {
+         accent-color: #247b36
+      }
+
+      .side-summary {
+         position: sticky;
+         top: 205px;
+         height: max-content;
+         background: white;
+         border: 1px solid var(--line);
+         border-radius: 12px;
+         padding: 19px
+      }
+
+      .side-summary h3 {
+         font-size: 16px;
+         margin: 0 0 15px
+      }
+
+      .side-summary dl {
+         margin: 0;
+         font-size: 13px
+      }
+
+      .side-summary dt {
+         color: #6a7d6b;
+         font-size: 12px;
+         margin-top: 12px
+      }
+
+      .side-summary dd {
+         margin: 2px 0 0;
+         font-weight: 600;
+         overflow-wrap: anywhere
+      }
+
+      .calc {
+         background: #eaf5e3;
+         border: 1px solid #d2e5c4;
+         border-radius: 9px;
+         padding: 16px;
+         margin-top: 17px
+      }
+
+      .calc strong {
+         font-size: 29px;
+         display: block;
+         color: #205a2c
+      }
+
+      .warning {
+         background: #fff4df;
+         border-left: 3px solid #b98026;
+         padding: 11px;
+         font-size: 13px;
+         margin: 12px 0 0
+      }
+
+      .warning.danger {
+         background: #faeeea;
+         border-color: #b53131;
+         color: #92352f
+      }
+
+      .step-footer {
+         display: flex;
+         justify-content: space-between;
+         gap: 12px;
+         margin: 16px 0
+      }
+
+      .file-list {
+         margin: 7px 0 0;
+         padding: 0;
+         list-style: none;
+         font-size: 12px
+      }
+
+      .file-list li {
+         padding: 7px;
+         background: #f3f7ef;
+         margin: 5px 0;
+         overflow-wrap: anywhere;
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         flex-wrap: wrap
+      }
+
+      .file-list button {
+         border: 0;
+         background: none;
+         text-decoration: underline;
+         color: #32653c;
+         cursor: pointer;
+         font: inherit
+      }
+
+      .file-list span {
+         flex: 1
+      }
+
+      .review-section {
+         margin-bottom: 20px
+      }
+
+      .review-section h4 {
+         font-size: 15px;
+         color: #275d33;
+         border-bottom: 1px solid #dfe8db;
+         padding-bottom: 7px;
+         margin: 15px 0
+      }
+
+      .review-line {
+         display: grid;
+         grid-template-columns: minmax(150px, 35%) 1fr;
+         gap: 12px;
+         padding: 7px 0;
+         font-size: 13px;
+         border-bottom: 1px solid #f0f3ed
+      }
+
+      .review-line span {
+         color: #627764
+      }
+
+      .review-line b {
+         font-weight: 400;
+         white-space: pre-wrap;
+         overflow-wrap: anywhere
+      }
+
+      .confirm {
+         display: flex;
+         align-items: start;
+         gap: 10px;
+         font-size: 14px;
+         padding: 16px;
+         background: #eef5e9;
+         border-radius: 8px
+      }
+
+      .confirm input {
+         accent-color: #247b36;
+         margin-top: 4px
+      }
+
+      .messages {
+         padding: 13px 16px;
+         background: #e9f3e2;
+         border-left: 3px solid #247b36;
+         border-radius: 5px;
+         margin: 15px 0;
+         font-size: 14px
+      }
+
+      .messages.error {
+         border-color: #b53131;
+         background: #fbefea;
+         color: #85362e
+      }
+
+      .messages[hidden],
+      [hidden] {
+         display: none !important
+      }
+
+      .filters-list {
+         display: flex;
+         gap: 10px;
+         flex-wrap: wrap;
+         margin-bottom: 18px
+      }
+
+      .filters-list label {
+         font-size: 13px;
+         display: grid;
+         gap: 5px
+      }
+
+      .cards-list {
+         display: grid;
+         gap: 12px
+      }
+
+      .request-card {
+         background: white;
+         border: 1px solid var(--line);
+         border-radius: 10px;
+         padding: 19px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 15px
+      }
+
+      .request-card h3 {
+         font-size: 16px;
+         margin: 0 0 7px
+      }
+
+      .request-card p {
+         font-size: 13px;
+         margin: 5px 0;
+         color: #5d745f
+      }
+
+      .status-badge {
+         background: #eaf2e3;
+         color: #235a30;
+         padding: 4px 9px;
+         border-radius: 6px;
+         font-size: 12px
+      }
+
+      .profile {
+         font-size: 12px;
+         color: #526d54
+      }
+
+      .judicial-title {
+         color: #963732
+      }
+
+      fieldset {
+         border: 0;
+         padding: 0;
+         margin: 0;
+         min-width: 0
+      }
+
+      fieldset:disabled {
+         opacity: .85
+      }
+
+      dialog {
+         border: 1px solid #cfddc7;
+         border-radius: 14px;
+         max-width: 460px;
+         padding: 25px;
+         color: #23422b
+      }
+
+      dialog::backdrop {
+         background: #102e1d70
+      }
+
+      dialog h3 {
+         margin-top: 0
+      }
+
+      .live-rank {
+         background: #f2f6ef;
+         padding: 12px;
+         border-radius: 8px;
+         font-size: 13px
+      }
+
+      @media(max-width:1000px) {
+         .form-layout {
+            grid-template-columns: 1fr
+         }
+
+         .side-summary {
+            position: static;
+            grid-row: 1
+         }
+
+         .side-summary dl {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px
+         }
+
+         .side-summary dt {
+            margin-top: 0
+         }
+
+         .origin-choices {
+            grid-template-columns: repeat(2, 1fr)
+         }
+      }
+
+      @media(max-width:650px) {
+         .fields {
+            grid-template-columns: 1fr
+         }
+
+         .steps {
+            grid-template-columns: repeat(2, 1fr)
+         }
+
+         .form-card {
+            padding: 16px
+         }
+
+         .origin-choices {
+            grid-template-columns: 1fr
+         }
+
+         .top-title p {
+            display: none
+         }
+
+         .top-title {
+            padding: 9px 0 13px
+         }
+
+         .top h1 {
+            font-size: 22px
+         }
+
+         .top {
+            top: 0
+         }
+
+         .header-line {
+            min-height: 55px;
+            padding: 10px 0
+         }
+
+         .review-line {
+            grid-template-columns: 1fr;
+            gap: 2px
+         }
+
+         .request-card {
+            align-items: start;
+            flex-direction: column
+         }
+
+         .side-summary {
+            display: none
+         }
+
+         .page-actions h2 {
+            font-size: 22px
+         }
+
+         .profile {
+            display: none
+         }
+      }
+   </style>
+</head>
+
+<body>
+   <div class="wrap">
+      <header class="top">
+         <div class="header-art" aria-hidden="true"></div>
+         <div class="header-line"><a class="brand-home" href="inicio.html"><span class="brand-mark"
+                  aria-hidden="true">IF</span><span>CONCURSOS IFBA<small>GESTÃO INSTITUCIONAL</small></span></a>
+            <nav class="topnav" aria-label="Menu principal"><span class="demo">Dados demonstrativos</span>
+               <details class="portal-menu" id="portal-menu">
+                  <summary aria-controls="portal-links"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                     </svg>Navegar<svg class="nav-icon chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m6 9 6 6 6-6" />
+                     </svg></summary>
+                  <div class="portal-panel" id="portal-links">
+                     <div class="portal-caption">Portais do sistema</div><a href="inicio.html"
+                        data-icon="home">Início</a><a href="dashboard.html" data-icon="grid">Painel Geral</a><a
+                        href="docentes.html" data-icon="school">Concurso Docente</a><a href="tae.html"
+                        data-icon="brief">Concurso TAE</a><a href="demandas.html" aria-current="page"
+                        data-icon="folder">Demandas</a><a href="convocacoes.html" data-icon="calendar">Convocações</a><a
+                        href="cadastros.html" data-icon="users">Cadastros</a><a href="documentacao.html"
+                        data-icon="file">Documentação</a>
+                     <div class="nav-end"><a href="index.html" data-icon="exit">Voltar ao login</a></div>
+                  </div>
+               </details>
+            </nav>
+         </div>
+         <div class="top-title"><span class="eyebrow">PLANEJAMENTO E PROVIMENTO</span>
+            <h1>Demandas de vagas</h1>
+            <p>Registre a necessidade do campus e acompanhe a análise institucional.</p>
+         </div>
+      </header>
+      <main id="conteudo">
+         <div class="breadcrumb"><a href="inicio.html">Início</a> / <a href="#lista" id="crumb-list">Demandas</a> <span
+               id="crumb-new" hidden>/ Nova Demanda de Vaga</span></div>
+         <p class="local-note">Demonstração local · rascunhos e anexos são armazenados somente neste navegador. “Enviar
+            para análise” simula o protocolo; não envia informações à Reitoria.</p>
+         <div id="message" class="messages" role="status" aria-live="polite" hidden></div>
+         <section id="list-view">
+            <div class="page-actions">
+               <div>
+                  <h2>Demandas do campus</h2>
+                  <p>Consulte os registros e prepare uma nova solicitação de provimento.</p><span class="profile">Perfil
+                     desta demonstração: Direção de Ensino · vínculo ao campus será definido pela autenticação.</span>
+               </div><button class="btn primary" id="new">Nova demanda de vaga</button>
+            </div>
+            <div class="filters-list"><label>Tipo<select id="list-type">
+                     <option value="">Todos</option>
+                     <option>Docente</option>
+                     <option>TAE</option>
+                  </select></label><label>Situação<select id="list-status">
+                     <option value="">Todas</option>
+                  </select></label></div>
+            <div id="requests" class="cards-list"></div>
+         </section>
+         <section id="form-view" hidden>
+            <div class="page-actions">
+               <div>
+                  <h2 id="form-title">Nova Demanda de Vaga</h2>
+                  <p>Informe a necessidade, fundamente o pedido e anexe os documentos para análise.</p>
+               </div>
+               <div class="actions"><button class="btn" id="draft">Salvar rascunho</button><button class="btn"
+                     id="cancel">Cancelar</button><button class="btn primary" id="send">Enviar para análise</button>
+               </div>
+            </div>
+            <nav class="steps" aria-label="Etapas do cadastro"><button type="button" data-step="0"><b>1</b>Identificação
+                  da demanda</button><button type="button" data-step="1"><b>2</b>Perfil e justificativa</button><button
+                  type="button" data-step="2"><b>3</b>Anexos e documentos</button><button type="button"
+                  data-step="3"><b>4</b>Revisão e envio</button></nav>
+            <div class="form-layout">
+               <form id="form" novalidate>
+                  <fieldset id="editable">
+                     <div data-page="0">
+                        <section class="form-card">
+                           <h3>Identificação da demanda</h3>
+                           <p class="help">Campos com * são obrigatórios para envio. Rascunhos podem ser salvos
+                              incompletos.</p>
+                           <div class="fields" id="identification"></div>
+                        </section>
+                        <section class="form-card">
+                           <h3>Origem da necessidade</h3>
+                           <p class="help">Selecione a origem principal. Informe os fatores complementares na
+                              justificativa.</p>
+                           <div id="origins" class="origin-choices"></div>
+                           <div class="fields" id="other-origin" hidden></div>
+                        </section>
+                        <section class="form-card" id="judicial-card" hidden>
+                           <h3 class="judicial-title">Cumprimento de decisão judicial</h3>
+                           <p class="help">Todos os campos desta seção e o documento comprobatório são obrigatórios.</p>
+                           <div class="fields" id="judicial"></div>
+                        </section>
+                        <section class="form-card">
+                           <h3>Dados da vaga e disponibilidade</h3>
+                           <div class="fields" id="vacancy"></div>
+                        </section>
+                     </div>
+                     <div data-page="1" hidden>
+                        <section class="form-card" id="teacher-card">
+                           <h3>Dimensionamento da Demanda Docente</h3>
+                           <p class="help">Informe horas semanais na mesma unidade. A cobertura efetiva é a soma da
+                              cobertura regular e da provisória, sem duplicar horas.</p>
+                           <div class="fields" id="teacher"></div>
+                           <div class="calc"><span>Carga horária semanal sem cobertura</span><strong id="hours">0
+                                 h/semana</strong><small id="formula"></small></div>
+                           <div id="hours-alert" class="warning" hidden></div>
+                        </section>
+                        <section class="form-card" id="tae-card" hidden>
+                           <h3>Dimensionamento da Demanda TAE</h3>
+                           <div class="fields" id="tae"></div>
+                        </section>
+                        <section class="form-card">
+                           <h3>Justificativa e impacto institucional</h3>
+                           <p class="help">Descreva o motivo, as consequências da não reposição, os impactos em cursos,
+                              estudantes ou serviços, a relação com o planejamento institucional e a fundamentação da
+                              prioridade.</p>
+                           <div class="fields" id="justification"></div>
+                        </section>
+                        <section class="form-card">
+                           <h3>Concurso e possibilidade de convocação</h3>
+                           <p class="help">A indicação de candidato é informativa. A convocação deverá respeitar a ordem
+                              oficial e a elegibilidade, sem escolha livre pelo solicitante.</p>
+                           <div class="fields" id="contest"></div>
+                           <div class="fields" id="contest-details"></div>
+                           <p class="live-rank">Próximo candidato elegível: <strong>a apurar pela lista
+                                 oficial</strong>. Classificação original e posição atual: a apurar após integração. Não
+                              são preenchidas livremente pelo campus.</p>
+                           <div class="warning" id="contest-alert" hidden></div>
+                        </section>
+                     </div>
+                     <div data-page="2" hidden>
+                        <section class="form-card">
+                           <h3>Documentos e anexos</h3>
+                           <p class="help">PDF, DOCX, XLSX, CSV, PNG ou JPG · até 10 MB por arquivo e 40 MB por demanda.
+                              Anexe ao menos um documento de solicitação. Para demanda Docente, anexe o planejamento de
+                              carga horária.</p>
+                           <div class="fields" id="attachments"></div>
+                        </section>
+                     </div>
+                     <div data-page="3" hidden>
+                        <section class="form-card">
+                           <h3>Revisão da demanda</h3>
+                           <p class="help">Confira todas as informações antes de enviar. Utilize as etapas acima para
+                              corrigir os dados.</p>
+                           <div id="review"></div><label class="confirm"><input type="checkbox" id="declaration">Declaro
+                              que as informações apresentadas são compatíveis com a necessidade institucional do campus
+                              e que os documentos comprobatórios foram anexados.</label>
+                        </section>
+                     </div>
+                  </fieldset>
+                  <div class="step-footer"><button class="btn" type="button" id="prev">Voltar</button><button
+                        class="btn primary" type="button" id="next">Continuar</button></div>
+               </form>
+               <aside class="side-summary" aria-label="Resumo atualizado da demanda">
+                  <h3>Resumo da demanda</h3>
+                  <div id="summary"></div>
+               </aside>
+            </div>
+         </section>
+         <details>
+            <summary>Fluxo e permissões previstos na integração</summary>
+            <p class="local-note"><a href="demandas-fluxo.html">Avalie um simulador interativo dos fluxo e estados de
+                  uma demanda cadastrada.</a></p>
+            <p>Direção de Ensino registra, edita rascunhos e submete demandas do próprio campus. Administrador acompanha
+               a análise e os encaminhamentos; Operador e Leitor consultam conforme suas atribuições. O servidor deve
+               validar o vínculo ao campus, a elegibilidade e as transições. O perfil não pode ser definido pelo
+               navegador.</p>
+            <p id="workflow"></p>
+            <p>O número exibido é um identificador local provisório, não um protocolo oficial. O SQL inicial do projeto
+               precisa de migração para contemplar este novo perfil, os campos, anexos, histórico e estados. Não execute
+               o esquema antigo como se já implementasse esta tela.</p>
+         </details>
+         <dialog id="cancel-dialog">
+            <h3>Cancelar a edição?</h3>
+            <p>As alterações desde o último salvamento serão descartadas. O rascunho já salvo será preservado.</p>
+            <div class="actions"><button class="btn" id="keep-editing">Continuar editando</button><button class="btn"
+                  id="discard">Descartar alterações</button></div>
+         </dialog>
+      </main>
+      <footer class="foot">IFBA · Planejamento e provimento de vagas <a href="inicio.html">Voltar ao início</a></footer>
+   </div>
+   <script>
+      const $ = id => document.getElementById(id);
+      const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const STATUSES = ['Rascunho', 'Enviada pelo campus', 'Em análise técnica', 'Aguardando complementação', 'Priorizada', 'Aprovada', 'Aguardando código de vaga', 'Apta para convocação', 'Convocada', 'Em exercício', 'Atendida por remoção ou redistribuição', 'Atendida por contratação substituta', 'Suspensa', 'Indeferida'];
+      const CAMPI = ['Barreiras', 'Brumado', 'Camaçari', 'Campo Formoso', 'Euclides da Cunha', 'Eunápolis', 'Feira de Santana', 'Ilhéus', 'Irecê', 'Jacobina', 'Jaguaquara', 'Jequié', 'Juazeiro', 'Lauro de Freitas', 'Paulo Afonso', 'Poções', 'Porto Seguro', 'Salvador', 'Santo Amaro', 'Santo Antônio de Jesus', 'Seabra', 'Simões Filho', 'Ubaitaba', 'Valença', 'Vitória da Conquista'];
+      const ORIGINS = ['Vacância', 'Aposentadoria', 'Exoneração', 'Falecimento', 'Redistribuição', 'Criação ou expansão de curso', 'Aumento de matrícula', 'Afastamento ou licença', 'Reposição administrativa', 'Decisão judicial', 'Acordo judicial ou TAC', 'Determinação de órgão de controle', 'Reserva legal de vagas', 'Outra origem'];
+      // Tuple: id, label, type/options, required, optional hint.
+      const SECTIONS = {
+         identification: [
+            ['number', 'Número da demanda', 'readonly'], ['campus', 'Campus solicitante', CAMPI, true], ['unit', 'Unidade ou setor demandante', 'text', true], ['requester', 'Nome do solicitante', 'text', true], ['email', 'E-mail institucional do solicitante', 'email', true], ['date', 'Data de registro', 'readonly'], ['type', 'Tipo de vaga', ['Docente', 'TAE'], true], ['modality', 'Modalidade', ['Vaga efetiva', 'Substituto', 'Temporário', 'Redistribuição', 'Remoção', 'Outra'], true], ['modalityOther', 'Descreva a outra modalidade', 'text'], ['priority', 'Grau de prioridade', ['Baixa', 'Média', 'Alta', 'Urgente', 'Cumprimento obrigatório'], true], ['desiredDate', 'Prazo desejado para provimento', 'date'], ['state', 'Situação da solicitação', 'readonly']],
+         'other-origin': [['originOther', 'Descreva a outra origem', 'text', true]],
+         judicial: [['judicialNumber', 'Número do processo judicial', 'text', true], ['court', 'Órgão julgador', 'text', true], ['orderType', 'Tipo de determinação', 'text', true], ['judicialDeadline', 'Prazo para cumprimento', 'date', true], ['injunction', 'Existe liminar?', ['Sim', 'Não'], true], ['legalUnit', 'Unidade responsável pelo acompanhamento jurídico', 'text', true], ['obligation', 'Descrição objetiva da obrigação', 'textarea', true], ['judicialDoc', 'Decisão ou documento comprobatório', 'file', true]],
+         vacancy: [['quantity', 'Quantidade de vagas demandadas', 'integer', true], ['hasCode', 'Há código de vaga disponível?', ['Sim', 'Não', 'Em análise'], true], ['vacancyCode', 'Código de vaga', 'text'], ['codeState', 'Situação do código', ['Disponível', 'Ocupado', 'Bloqueado', 'Aguardando liberação', 'Inexistente'], true], ['formerServer', 'Servidor anteriormente vinculado', 'text'], ['vacancyDate', 'Data da vacância', 'date'], ['sei', 'Processo SEI relacionado', 'text'], ['alternative', 'Possibilidade de atendimento alternativo', 'textarea', false, 'Indique redistribuição, remoção interna ou contratação substituta.'], ['technicalNotes', 'Observações técnicas', 'textarea']],
+         teacher: [['area', 'Área/subárea de conhecimento', 'text', true], ['workCampus', 'Campus de exercício', CAMPI, true], ['academicUnit', 'Departamento, coordenação ou área acadêmica', 'text', true], ['courses', 'Cursos atendidos', 'textarea', true], ['components', 'Componentes curriculares afetados', 'textarea', true], ['shifts', 'Turno(s) de atuação', 'text', true, 'Ex.: matutino, vespertino e noturno.'], ['semesters', 'Semestre(s) impactado(s)', 'text', true, 'Ex.: 2026.2 e 2027.1.'], ['regime', 'Regime de trabalho requerido', ['20h', '40h', 'Dedicação Exclusiva'], true], ['plannedHours', 'Carga horária semanal prevista no planejamento', 'hours', true], ['coveredHours', 'Carga horária semanal já coberta (regular)', 'hours', true], ['temporaryHours', 'Carga horária semanal coberta provisoriamente', 'hours', true], ['totalHours', 'Carga horária total demandada para a área no campus', 'hours', true, 'Informe o total semanal demandado, que poderá subsidiar mais de uma vaga.'], ['students', 'Quantidade estimada de estudantes impactados', 'integer', true], ['absentTeachers', 'Docentes afastados, em licença ou com previsão de desligamento', 'textarea', true, 'Informe os casos ou registre “Não se aplica”.'], ['adopted', 'Alternativas já adotadas pelo campus', 'textarea', true, 'Redistribuição de carga, substituto, remanejamento interno ou oferta concentrada.'], ['mandatoryRisk', 'Afeta componentes obrigatórios?', ['Sim', 'Não'], true], ['courseRisk', 'Pode comprometer a oferta regular dos cursos?', ['Sim', 'Não'], true]],
+         tae: [['role', 'Cargo', 'text', true], ['level', 'Nível de classificação', ['A', 'B', 'C', 'D', 'E'], true], ['workUnit', 'Unidade ou setor de exercício', 'text', true], ['technicalProfile', 'Perfil técnico desejado', 'textarea', true], ['currentStaff', 'Quantidade atual de servidores no setor', 'integer', true], ['neededStaff', 'Quantidade necessária para funcionamento adequado', 'integer', true], ['activities', 'Atividades e processos afetados', 'textarea', true], ['servicesRisk', 'Serviços com risco de interrupção', 'textarea', true], ['publicServed', 'Público atendido', 'text', true], ['taeAlternative', 'Possibilidade de redistribuição, remanejamento interno ou terceirização', 'textarea', true], ['adminImpact', 'Justificativa do impacto administrativo', 'textarea', true]],
+         justification: [['justificationText', 'Justificativa e impacto institucional', 'textarea', true]],
+         contest: [['hasContest', 'Existe concurso vigente para o cargo ou área?', ['Sim', 'Não', 'Em consulta'], true]],
+         'contest-details': [['notice', 'Edital vinculado', 'text'], ['noticeRole', 'Área/cargo do edital', 'text'], ['validity', 'Prazo de validade do concurso', 'date'], ['hasCandidate', 'Há candidato homologado disponível?', ['Sim', 'Não']], ['listType', 'Tipo de lista', ['AC — Ampla Concorrência', 'PP — Pretos e Pardos', 'PcD — Pessoa com Deficiência', 'Outra']], ['candidateOtherCampus', 'Observação sobre candidato já em exercício em outro campus', 'textarea', false, 'Candidato já nomeado/em exercício não fica elegível para nova convocação nesta consulta.'], ['otherContest', 'Possibilidade de aproveitamento de concurso de outra instituição', 'textarea']],
+         attachments: [['requestDoc', 'Documento de solicitação do campus', 'file', true], ['planningDoc', 'Planejamento de carga horária ou matriz de oferta', 'file'], ['vacancyDoc', 'Documento de vacância', 'file'], ['opinionDoc', 'Parecer ou despacho', 'file'], ['controlDoc', 'Decisão judicial, TAC ou documento de órgão de controle', 'file'], ['seiDoc', 'Processo SEI', 'file'], ['otherDocs', 'Outros documentos comprobatórios', 'file']]
+      };
+      const FILE_IDS = Object.values(SECTIONS).flat().filter(f => f[2] === 'file').map(f => f[0]);
+      let step = 0, current = null, records = [], dirty = false, files = {}, db = null, busy = false;
+      function localDate() { const d = new Date(); return [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-'); }
+      function notify(text, error = false) { $('message').textContent = text; $('message').hidden = false; $('message').classList.toggle('error', error); }
+      function makeFields() {
+         for (const [section, fields] of Object.entries(SECTIONS)) {
+            $(section).innerHTML = fields.map(f => {
+               const [id, label, kind, required, hint] = f, wide = kind === 'textarea' || kind === 'file'; let input;
+               const common = ' id="' + id + '" name="' + id + '" ' + (required ? 'required ' : '');
+               if (Array.isArray(kind)) input = '<select' + common + '><option value="">Selecione</option>' + kind.map(x => '<option>' + esc(x) + '</option>').join('') + '</select>';
+               else if (kind === 'textarea') input = '<textarea' + common + ' maxlength="10000"></textarea>';
+               else if (kind === 'file') input = '<input' + common + ' type="file" multiple accept=".pdf,.docx,.xlsx,.csv,.png,.jpg,.jpeg"><ul class="file-list" id="' + id + '-files"></ul>';
+               else input = '<input' + common + ' type="' + (['integer', 'hours'].includes(kind) ? 'number' : kind === 'readonly' ? 'text' : kind) + '" ' + (kind === 'readonly' ? 'readonly ' : '') + (['integer', 'hours'].includes(kind) ? 'min="0" step="' + (kind === 'integer' ? '1' : '0.5') + '" ' : '') + (!['integer', 'hours', 'date'].includes(kind) ? 'maxlength="500"' : '') + '>';
+               return '<div class="field ' + (wide ? 'wide ' : '') + (required ? 'required' : '') + '" data-field="' + id + '"><label for="' + id + '">' + esc(label) + '</label>' + input + (hint ? '<small>' + esc(hint) + '</small>' : '') + '</div>';
+            }).join('');
+         }
+         $('origins').innerHTML = ORIGINS.map((o, i) => '<label class="origin-option"><input type="radio" name="origin" value="' + esc(o) + '" id="origin-' + i + '">' + esc(o) + '</label>').join('');
+         $('list-status').innerHTML += '<option>' + STATUSES.join('</option><option>') + '</option>';
+         $('workflow').textContent = 'Situações suportadas: ' + STATUSES.join(' · ') + '. Os encaminhamentos dependem da análise; esta relação não representa uma sequência obrigatória. As decisões de análise não são feitas pelo campus nesta tela.';
+      }
+      function origin() { return document.querySelector('[name=origin]:checked')?.value || ''; }
+      function num(id) { return Number($(id).value || 0); }
+      function workload() { const planned = num('plannedHours'), regular = num('coveredHours'), temporary = num('temporaryHours'); return { planned, covered: regular + temporary, gap: Math.max(0, Math.round((planned - regular - temporary) * 100) / 100), inconsistent: regular + temporary > planned }; }
+      function activeField(section, id) {
+         const teacher = $('type').value === 'Docente', judicial = origin() === 'Decisão judicial';
+         if (section === 'teacher' && !teacher) return false;
+         if (section === 'tae' && $('type').value !== 'TAE') return false;
+         if (section === 'judicial' && !judicial) return false;
+         if (section === 'other-origin' && origin() !== 'Outra origem') return false;
+         if (id === 'modalityOther' && $('modality').value !== 'Outra') return false;
+         return true;
+      }
+      function mandatory(section, f) {
+         if (!activeField(section, f[0])) return false;
+         if (f[0] === 'planningDoc') return $('type').value === 'Docente';
+         if (f[0] === 'vacancyCode') return $('hasCode').value === 'Sim';
+         if (['notice', 'noticeRole', 'validity', 'hasCandidate', 'listType'].includes(f[0])) return $('hasContest').value === 'Sim';
+         if (f[0] === 'modalityOther') return $('modality').value === 'Outra';
+         return !!f[3];
+      }
+      function update() {
+         const teacher = $('type').value === 'Docente';
+         $('teacher-card').hidden = !teacher; $('tae-card').hidden = $('type').value !== 'TAE';
+         $('judicial-card').hidden = origin() !== 'Decisão judicial'; $('other-origin').hidden = origin() !== 'Outra origem';
+         document.querySelector('[data-field=modalityOther]').hidden = $('modality').value !== 'Outra';
+         for (const [s, fields] of Object.entries(SECTIONS)) for (const f of fields) {
+            const req = mandatory(s, f); $(f[0]).required = req;
+            document.querySelector('[data-field="' + f[0] + '"]').classList.toggle('required', req);
+         }
+         const w = workload(); $('hours').textContent = w.gap.toLocaleString('pt-BR') + ' h/semana';
+         $('formula').textContent = w.planned + ' h previstas − (' + num('coveredHours') + ' h regulares + ' + num('temporaryHours') + ' h provisórias) = ' + (w.planned - w.covered) + ' h.';
+         const danger = $('mandatoryRisk').value === 'Sim' || $('courseRisk').value === 'Sim';
+         $('hours-alert').hidden = !w.gap && !w.inconsistent;
+         $('hours-alert').classList.toggle('danger', danger || w.inconsistent);
+         $('hours-alert').textContent = w.inconsistent ? 'A cobertura informada supera o planejamento. Revise os valores antes de enviar.' : w.gap + ' h semanais sem cobertura.' + (danger ? ' Há risco para componentes obrigatórios ou para a oferta regular.' : ' Descreva o impacto e as alternativas adotadas.');
+         const expired = $('hasContest').value === 'Sim' && $('validity').value && $('validity').value < localDate();
+         $('contest-alert').hidden = !expired; $('contest-alert').textContent = 'A validade informada está vencida. Confira se houve prorrogação. A demanda pode ser analisada, mas não deve ser tratada como apta para convocação com base nesta validade.';
+         const values = [['Tipo de vaga', $('type').value], ['Campus', $('campus').value], ['Área/cargo', teacher ? $('area').value : $('role').value], ['Origem', origin()], ['Prioridade', $('priority').value], ...(teacher ? [['Carga sem cobertura', w.gap + ' h/semana']] : []), ['Código de vaga', $('hasCode').value], ['Concurso vigente', $('hasContest').value + (expired ? ' · validade vencida' : '')], ['Situação', current?.status || 'Rascunho']];
+         $('summary').innerHTML = '<dl>' + values.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd>' + esc(v || 'Não informado') + '</dd></div>').join('') + '</dl>';
+         if (step === 3) renderReview();
+      }
+      function collect() {
+         const values = {}; for (const fields of Object.values(SECTIONS)) for (const f of fields) if (f[2] !== 'file') values[f[0]] = $(f[0]).value;
+         values.origin = origin(); values.declaration = $('declaration').checked;
+         return values;
+      }
+      function snapshot(targetStatus) {
+         const values = collect(), storedFiles = {};
+         for (const [s, fields] of Object.entries(SECTIONS)) for (const f of fields) {
+            if (!activeField(s, f[0])) { delete values[f[0]]; continue; }
+            if (f[2] === 'file') storedFiles[f[0]] = files[f[0]] || [];
+         }
+         values.state = targetStatus;
+         return { ...current, status: targetStatus, values, files: storedFiles, updatedAt: new Date().toISOString(), coverage: $('type').value === 'Docente' ? workload() : null };
+      }
+      function renderReview() {
+         const labels = { identification: 'Identificação da demanda', judicial: 'Decisão judicial', vacancy: 'Vaga e disponibilidade', teacher: 'Dimensionamento Docente', tae: 'Dimensionamento TAE', justification: 'Justificativa', contest: 'Concurso', 'contest-details': 'Concurso e candidatos', attachments: 'Documentos', 'other-origin': 'Outra origem' };
+         let html = '<div class="review-line"><span>Origem da necessidade</span><b>' + esc(origin() || 'Não informada') + '</b></div>';
+         for (const [s, fields] of Object.entries(SECTIONS)) {
+            const visible = fields.filter(f => activeField(s, f[0]));
+            if (!visible.length) continue;
+            html += '<div class="review-section"><h4>' + labels[s] + '</h4>' + visible.map(f => {
+               const value = f[2] === 'file' ? (files[f[0]] || []).map(a => a.name).join(', ') : $(f[0]).value;
+               return '<div class="review-line"><span>' + esc(f[1]) + '</span><b>' + esc(value || 'Não informado') + '</b></div>';
+            }).join('') + '</div>';
+         }
+         if ($('type').value === 'Docente') html += '<div class="calc">Carga semanal sem cobertura<strong>' + workload().gap + ' h/semana</strong></div>';
+         if (current?.history?.length) html += '<div class="review-section"><h4>Histórico local</h4>' + current.history.map(h => '<p class="help">' + esc(new Date(h.at).toLocaleString('pt-BR')) + ' · ' + esc(h.action) + ' · ' + esc(h.actor) + '</p>').join('') + '</div>';
+         $('review').innerHTML = html;
+      }
+      function showStep(n) {
+         step = Math.max(0, Math.min(3, n));
+         document.querySelectorAll('[data-page]').forEach(el => el.hidden = Number(el.dataset.page) !== step);
+         document.querySelectorAll('[data-step]').forEach(el => { if (Number(el.dataset.step) === step) el.setAttribute('aria-current', 'step'); else el.removeAttribute('aria-current'); });
+         $('prev').disabled = step === 0; $('next').hidden = step === 3; update();
+      }
+      function stepFor(section) { return ['identification', 'judicial', 'vacancy', 'other-origin'].includes(section) ? 0 : ['teacher', 'tae', 'justification', 'contest', 'contest-details'].includes(section) ? 1 : 2; }
+      function fail(message, id, section) {
+         showStep(stepFor(section)); notify(message, true);
+         $(id)?.focus(); $(id)?.scrollIntoView({ block: 'center', behavior: 'smooth' }); return false;
+      }
+      function validate() {
+         for (const [s, fields] of Object.entries(SECTIONS)) for (const f of fields) {
+            if (!activeField(s, f[0])) continue; const el = $(f[0]), req = mandatory(s, f);
+            if (f[2] === 'file') { if (req && !(files[f[0]] || []).length) return fail('Anexe: ' + f[1] + '.', f[0], s); continue; }
+            if (req && !el.value.trim()) return fail('Preencha: ' + f[1] + '.', f[0], s);
+            if (el.value && !el.checkValidity()) return fail('Revise o campo: ' + f[1] + '.', f[0], s);
+         }
+         if (!origin()) return fail('Selecione a origem da necessidade.', 'origin-0', 'identification');
+         if (num('quantity') < 1) return fail('Informe ao menos uma vaga demandada.', 'quantity', 'vacancy');
+         if ($('type').value === 'Docente' && workload().inconsistent) return fail('A cobertura total não pode superar a carga horária prevista.', 'coveredHours', 'teacher');
+         if ($('hasCode').value === 'Não' && $('codeState').value === 'Disponível') return fail('Há inconsistência entre ausência de código e situação disponível.', 'codeState', 'vacancy');
+         if (!$('declaration').checked) { showStep(3); notify('Revise as informações e marque a declaração antes de enviar.', true); $('declaration').focus(); return false; }
+         return true;
+      }
+      function openDatabase() {
+         return new Promise((resolve, reject) => { const req = indexedDB.open('ifba-demandas-demo-v1', 1); req.onupgradeneeded = () => req.result.createObjectStore('demands', { keyPath: 'id' }); req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error); });
+      }
+      function dbCall(mode, action) { return new Promise((resolve, reject) => { const tx = db.transaction('demands', mode); let result; const req = action(tx.objectStore('demands')); req.onsuccess = () => result = req.result; tx.oncomplete = () => resolve(result); tx.onerror = () => reject(tx.error); tx.onabort = () => reject(tx.error || new Error('Gravação cancelada')); }); }
+      async function loadList() {
+         records = await dbCall('readonly', s => s.getAll()); renderList();
+      }
+      function renderList() {
+         const filtered = records.filter(r => (!$('list-type').value || r.values.type === $('list-type').value) && (!$('list-status').value || r.status === $('list-status').value)).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+         $('requests').innerHTML = filtered.length ? filtered.map(r => '<article class="request-card"><div><h3>' + esc(r.values.number) + ' · ' + esc(r.values.type || 'Tipo não informado') + '</h3><p>' + esc(r.values.campus || 'Campus não informado') + ' · ' + esc(r.values.area || r.values.role || 'Área/cargo não informado') + '</p><p>' + esc(r.values.origin || 'Origem não informada') + ' · Prioridade: ' + esc(r.values.priority || 'Não informada') + '</p><span class="status-badge">' + esc(r.status) + '</span></div><button class="btn" type="button" data-open="' + esc(r.id) + '">' + (r.status === 'Rascunho' ? 'Editar rascunho' : 'Visualizar') + '</button></article>').join('') : '<div class="form-card"><h3>Nenhuma demanda neste recorte</h3><p class="help">Cadastre uma nova solicitação ou ajuste os filtros. Não há dados institucionais carregados.</p></div>';
+      }
+      function fileList(id) {
+         $(id + '-files').innerHTML = (files[id] || []).map((f, i) => '<li><span>' + esc(f.name) + ' · ' + Math.ceil(f.size / 1024) + ' KB</span><button type="button" data-download="' + id + '" data-index="' + i + '">Baixar</button>' + (current?.status === 'Rascunho' ? '<button type="button" data-remove="' + id + '" data-index="' + i + '">Remover</button>' : '') + '</li>').join('');
+      }
+      function totalBytes() { return Object.values(files).flat().reduce((n, f) => n + f.size, 0); }
+      function editable() { return current?.status === 'Rascunho'; }
+      function openForm(record = null) {
+         $('form').reset(); files = {}; dirty = false;
+         const id = record?.id || crypto.randomUUID();
+         current = record || { id, status: 'Rascunho', createdAt: new Date().toISOString(), history: [], values: { number: 'LOCAL-' + new Date().getFullYear() + '-' + id.slice(0, 8).toUpperCase(), date: localDate(), type: 'Docente', priority: 'Média', state: 'Rascunho' }, files: {} };
+         for (const fields of Object.values(SECTIONS)) for (const f of fields) {
+            if (f[2] === 'file') { files[f[0]] = [...(current.files[f[0]] || [])]; fileList(f[0]); }
+            else $(f[0]).value = current.values[f[0]] ?? '';
+         }
+         const radio = document.querySelector('[name=origin][value="' + (current.values.origin || '') + '"]'); if (radio) radio.checked = true;
+         $('declaration').checked = !!current.values.declaration;
+         $('editable').disabled = false;
+         $('editable').querySelectorAll('input,textarea,select,button').forEach(el => el.disabled = !editable() && !el.hasAttribute('data-download')); $('draft').hidden = !editable(); $('send').hidden = !editable(); $('cancel').textContent = editable() ? 'Cancelar' : 'Voltar às demandas';
+         $('form-title').textContent = record ? 'Demanda de Vaga' : 'Nova Demanda de Vaga';
+         $('list-view').hidden = true; $('form-view').hidden = false; $('crumb-new').hidden = false; $('message').hidden = true;
+         showStep(editable() ? 0 : 3);
+
+      }
+      async function save(send) {
+         if (!editable() || busy) return;
+         if (send && !validate()) return;
+         if (!db) { notify('Armazenamento local indisponível. Não foi possível salvar.', true); return; }
+         busy = true; $('draft').disabled = true; $('send').disabled = true;
+         try {
+            const status = send ? 'Enviada pelo campus' : 'Rascunho', record = snapshot(status);
+            record.history = [...(current.history || []), { at: new Date().toISOString(), action: send ? 'Submissão simulada' : 'Rascunho salvo', status, actor: $('requester').value || 'Direção de Ensino (demonstração)' }];
+            await dbCall('readwrite', s => s.put(record)); current = record; dirty = false; await loadList();
+            if (send) { $('form-view').hidden = true; $('list-view').hidden = false; $('crumb-new').hidden = true; notify('Demanda salva como “Enviada pelo campus” nesta demonstração. Nenhum envio à Reitoria foi realizado.'); }
+            else notify('Rascunho e anexos salvos neste navegador.');
+         } catch (e) { notify('Não foi possível salvar. Verifique o espaço disponível ou as permissões do navegador. Os dados continuam no formulário.', true); }
+         finally { busy = false; $('draft').disabled = false; $('send').disabled = false; }
+      }
+      function leave() { if (busy) return; $('form-view').hidden = true; $('list-view').hidden = false; $('crumb-new').hidden = true; dirty = false; current = null; renderList(); }
+      function cancel() { if (dirty && editable()) $('cancel-dialog').showModal(); else leave(); }
+      makeFields();
+      document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => showStep(Number(b.dataset.step))));
+      $('prev').addEventListener('click', () => showStep(step - 1)); $('next').addEventListener('click', () => showStep(step + 1));
+      $('form').addEventListener('submit', e => e.preventDefault());
+      $('form').addEventListener('input', () => { if (editable()) { dirty = true; update(); } });
+      $('form').addEventListener('change', () => { if (editable()) { dirty = true; update(); } });
+      $('new').addEventListener('click', () => openForm());
+      $('draft').addEventListener('click', () => save(false)); $('send').addEventListener('click', () => save(true)); $('cancel').addEventListener('click', cancel);
+      $('crumb-list').addEventListener('click', e => { e.preventDefault(); if (!$('form-view').hidden) cancel(); });
+      $('keep-editing').addEventListener('click', () => $('cancel-dialog').close()); $('discard').addEventListener('click', () => { $('cancel-dialog').close(); leave(); });
+      ['list-type', 'list-status'].forEach(id => $(id).addEventListener('change', renderList));
+      $('requests').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openForm(records.find(r => r.id === b.dataset.open)); });
+      for (const id of FILE_IDS) $(id).addEventListener('change', () => {
+         if (!editable()) return; const added = Array.from($(id).files);
+         if (added.some(f => !/\.(pdf|docx|xlsx|csv|png|jpe?g)$/i.test(f.name) || f.size > 10 * 1024 * 1024) || totalBytes() + added.reduce((n, f) => n + f.size, 0) > 40 * 1024 * 1024) { notify('Arquivo não aceito. Confira o formato e os limites de 10 MB por arquivo e 40 MB por demanda.', true); $(id).value = ''; return; }
+         files[id] = [...(files[id] || []), ...added]; $(id).value = ''; dirty = true; fileList(id); update();
+      });
+      document.addEventListener('click', e => {
+         const rm = e.target.closest('[data-remove]'), dl = e.target.closest('[data-download]');
+         if (rm && editable()) { files[rm.dataset.remove].splice(Number(rm.dataset.index), 1); fileList(rm.dataset.remove); dirty = true; update(); }
+         if (dl) { const file = files[dl.dataset.download]?.[Number(dl.dataset.index)]; if (file) { const url = URL.createObjectURL(file), a = document.createElement('a'); a.href = url; a.download = file.name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); } }
+      });
+      window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+      openDatabase().then(result => { db = result; return loadList(); }).catch(() => { notify('Este navegador não disponibilizou o armazenamento local. Você pode preencher a tela, mas não salvar ou enviar nesta demonstração.', true); records = []; renderList(); });
+
+      const portalMenu = $('portal-menu'), portalTrigger = portalMenu.querySelector('summary');
+      const navPaths = { home: 'M3 10 12 3l9 7M5 9v12h14V9M9 21v-7h6v7', grid: 'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z', school: 'M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4', brief: 'M3 7h18v14H3ZM8 7V3h8v4M3 12l9 3 9-3', folder: 'M3 20V5h7l2 3h9v12ZM7 12h10M7 16h7', calendar: 'M4 5h16v16H4ZM8 3v4M16 3v4M4 11h16M8 15h3M8 18h7', users: 'M9 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0M6 21v-3a6 6 0 0 1 12 0v3M3 19v-1a5 5 0 0 1 2-4M21 19v-1a5 5 0 0 0-2-4', file: 'M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6', exit: 'M10 4H4v16h6M10 12h11m-4-4 4 4-4 4' };
+      portalMenu.querySelectorAll('[data-icon]').forEach(link => { link.insertAdjacentHTML('afterbegin', '<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + navPaths[link.dataset.icon] + '"/></svg>'); });
+      // Disclosure nativo: Enter/Espaço abre; Tab percorre links; Escape fecha e devolve foco.
+      document.addEventListener('keydown', event => { if (event.key === 'Escape' && portalMenu.open) { portalMenu.open = false; portalTrigger.focus(); } });
+      document.addEventListener('click', event => { if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false; });
+      document.addEventListener('focusin', event => { if (portalMenu.open && !portalMenu.contains(event.target)) portalMenu.open = false; });
+
+   </script>
+</body>
+
+</html>
