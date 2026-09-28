@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const TYPES = ["Implantação de curso", "Reformulação do PPC", "Alteração Menor Relevância do PPC", "Suspensão da oferta", "Estudo de viabilidade", "Atualização do PPC", "Reconhecimento de curso"];
+  const TYPES = ["Implantação de curso", "Reformulação do PPC", "Alteração Menor Relevância do PPC", "Suspensão da oferta", "Estudo de viabilidade", "Reconhecimento de curso"];
   const STAGES = ["Mapeamento inicial", "Elaboração pelo campus", "Análise técnica PROEN", "Solicitação ajustes ao campus", "Diligência ao campus", "Aguardando CONSEPE", "Relatado no CONSEPE", "Resolução emitida", "Concluído"];
   const UNITS = ["Campus", "PROEN", "PROEN - DPE", "PROEN - DESUP", "PROEN - DETEC", "PROEX - Curricularização", "CONSEPE"];
   const CONSEPE = ["Não encaminhado", "Preparação para envio", "Na Câmara de Ensino", "Em análise pelo relator", "Em análise", "Pauta agendada", "Aprovado", "Aprovado com ressalvas", "Aguardando emissão de Resolução", "Resolução emitida"];
