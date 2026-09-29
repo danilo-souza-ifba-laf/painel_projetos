@@ -1,0 +1,223 @@
+<div class="mapa-ifba-container" style="font-family: 'Segoe UI', Arial, sans-serif; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 900px; margin: 20px auto;">
+  
+  <!-- Cabeçalho e Filtros -->
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h2 style="color: #006633; margin: 0 0 10px 0; font-size: 24px;">Mapa da Rede IFBA por Tipologia</h2>
+    <p style="color: #555; font-size: 14px; margin: 0 0 20px 0;">Clique sobre a bolinha do campus para ver o Ato Autorizativo. Utilize os botões abaixo para filtrar.</p>
+    
+    <!-- Botões de Filtro -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+      <button onclick="filtrarTipologia('todos')" style="background: #212529; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer;">Todos os Campi (27)</button>
+      <button onclick="filtrarTipologia('350/200')" style="background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer;">🔴 Tipologia 350/200</button>
+      <button onclick="filtrarTipologia('90/60')" style="background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer;">🔵 Tipologia 90/60</button>
+      <button onclick="filtrarTipologia('70/45')" style="background: #e8f5e9; color: #006633; border: 1px solid #c8e6c9; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer;">🟢 Tipologia 70/45</button>
+      <button onclick="filtrarTipologia('40/26')" style="background: #fff8e1; color: #854d0e; border: 1px solid #ffe082; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer;">🟡 Tipologia 40/26</button>
+    </div>
+  </div>
+
+  <!-- Área do Mapa com a Imagem de Fundo -->
+  <div style="position: relative; background: #ffffff; border-radius: 8px; border: 1px solid #cbd5e1; overflow: hidden; max-width: 800px; margin: 0 auto;">
+    
+    <!-- IMAGEM DE FUNDO DO ESTADO DA BAHIA (A MESMA QUE VOCÊ ENVIOU) -->
+    <!-- SUBSTITUA O 'src' ABAIXO PELO LINK DA IMAGEM NO SEU PLONE -->
+<img src="mapabahia.png"
+     alt="Mapa das Regiões da Bahia"
+     style="width: 100%; height: auto; display: block; opacity: 0.6;" />
+    <!-- PINOS DOS CAMPI POSICIONADOS SOBRE A IMAGEM -->
+    
+    <!-- 🔵 90/60 (Azul) -->
+    <div class="ponto-campus tip-90-60" onclick="mostrarInfo('Barreiras', '90/60', '#1565C0', '#E3F2FD', 'PORTARIA Nº 1.135, DE 19 DE AGOSTO DE 1994', 'assets/files/barreiras.pdf')" style="position: absolute; top: 38%; left: 16%; cursor: pointer; transform: translate(-50%, -50%);" title="Barreiras">
+      <div style="width: 16px; height: 16px; background-color: #1565C0; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold; color: #1e293b; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Barreiras</span>
+    </div>
+
+    <div class="ponto-campus tip-90-60" onclick="mostrarInfo('Eunápolis', '90/60', '#1565C0', '#E3F2FD', 'PORTARIA Nº 1.719, DE 15 DE DEZEMBRO DE 1994', 'assets/files/vitoria_eunapolis_valenca.pdf')" style="position: absolute; top: 82%; left: 71%; cursor: pointer; transform: translate(-50%, -50%);" title="Eunápolis">
+      <div style="width: 16px; height: 16px; background-color: #1565C0; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold; color: #1e293b; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Eunápolis</span>
+    </div>
+
+    <div class="ponto-campus tip-90-60" onclick="mostrarInfo('Valença', '90/60', '#1565C0', '#E3F2FD', 'PORTARIA Nº 1.720, DE 15 DE DEZEMBRO DE 1994', 'assets/files/vitoria_eunapolis_valenca.pdf')" style="position: absolute; top: 51%; left: 74%; cursor: pointer; transform: translate(-50%, -50%);" title="Valença">
+      <div style="width: 16px; height: 16px; background-color: #1565C0; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold; color: #1e293b; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Valença</span>
+    </div>
+
+    <div class="ponto-campus tip-90-60" onclick="mostrarInfo('Vitória da Conquista', '90/60', '#1565C0', '#E3F2FD', 'PORTARIA Nº 1.718, DE 15 DE DEZEMBRO DE 1994', 'assets/files/vitoria_eunapolis_valenca.pdf')" style="position: absolute; top: 66%; left: 56%; cursor: pointer; transform: translate(-50%, -50%);" title="Vitória da Conquista">
+      <div style="width: 16px; height: 16px; background-color: #1565C0; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold; color: #1e293b; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">V. da Conquista</span>
+    </div>
+
+    <!-- 🟢 70/45 (Verde IFBA) -->
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Brumado', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 993, DE 7 DE OUTUBRO DE 2013', 'assets/files/brumado.pdf')" style="position: absolute; top: 59%; left: 47%; cursor: pointer; transform: translate(-50%, -50%);" title="Brumado">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Camaçari', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 937, DE 1º DE OUTUBRO DE 2007', 'assets/files/camacari.pdf')" style="position: absolute; top: 43%; left: 81%; cursor: pointer; transform: translate(-50%, -50%);" title="Camaçari">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Euclides da Cunha', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 27, DE 21 DE JANEIRO DE 2015', 'assets/files/euclides_juazeiro_ubaitaba.pdf')" style="position: absolute; top: 22%; left: 74%; cursor: pointer; transform: translate(-50%, -50%);" title="Euclides da Cunha">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Euc. da Cunha</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Feira de Santana', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 806, DE 22 DE JUNHO DE 2011', 'assets/files/jacobina_ilheus_feira.pdf')" style="position: absolute; top: 40%; left: 74%; cursor: pointer; transform: translate(-50%, -50%);" title="Feira de Santana">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Feira de Santana</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Ilhéus', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 806, DE 22 DE JUNHO DE 2011', 'assets/files/jacobina_ilheus_feira.pdf')" style="position: absolute; top: 66%; left: 74%; cursor: pointer; transform: translate(-50%, -50%);" title="Ilhéus">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Ilhéus</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Irecê', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 1.366, DE 6 DE DEZEMBRO DE 2010', 'assets/files/irece_seabra_jequie.pdf')" style="position: absolute; top: 30%; left: 45%; cursor: pointer; transform: translate(-50%, -50%);" title="Irecê">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Irecê</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Itabuna', '70/45', '#006633', '#E8F5E9', 'PORTARIA MEC Nº 591, DE 3 DE JULHO DE 2026', 'assets/files/itabuna.pdf')" style="position: absolute; top: 65%; left: 71%; cursor: pointer; transform: translate(-50%, -50%);" title="Itabuna">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Itabuna</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Jacobina', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 806, DE 22 DE JUNHO DE 2011', 'assets/files/jacobina_ilheus_feira.pdf')" style="position: absolute; top: 29%; left: 59%; cursor: pointer; transform: translate(-50%, -50%);" title="Jacobina">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Jacobina</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Jequié', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 1.366, DE 6 DE DEZEMBRO DE 2010', 'assets/files/irece_seabra_jequie.pdf')" style="position: absolute; top: 56%; left: 63%; cursor: pointer; transform: translate(-50%, -50%);" title="Jequié">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Jequié</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Juazeiro', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 27, DE 21 DE JANEIRO DE 2015', 'assets/files/euclides_juazeiro_ubaitaba.pdf')" style="position: absolute; top: 11%; left: 59%; cursor: pointer; transform: translate(-50%, -50%);" title="Juazeiro">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Juazeiro</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Lauro de Freitas', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 378, DE 9 DE MAIO DE 2016', 'assets/files/lauro_santo_antonio.pdf')" style="position: absolute; top: 45%; left: 81%; cursor: pointer; transform: translate(-50%, -50%);" title="Lauro de Freitas">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Paulo Afonso', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 105, DE 29 DE JANEIRO DE 2010', 'assets/files/paulo_afonso.pdf')" style="position: absolute; top: 11%; left: 82%; cursor: pointer; transform: translate(-50%, -50%);" title="Paulo Afonso">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Paulo Afonso</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Poções', '70/45', '#006633', '#E8F5E9', 'PORTARIA MEC Nº 267, DE 24 DE MARÇO DE 2026', 'assets/files/pocoes.pdf')" style="position: absolute; top: 62%; left: 60%; cursor: pointer; transform: translate(-50%, -50%);" title="Poções">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Poções</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Porto Seguro', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 1.981, DE 18 DE DEZEMBRO DE 2006', 'resolveuid/596b1bf99f1b45d782256739e81ea125')" style="position: absolute; top: 83%; left: 76%; cursor: pointer; transform: translate(-50%, -50%);" title="Porto Seguro">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Porto Seguro</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Santo Amaro', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 1.187, DE 23 DE JUNHO DE 2006', 'assets/files/santo_amaro.pdf')" style="position: absolute; top: 41%; left: 77%; cursor: pointer; transform: translate(-50%, -50%);" title="Santo Amaro">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Santo Antônio de Jesus', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 378, DE 9 DE MAIO DE 2016', 'assets/files/lauro_santo_antonio.pdf')" style="position: absolute; top: 46%; left: 72%; cursor: pointer; transform: translate(-50%, -50%);" title="Santo Antônio de Jesus">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">S. A. de Jesus</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Seabra', '70/45', '#006633', '#E8F5E9', 'PORTARIA Nº 1.366, DE 6 DE DEZEMBRO DE 2010', 'assets/files/irece_seabra_jequie.pdf')" style="position: absolute; top: 40%; left: 46%; cursor: pointer; transform: translate(-50%, -50%);" title="Seabra">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Seabra</span>
+    </div>
+
+    <div class="ponto-campus tip-70-45" onclick="mostrarInfo('Simões Filho', '70/45', '#006633', '#E8F5E9', 'assets/files/porto_simoes.pdf')" style="position: absolute; top: 44%; left: 80%; cursor: pointer; transform: translate(-50%, -50%);" title="Simões Filho">
+      <div style="width: 14px; height: 14px; background-color: #006633; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+    </div>
+
+    <!-- 🟡 40/26 (Amarelo) -->
+    <div class="ponto-campus tip-40-26" onclick="mostrarInfo('Campo Formoso', '40/26', '#854D0E', '#FFF8E1', 'PORTARIA Nº 2.166, DE 28 DE DEZEMBRO DE 2023', 'assets/files/campo_formoso_e_jaguaquara.pdf')" style="position: absolute; top: 22%; left: 61%; cursor: pointer; transform: translate(-50%, -50%);" title="Campo Formoso">
+      <div style="width: 14px; height: 14px; background-color: #EAB308; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">C. Formoso</span>
+    </div>
+
+    <div class="ponto-campus tip-40-26" onclick="mostrarInfo('Jaguaquara', '40/26', '#854D0E', '#FFF8E1', 'PORTARIA Nº 2.166, DE 28 DE DEZEMBRO DE 2023', 'assets/files/campo_formoso_e_jaguaquara.pdf')" style="position: absolute; top: 52%; left: 64%; cursor: pointer; transform: translate(-50%, -50%);" title="Jaguaquara">
+      <div style="width: 14px; height: 14px; background-color: #EAB308; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Jaguaquara</span>
+    </div>
+
+    <div class="ponto-campus tip-40-26" onclick="mostrarInfo('Macaúbas', '40/26', '#854D0E', '#FFF8E1', 'PORTARIA MEC Nº 733, DE 26 DE SETEMBRO DE 2026', 'assets/files/macaubas.pdf')" style="position: absolute; top: 47%; left: 39%; cursor: pointer; transform: translate(-50%, -50%);" title="Macaúbas">
+      <div style="width: 14px; height: 14px; background-color: #EAB308; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Macaúbas</span>
+    </div>
+
+    <div class="ponto-campus tip-40-26" onclick="mostrarInfo('Ubaitaba', '40/26', '#854D0E', '#FFF8E1', 'PORTARIA Nº 27/2015 e MEC Nº 666/2026', 'assets/files/ubaitaba.pdf')" style="position: absolute; top: 60%; left: 71%; cursor: pointer; transform: translate(-50%, -50%);" title="Ubaitaba">
+      <div style="width: 14px; height: 14px; background-color: #EAB308; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>
+      <span style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: #334155; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Ubaitaba</span>
+    </div>
+
+    <!-- 🔴 350/200 Salvador (Vermelho) -->
+    <div class="ponto-campus tip-350-200" onclick="mostrarInfo('Salvador', '350/200', '#C62828', '#FFEEBE', 'LEI Nº 8.670, DE 30 DE JUNHO DE 1993', 'assets/files/salvador.pdf')" style="position: absolute; top: 46%; left: 79%; cursor: pointer; transform: translate(-50%, -50%); z-index: 5;" title="Salvador">
+      <div style="width: 20px; height: 20px; background-color: #DC2626; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.4);"></div>
+      <span style="position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-size: 13px; font-weight: bold; color: #DC2626; text-shadow: 1px 1px 2px #fff; white-space: nowrap;">Salvador</span>
+    </div>
+
+    <!-- Card/Popup de Informações Flutuante -->
+    <div id="card-info-campus" style="display: none; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; max-width: 400px; background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); border-top: 6px solid #006633; z-index: 10; text-align: left;">
+      <button onclick="fecharCard()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; color: #999; cursor: pointer; padding: 0;">&times;</button>
+      <h3 id="card-titulo" style="margin: 0 0 10px 0; color: #006633; font-size: 18px;">Nome do Campus</h3>
+      <div style="margin-bottom: 12px;">
+        <span id="card-badge" style="display: inline-block; padding: 4px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">Tipologia</span>
+      </div>
+      <div style="font-size: 14px; color: #444; border-top: 1px solid #eee; padding-top: 10px;">
+        <strong>Ato Autorizativo:</strong><br />
+        <a id="card-link" href="#" target="_blank" style="color: #006633; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 5px;">📄 Acessar Portaria</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Script Interno (Controla os cliques e os filtros) -->
+<script>
+  function mostrarInfo(nome, tipologia, corTexto, corBg, ato, url) {
+    document.getElementById('card-titulo').innerText = 'Campus ' + nome;
+    
+    var badge = document.getElementById('card-badge');
+    badge.innerText = 'Tipologia: ' + tipologia;
+    badge.style.color = corTexto;
+    badge.style.backgroundColor = corBg;
+    badge.style.border = '1px solid ' + corTexto;
+
+    var link = document.getElementById('card-link');
+    link.innerText = 'Ler documento: ' + ato;
+    link.href = url;
+
+    var card = document.getElementById('card-info-campus');
+    card.style.borderTopColor = corTexto;
+    card.style.display = 'block';
+  }
+
+  function fecharCard() {
+    document.getElementById('card-info-campus').style.display = 'none';
+  }
+
+  function filtrarTipologia(tipo) {
+    fecharCard();
+    var todosPontos = document.querySelectorAll('.ponto-campus');
+    
+    todosPontos.forEach(function(ponto) {
+      if (tipo === 'todos') {
+        ponto.style.opacity = '1';
+        ponto.style.pointerEvents = 'auto';
+      } else {
+        var classeTipo = 'tip-' + tipo.replace('/', '-');
+        if (ponto.classList.contains(classeTipo)) {
+          ponto.style.opacity = '1';
+          ponto.style.pointerEvents = 'auto';
+        } else {
+          // Apaga visualmente os outros, mantendo o layout
+          ponto.style.opacity = '0.15'; 
+          ponto.style.pointerEvents = 'none'; 
+        }
+      }
+    });
+  }
+</script>
