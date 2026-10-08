@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="proenApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico PROEN - IFBA | Autenticação</title>
+    
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AngularJS 1.8.2 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ifba: {
+                            green: '#006633',
+                            leaf: '#0f8b4c',
+                            lightgreen: '#2e7d32',
+                            red: '#c62828',
+                            darkgreen: '#004d26',
+                            bglight: '#f4f7f5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --ifba-green: #006633;
+            --ifba-leaf: #0f8b4c;
+            --ifba-red: #c62828;
+            --ifba-dark-green: #004d26;
+            --diagnostico-lime: #C2D83C;
+
+            /* Coordenadas aproximadas da área #C2D83C na arte 1920x1080 */
+            --login-left: 19.4%;
+            --login-top: 27%;
+            --login-width: 32%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background: #f4f7f5;
+            color: #1f2937;
+            transition: background-color .3s ease, color .3s ease;
+        }
+
+        [ng-cloak] {
+            display: none !important;
+        }
+
+        header {
+            flex: 0 0 auto;
+            z-index: 40;
+        }
+
+        /*
+         * Área visual principal.
+         * A imagem fica EXCLUSIVAMENTE dentro do main, portanto não invade
+         * o header nem o footer.
+         *
+         * A arte original é 1920x1080. O background é esticado para ocupar
+         * exatamente a área disponível, preservando o posicionamento relativo
+         * da região verde onde o formulário deve ficar.
+         */
+        .diagnostico-main {
+            position: relative;
+            isolation: isolate;
+            flex: 1 0 auto;
+            min-height: clamp(680px, calc(100vh - 155px), 900px);
+            min-height: clamp(680px, calc(100dvh - 155px), 900px);
+            width: 100%;
+            overflow: hidden;
+
+            background-color: #eef0f7;
+            background-image: url('../assets/telalogin2.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% 100%;
+
+            display: block;
+        }
+
+        /*
+         * Camada que permite posicionar o cartão diretamente sobre a área
+         * verde #C2D83C da arte.
+         */
+        .login-stage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .login-card-wrap {
+            position: absolute;
+            left: var(--login-left);
+            top: var(--login-top);
+            width: var(--login-width);
+            max-width: 820px;
+            pointer-events: auto;
+            z-index: 10;
+            transform: translateY(-2%);
+        }
+
+        .login-card {
+            width: 100%;
+            max-height: calc(100% - 1rem);
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            border: 1px solid rgba(255, 255, 255, .85);
+            border-radius: 20px;
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, .18),
+                0 8px 24px rgba(0, 0, 0, .10);
+
+            padding: clamp(1.15rem, 2vw, 1.75rem);
+        }
+
+        .login-card::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .login-card::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .login-card::-webkit-scrollbar-thumb {
+            background: rgba(0, 102, 51, .25);
+            border-radius: 99px;
+        }
+
+        .login-card .card-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #006633 0%, #0f8b4c 55%, #C2D83C 100%);
+        }
+
+        .ifba-gradient {
+            background: linear-gradient(135deg, #006633 0%, #0f8b4c 100%);
+        }
+
+        .ifba-gradient-dark {
+            background: linear-gradient(135deg, #003319 0%, #004d26 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .dark .glass-card,
+        .dark .login-card {
+            background: rgba(30, 41, 59, .96);
+            border-color: rgba(71, 85, 105, .75);
+        }
+
+        .pulse-online {
+            box-shadow: 0 0 0 0 rgba(15, 139, 76, .7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(.95);
+                box-shadow: 0 0 0 0 rgba(15, 139, 76, .7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(15, 139, 76, 0);
+            }
+            100% {
+                transform: scale(.95);
+                box-shadow: 0 0 0 0 rgba(15, 139, 76, 0);
+            }
+        }
+
+        .spinner {
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            width: 1.25rem;
+            height: 1.25rem;
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /*
+         * Tablet: mantém a composição, mas reduz o formulário.
+         */
+        @media (max-width: 1199px) {
+            :root {
+                --login-left: 8.5%;
+                --login-top: 33%;
+                --login-width: 45%;
+            }
+
+            .diagnostico-main {
+                min-height: 700px;
+            }
+
+            .login-card {
+                padding: 1.25rem;
+            }
+        }
+
+        /*
+         * Mobile:
+         * a arte continua como fundo, mas o formulário deixa de ser absoluto.
+         * Isso evita que os campos fiquem pequenos ou sejam cortados.
+         */
+        @media (max-width: 1023px) {
+            .diagnostico-main {
+                min-height: 0;
+                padding: 2rem 1rem;
+                overflow: visible;
+
+                background-size: cover;
+                background-position: center;
+            }
+
+            .login-stage {
+                position: relative;
+                inset: auto;
+                width: 100%;
+                height: auto;
+            }
+
+            .login-card-wrap {
+                position: relative;
+                left: auto;
+                top: auto;
+                width: min(100%, 620px);
+                max-width: 620px;
+                margin: 0 auto;
+                transform: none;
+            }
+
+            .login-card {
+                max-height: none;
+                overflow: visible;
+                padding: 1.25rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .diagnostico-main {
+                padding: 1rem .75rem;
+                background-position: 62% center;
+            }
+
+            .login-card {
+                border-radius: 16px;
+                padding: 1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body ng-controller="LoginController as vm" class="bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white" ng-class="{'dark': vm.isDarkMode}">
+
+    <!-- Top Utility Bar -->
+    <header class="w-full bg-white/80 dark:bg-slate-800/80 backdrop-blur border-b border-gray-200 dark:border-slate-700 py-2.5 px-4 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-xs md:text-sm">
+            <!-- Left Info -->
+            <div class="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                <a href="https://portal.ifba.edu.br/proen" target="_blank" rel="noopener noreferrer" class="hover:text-ifba-green dark:hover:text-emerald-400 font-medium transition-colors flex items-center gap-1.5">
+                    <img src="../assets/logo.png" alt="IFBA - Pró-Reitoria de Ensino" class="h-9 w-auto object-contain">
+                </a>
+                <span class="text-gray-300 dark:text-slate-600">|</span>
+
+            </div>
+
+            <!-- Right Controls: Theme Toggle & Open Source Badge -->
+            <div class="flex items-center space-x-3">
+                <!-- Open Source Badge -->
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="Código Aberto no GitHub" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors text-xs font-medium">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span>Open Source</span>
+                </a>
+
+                <!-- Dark Mode Toggle Button -->
+                <button type="button" ng-click="vm.toggleDarkMode()" class="p-2 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-amber-400 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors flex items-center gap-1.5" aria-label="Alternar Tema Claro/Escuro">
+                    <i class="fa-solid" ng-class="vm.isDarkMode ? 'fa-sun text-amber-400' : 'fa-moon text-slate-600'"></i>
+                    <span class="hidden md:inline text-xs font-medium" ng-bind="vm.isDarkMode ? 'Modo Claro' : 'Modo Escuro'"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="diagnostico-main" aria-label="Acesso ao Diagnóstico PROEN">
+        <div class="login-stage">
+
+            <!-- Login Card: posicionada sobre a área #C2D83C da arte -->
+            <div class="login-card-wrap">
+                <div class="login-card glass-card relative overflow-hidden">
+                    <!-- Top Accent Colored Line -->
+                    <div class="card-accent" aria-hidden="true"></div>
+
+                    <!-- Header inside card for mobile views -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                                Acessar o Sistema
+                            </h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-100 dark:bg-emerald-950 text-ifba-green dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                Versão 2.4.0
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Global Dynamic Feedback Alert Banners -->
+                    <div ng-show="vm.errorMessage" class="mb-5 p-3.5 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs sm:text-sm flex items-start space-x-3 animate-fade-in">
+                        <i class="fa-solid fa-circle-exclamation text-red-500 text-base mt-0.5 flex-shrink-0"></i>
+                        <div class="flex-grow">
+                            <span class="font-semibold block">Erro de Autenticação</span>
+                            <span ng-bind="vm.errorMessage"></span>
+                        </div>
+                        <button type="button" ng-click="vm.errorMessage = null" class="text-red-400 hover:text-red-600 dark:hover:text-red-200">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div ng-show="vm.successMessage" class="mb-5 p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 text-xs sm:text-sm flex items-start space-x-3">
+                        <i class="fa-solid fa-circle-check text-emerald-500 text-base mt-0.5 flex-shrink-0"></i>
+                        <div class="flex-grow">
+                            <span class="font-semibold block">Sucesso!</span>
+                            <span ng-bind="vm.successMessage"></span>
+                        </div>
+                        <button type="button" ng-click="vm.successMessage = null" class="text-emerald-400 hover:text-emerald-600">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <!-- AngularJS Form -->
+                    <form name="loginForm" ng-submit="vm.handleLogin(loginForm)" novalidate class="space-y-5">
+                        
+                        <!-- Email / login Input -->
+                        <div>
+                            <label for="email" class="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">
+                                E-mail Institucional ou Login  <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                    <i class="fa-solid fa-user-gear"></i>
+                                </div>
+                                <input type="text" 
+                                       id="email" 
+                                       name="email" 
+                                       ng-model="vm.loginData.email" 
+                                       required 
+                                       ng-pattern="vm.identityPattern"
+                                       placeholder="exemplo@ifba.edu.br ou user-rei" 
+                                       class="w-full pl-10 pr-4 py-3 text-sm bg-gray-50 dark:bg-slate-800/80 text-gray-900 dark:text-white rounded-xl border transition-all outline-none focus:ring-2 focus:ring-ifba-green dark:focus:ring-emerald-500"
+                                       ng-class="{
+                                           'border-red-500 focus:ring-red-500': loginForm.email.$invalid && (loginForm.email.$touched || loginForm.$submitted),
+                                           'border-gray-300 dark:border-slate-600': !(loginForm.email.$invalid && (loginForm.email.$touched || loginForm.$submitted))
+                                       }">
+                            </div>
+                            <!-- Field Error Messages -->
+                            <div ng-show="loginForm.email.$invalid && (loginForm.email.$touched || loginForm.$submitted)" class="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span ng-show="loginForm.email.$error.required">O e-mail ou login é obrigatório.</span>
+                                <span ng-show="loginForm.email.$error.pattern && !loginForm.email.$error.required">Digite um e-mail válido (@ifba.edu.br) ou login.</span>
+                            </div>
+                        </div>
+
+                        <!-- Password Input with Toggle -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label for="password" class="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                    Senha de Acesso <span class="text-red-500">*</span>
+                                </label>
+                                <button type="button" ng-click="vm.openForgotPasswordModal()" class="text-xs font-semibold text-ifba-green dark:text-emerald-400 hover:underline">
+                                    Esqueceu a senha?
+                                </button>
+                            </div>
+                            <div class="relative rounded-xl shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                                <input type="{{ vm.showPassword ? 'text' : 'password' }}" 
+                                       id="password" 
+                                       name="password" 
+                                       ng-model="vm.loginData.password" 
+                                       required 
+                                       ng-minlength="6"
+                                       placeholder="••••••••" 
+                                       class="w-full pl-10 pr-11 py-3 text-sm bg-gray-50 dark:bg-slate-800/80 text-gray-900 dark:text-white rounded-xl border transition-all outline-none focus:ring-2 focus:ring-ifba-green dark:focus:ring-emerald-500"
+                                       ng-class="{
+                                           'border-red-500 focus:ring-red-500': loginForm.password.$invalid && (loginForm.password.$touched || loginForm.$submitted),
+                                           'border-gray-300 dark:border-slate-600': !(loginForm.password.$invalid && (loginForm.password.$touched || loginForm.$submitted))
+                                       }">
+                                <!-- Password Visibility Toggle Button -->
+                                <button type="button" 
+                                        ng-click="vm.togglePasswordVisibility()" 
+                                        class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none"
+                                        aria-label="Ver ou ocultar senha">
+                                    <i class="fa-solid" ng-class="vm.showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                </button>
+                            </div>
+                            <!-- Password Error Messages -->
+                            <div ng-show="loginForm.password.$invalid && (loginForm.password.$touched || loginForm.$submitted)" class="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span ng-show="loginForm.password.$error.required">A senha é obrigatória.</span>
+                                <span ng-show="loginForm.password.$error.minlength && !loginForm.password.$error.required">A senha deve ter no mínimo 6 caracteres.</span>
+                            </div>
+                        </div>
+
+                        <!-- Remember Me & Extra Checkbox -->
+                        <div class="flex items-center justify-between text-xs sm:text-sm">
+                            <label class="flex items-center space-x-2 cursor-pointer select-none">
+                                <input type="checkbox" 
+                                       ng-model="vm.loginData.remember" 
+                                       class="w-4 h-4 rounded text-ifba-green focus:ring-ifba-green border-gray-300 dark:border-slate-600 dark:bg-slate-800">
+                                <span class="text-gray-600 dark:text-gray-300 font-medium">Manter conectado neste dispositivo</span>
+                            </label>
+                        </div>
+
+                        <!-- Submit Button with Loading Spinner -->
+                        <button type="submit" 
+                                ng-disabled="loginForm.$invalid || vm.isLoading" 
+                                class="w-full py-3.5 px-4 rounded-xl text-white font-bold text-sm shadow-lg shadow-emerald-900/20 ifba-gradient hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ifba-green disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2">
+                            <div ng-show="vm.isLoading" class="spinner"></div>
+                            <span ng-bind="vm.isLoading ? 'Autenticando no IFBA...' : 'Entrar no Sistema'"></span>
+                            <i ng-show="!vm.isLoading" class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                        <!-- System Operational Status Indicator -->
+                            <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-gray-200/60 dark:bg-slate-800 border border-gray-300/50 dark:border-slate-700 w-fit text-xs text-gray-700 dark:text-gray-300">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-online"></span>
+                                <span class="font-medium">Serviços da PROEN operando normalmente</span>
+                            </div>
+                        
+                    
+                    <!-- Auxiliary Links Row -->
+                    <div class="mt-6 text-center border-t border-gray-100 dark:border-slate-700/80 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500 dark:text-gray-400">
+                        <button type="button" ng-click="vm.openSupportModal()" class="hover:text-ifba-green dark:hover:text-emerald-400 underline font-medium">
+                            <i class="fa-solid fa-circle-question mr-1"></i> Acesso de Visitante / Suporte
+                        </button>
+                        <a href="https://suap.ifba.edu.br" target="_blank" rel="noopener noreferrer" class="hover:text-ifba-green dark:hover:text-emerald-400 underline font-medium">
+                            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Acessar SUAP Oficial
+                        </a>
+                    </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Forgot Password -->
+    <div ng-show="vm.showForgotPasswordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" ng-cloak>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 dark:border-slate-700 relative">
+            <button type="button" ng-click="vm.closeForgotPasswordModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center">
+                <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/50 text-ifba-green dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recuperação de Senha</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Informe seu e-mail cadastrado ou login para receber as instruções de redefinição de acesso via e-mail.
+                </p>
+            </div>
+
+            <form class="mt-4 space-y-4" ng-submit="vm.handleForgotPassword()">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">E-mail ou Login</label>
+                    <input type="text" ng-model="vm.recoveryInput" required placeholder="Digite seu e-mail ou login" class="w-full px-3.5 py-2.5 text-sm bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-white rounded-xl border border-gray-300 dark:border-slate-600 focus:ring-2 focus:ring-ifba-green outline-none">
+                </div>
+                <div class="flex space-x-2 pt-2">
+                    <button type="button" ng-click="vm.closeForgotPasswordModal()" class="w-1/2 py-2.5 px-3 rounded-xl border border-gray-300 dark:border-slate-600 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="w-1/2 py-2.5 px-3 rounded-xl ifba-gradient text-white text-xs font-semibold hover:opacity-95">
+                        Enviar Instruções
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Support & Visitor Access -->
+    <div ng-show="vm.showSupportModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" ng-cloak>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-200 dark:border-slate-700 relative">
+            <button type="button" ng-click="vm.closeSupportModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/50 text-ifba-green dark:text-emerald-400 rounded-xl flex items-center justify-center text-lg font-bold">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white">Suporte & Central de Ajuda PROEN</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Atendimento aos servidores e alunos do IFBA</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs text-gray-600 dark:text-gray-300">
+                <div class="p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl border border-gray-200 dark:border-slate-600">
+                    <strong class="text-gray-900 dark:text-white block mb-0.5"><i class="fa-regular fa-envelope text-ifba-green dark:text-emerald-400 mr-1"></i> E-mail Institucional:</strong>
+                    proen@ifba.edu.br | reestruturacao@ifba.edu.br
+                </div>
+                <div class="p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl border border-gray-200 dark:border-slate-600">
+                    <strong class="text-gray-900 dark:text-white block mb-0.5"><i class="fa-solid fa-phone text-ifba-green dark:text-emerald-400 mr-1"></i> Contato Telefônico:</strong>
+                    (71) 3221-0446 - Pró-Reitoria de Ensino
+                </div>
+                <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-xl">
+                    <strong class="text-ifba-green dark:text-emerald-300 block mb-0.5"><i class="fa-solid fa-user-shield mr-1"></i> Acesso como Visitante ou Pesquisador:</strong>
+                    Para solicitar acesso aos relatórios públicos do Diagnóstico PROEN sem credenciais SUAP, formalize a solicitação via Sistema SEI do IFBA.
+                </div>
+            </div>
+
+            <div class="mt-5 text-right">
+                <button type="button" ng-click="vm.closeSupportModal()" class="py-2 px-4 rounded-xl ifba-gradient text-white text-xs font-semibold hover:opacity-95">
+                    Entendido / Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Institutional Footer -->
+    <footer class="w-full bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 py-6 px-4 text-xs text-gray-500 dark:text-gray-400">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Left: IFBA Entity Info -->
+            <div class="text-center md:text-left space-y-1">
+                <p class="font-semibold text-gray-700 dark:text-gray-300">
+                    Instituto Federal de Educação, Ciência e Tecnologia da Bahia - IFBA
+                </p>
+                <p>Pró-Reitoria de Ensino (PROEN) | Av. Araújo Pinho, 39 - Canela, Salvador - BA</p>
+            </div>
+
+            <!-- Center: GitHub Open Source & License -->
+            <div class="flex flex-col items-center justify-center space-y-1">
+                <div class="flex items-center space-x-2">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">
+                        MIT Open Source License
+                    </span>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-ifba-green dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium">
+                        <i class="fa-brands fa-github text-sm"></i>
+                        <span>Repositório GitHub</span>
+                    </a>
+                </div>
+                <p class="text-[11px] text-gray-400">Transposto para código aberto para a comunidade acadêmica.</p>
+            </div>
+
+            <!-- Right: Copyright Notice -->
+            <div class="text-center md:text-right">
+                <p>&copy; {{ vm.currentYear }} IFBA / PROEN. Todos os direitos reservados.</p>
+                <p class="text-[10px] text-gray-400">Desenvolvido por Danilo Santos Souza com AngularJS & Tailwind CSS</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- AngularJS Logic -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Define AngularJS Application Module 'proenApp'
+            var app = angular.module('proenApp', []);
+
+            // Controller Implementation
+            app.controller('LoginController', ['$timeout', '$scope', function($timeout, $scope) {
+                var vm = this;
+
+                // Application Properties
+                vm.currentYear = new Date().getFullYear();
+                vm.isLoading = false;
+                vm.showPassword = false;
+                vm.isDarkMode = false;
+
+                // Modal state controls
+                vm.showForgotPasswordModal = false;
+                vm.showSupportModal = false;
+
+                // Status messages
+                vm.errorMessage = null;
+                vm.successMessage = null;
+                vm.recoveryInput = '';
+
+                // Login Form Data Object
+                vm.loginData = {
+                    email: '',
+                    password: '',
+                    remember: true
+                };
+
+                // Regex Validation Pattern for Email (@ifba.edu.br) or login
+                vm.identityPattern = /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[0-9]{7,12})$/;
+
+                // Toggle Password Visibility
+                vm.togglePasswordVisibility = function() {
+                    vm.showPassword = !vm.showPassword;
+                };
+
+                // Toggle Dark Mode
+                vm.toggleDarkMode = function() {
+                    vm.isDarkMode = !vm.isDarkMode;
+                    localStorage.setItem('proen_dark_mode', vm.isDarkMode);
+                };
+
+                // Load initial theme settings
+                vm.initTheme = function() {
+                    var savedTheme = localStorage.getItem('proen_dark_mode');
+                    if (savedTheme !== null) {
+                        vm.isDarkMode = (savedTheme === 'true');
+                    } else {
+                        // Check system preferences
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            vm.isDarkMode = true;
+                        }
+                    }
+                };
+
+                // Quick Demo Credentials Fill
+                vm.fillDemoCredentials = function(type) {
+                    vm.errorMessage = null;
+                    vm.successMessage = null;
+
+                    if (type === 'servidor') {
+                        vm.loginData.email = 'servidor.proen@ifba.edu.br';
+                        vm.loginData.password = 'senha12345';
+                    } else if (type === 'suap') {
+                        vm.loginData.email = '20231010042';
+                        vm.loginData.password = 'suapPass2024';
+                    }
+                };
+
+                // Handle Login Form Submission
+                vm.handleLogin = function(form) {
+                    vm.errorMessage = null;
+                    vm.successMessage = null;
+
+                    if (form.$invalid) {
+                        vm.errorMessage = 'Por favor, preencha corretamente todos os campos obrigatórios.';
+                        return;
+                    }
+
+                    vm.isLoading = true;
+
+                    // Simulate Async Server Call ($timeout simulates HTTP request to PROEN Auth Server)
+                    $timeout(function() {
+                        vm.isLoading = false;
+
+                        // Demonstration authentication logic
+                        var identity = vm.loginData.email.toLowerCase();
+                        var password = vm.loginData.password;
+
+                        if (password === 'errada' || password === '123456') {
+                            vm.errorMessage = 'Credenciais inválidas. Verifique seu e-mail/login e senha digitados.';
+                        } else {
+                            vm.successMessage = 'Autenticação realizada com sucesso! Redirecionando para o painel Diagnóstico PROEN...';
+                            
+                            // Reset password field for security
+                            vm.loginData.password = '';
+                            form.$setPristine();
+                            form.$setUntouched();
+                        }
+                    }, 1600);
+                };
+
+                // Forgot Password Modal Handlers
+                vm.openForgotPasswordModal = function() {
+                    vm.recoveryInput = vm.loginData.email || '';
+                    vm.showForgotPasswordModal = true;
+                };
+
+                vm.closeForgotPasswordModal = function() {
+                    vm.showForgotPasswordModal = false;
+                };
+
+                vm.handleForgotPassword = function() {
+                    if (!vm.recoveryInput) return;
+                    vm.showForgotPasswordModal = false;
+                    vm.successMessage = 'Instruções de redefinição foram enviadas para o e-mail associado a: ' + vm.recoveryInput;
+                    vm.recoveryInput = '';
+                };
+
+                // Support Modal Handlers
+                vm.openSupportModal = function() {
+                    vm.showSupportModal = true;
+                };
+
+                vm.closeSupportModal = function() {
+                    vm.showSupportModal = false;
+                };
+
+                // Initialize Theme on startup
+                vm.initTheme();
+
+            }]);
+
+        })();
+    </script>
+</body>
+</html>
