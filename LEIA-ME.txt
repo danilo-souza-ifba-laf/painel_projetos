@@ -1,19 +1,29 @@
-PORTFÓLIO PROFISSIONAL — DANILO SANTOS SOUZA
+PORTFÓLIO DANILO SANTOS SOUZA — PROPOSTA DE REVISÃO
 
-COMO ABRIR
-1. Extraia todos os arquivos do ZIP para uma pasta.
-2. Abra o arquivo index.html com um navegador.
-3. Não é necessário instalar programas ou iniciar um servidor.
+Abra index.html para revisar a proposta. Não exige instalação ou compilação.
+Para aplicar ao seu domínio, faça uma cópia de segurança e envie index.html,
+style.css, script.js e os arquivos da pasta assets para a raiz do site.
+Preserve as pastas dos sistemas existentes. Nada foi publicado automaticamente.
 
-ARQUIVOS
-- index.html: conteúdo e estrutura da página.
-- style.css: aparência, responsividade e três paletas de cores.
-- script.js: troca de paletas e filtros dos projetos.
+O que mudou
+- Projetos logo após a apresentação, com grade visual inspirada na referência.
+- Seis ilustrações SVG próprias, identificadas como conceituais.
+- Busca sem distinção de acentos combinada com os filtros existentes.
+- Contagem, estado sem resultados e limpeza dos filtros.
+- Detalhes expansíveis em cada projeto, inclusive sem JavaScript.
+- Links de acesso aos dois sistemas existentes mantidos no domínio original.
+- Seletor discreto no cabeçalho: Terracota, Verde e Azul, com preferência salva.
+- Menu móvel, fechamento com Escape e foco visível.
+- Conteúdo biográfico e trajetória preservados.
 
-EDIÇÃO
-Os três arquivos podem ser editados em qualquer editor de texto ou código,
-como Visual Studio Code, Notepad++ ou Bloco de Notas.
+Imagens
+A foto foi obtida do seu site atual. As imagens dos projetos são ilustrações,
+não capturas reais dos sistemas. Substitua assets/panda.svg, ppcs.svg,
+repositorio.svg, diario-oficial.svg, aura.svg e curriculos.svg por imagens
+reais; ajuste os caminhos no HTML e remova a legenda de ilustração quando fizer isso.
+Não foram inventados indicadores de impacto, autoria individual ou resultados.
 
-PUBLICAÇÃO
-A pasta pode ser hospedada diretamente no GitHub Pages, Netlify, Cloudflare
-Pages ou em qualquer hospedagem que aceite sites estáticos.
+Validação
+Sintaxe JavaScript e estrutura HTML verificadas (projetos, âncoras, IDs e assets).
+Não foi realizada inspeção visual em navegador nesta execução.
+Revisar no celular e no desktop antes de substituir a versão publicada.
