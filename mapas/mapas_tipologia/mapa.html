@@ -55,6 +55,7 @@
             >
               Lista
             </button>
+            <button type="button" data-vista="tabela" aria-pressed="false" aria-controls="tabela">Tabela</button>
           </div>
         </div>
         <section id="mapa" aria-label="Mapa dos campi">
@@ -68,6 +69,15 @@
           </p>
         </section>
         <section id="lista" aria-label="Lista dos campi" hidden></section>
+        <section id="tabela" aria-label="Atos normativos dos campi" hidden>
+          <div class="tabela-scroll" role="region" aria-label="Tabela de atos normativos; role horizontalmente em telas pequenas" tabindex="0">
+            <table>
+              <caption>Campi, atos normativos e tipologias da Rede IFBA. Os documentos abrem em nova aba.</caption>
+              <thead><tr><th scope="col">Campus</th><th scope="col">Ato normativo</th><th scope="col">Tipologia</th><th scope="col">Localização</th></tr></thead>
+              <tbody id="tabela-campi"></tbody>
+            </table>
+          </div>
+        </section>
         <p id="vazio" hidden>
           Nenhum campus encontrado. Tente outro nome ou tipologia.
         </p>
@@ -84,11 +94,8 @@
       <h2 id="titulo"></h2>
       <span id="badge"></span>
       <div class="documento">
-        <h3>Ato autorizativo</h3>
-        <p id="ato"></p>
-        <a id="documento" target="_blank" rel="noopener noreferrer"
-          >Abrir documento ↗ <span class="sr-only">(abre em nova aba)</span></a
-        >
+        <h3>Atos normativos</h3>
+        <div id="ato"></div>
       </div>
     </dialog>
     <noscript

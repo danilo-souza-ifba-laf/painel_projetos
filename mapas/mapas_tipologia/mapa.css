@@ -439,3 +439,23 @@ h3 {
   .mapa .ponto { width: 26px; height: 38px; }
   .mapa .ponto .pin-imagem { width: 42px; height: 42px; }
 }
+
+.tabela-scroll { overflow-x: auto; border: 1px solid var(--borda); border-radius: 10px; }
+#tabela table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+#tabela caption { text-align: left; padding: 16px; color: #617066; font-size: 12px; line-height: 1.6; }
+#tabela th, #tabela td { padding: 16px; border-top: 1px solid var(--borda); vertical-align: top; }
+#tabela thead { background: #edf6f0; color: var(--verde); }
+#tabela tbody tr:hover { background: #f6faf7; }
+#tabela th[scope=row] { min-width: 150px; }
+.atos-lista { margin: 0; padding: 0; list-style: none; line-height: 1.7; }
+.atos-lista li + li { margin-top: 12px; }
+.atos-lista a { color: var(--verde); text-underline-offset: 3px; }
+.campus-tabela { padding: 0; border: 0; background: transparent; color: #22352a; font-weight: 650; text-align: left; }
+.campus-tabela:hover { color: var(--verde); text-decoration: underline; }
+.tipo-tabela { display: inline-block; padding: 5px 9px; border-radius: 6px; white-space: nowrap; font-size: 12px; font-weight: 650; }
+.localizar-campus { border: 1px solid var(--borda); border-radius: 6px; padding: 8px 10px; background: white; color: var(--verde); white-space: nowrap; font-size: 12px; }
+.localizar-campus:hover { border-color: var(--verde); }
+.mapa .ponto.selecionado { z-index: 25; }
+.mapa .ponto.selecionado .tooltip { visibility: visible; }
+.mapa .ponto.selecionado .pin-imagem { scale: 1.15; transform-origin: center bottom; }
+@media(max-width:600px) { .barra { flex-wrap: wrap; } #tabela th, #tabela td { padding: 12px; } }

@@ -10,8 +10,7 @@
     $('badge').textContent = `Tipologia ${campus.tipologia}`;
     $('badge').style.color = campus.cor;
     $('badge').style.background = campus.fundo;
-    $('ato').textContent = campus.ato;
-    $('documento').href = campus.url;
+    $('ato').replaceChildren(linksAtos(campus));
     $('detalhes').showModal();
   }
   function botao(texto, classe, acao) {
@@ -19,6 +18,27 @@
     b.type = 'button'; b.className = classe; b.textContent = texto;
     b.addEventListener('click', acao);
     return b;
+  }
+  function linksAtos(campus) {
+    const lista = document.createElement('ul');
+    lista.className = 'atos-lista';
+    for (const ato of campus.atos) {
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.textContent = ato.titulo;
+      link.href = ato.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', `${ato.titulo} — Campus ${campus.nome} (abre em nova aba)`);
+      item.append(link);
+      if (ato.observacao) item.append(document.createTextNode(` — ${ato.observacao}`));
+      lista.append(item);
+    }
+    return lista;
+  }
+  function mudarVista(vista) {
+    document.querySelectorAll('[data-vista]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.vista === vista)));
+    ['mapa', 'lista', 'tabela'].forEach(id => { $(id).hidden = id !== vista; });
   }
   for (const campus of campi) {
     const ponto = botao('', 'ponto', () => abrir(campus));
@@ -51,7 +71,28 @@
     const nome = document.createElement('strong'); nome.textContent = campus.nome;
     const tipo = document.createElement('span'); tipo.textContent = `Tipologia ${campus.tipologia} ↗`;
     card.style.setProperty('--cor', campus.cor); card.append(nome, tipo);
-    $('lista').append(card); elementos.push({campus, ponto, card});
+    $('lista').append(card);
+    const linha = document.createElement('tr');
+    const campusCelula = document.createElement('th');
+    campusCelula.scope = 'row';
+    campusCelula.append(botao(campus.nome, 'campus-tabela', () => abrir(campus)));
+    const atosCelula = document.createElement('td'); atosCelula.append(linksAtos(campus));
+    const tipoCelula = document.createElement('td');
+    const badge = document.createElement('span'); badge.className = 'tipo-tabela';
+    badge.textContent = campus.tipologia; badge.style.color = campus.cor; badge.style.background = campus.fundo;
+    tipoCelula.append(badge);
+    const localCelula = document.createElement('td');
+    const localizar = botao('Ver no mapa', 'localizar-campus', () => {
+      mudarVista('mapa');
+      document.querySelectorAll('.ponto.selecionado').forEach(p => p.classList.remove('selecionado'));
+      ponto.classList.add('selecionado');
+      ponto.scrollIntoView({block: 'center', inline: 'nearest'});
+      ponto.focus({preventScroll: true});
+    });
+    localizar.setAttribute('aria-label', `Localizar Campus ${campus.nome} no mapa`);
+    localCelula.append(localizar); linha.append(campusCelula, atosCelula, tipoCelula, localCelula);
+    $('tabela-campi').append(linha);
+    elementos.push({campus, ponto, card, linha});
   }
   for (const tipo of ['todos','350/200','90/60','70/45','40/26']) {
     const grupo = campi.filter(c => tipo === 'todos' || c.tipologia === tipo);
@@ -62,17 +103,16 @@
   }
   function atualizar() {
     const busca = normalizar($('busca').value.trim()); let total = 0;
-    elementos.forEach(({campus,ponto,card}) => {
+    elementos.forEach(({campus,ponto,card,linha}) => {
       const visivel = (filtro === 'todos' || campus.tipologia === filtro) && normalizar(campus.nome).includes(busca);
-      ponto.hidden = card.hidden = !visivel; if (visivel) total++;
+      ponto.hidden = card.hidden = linha.hidden = !visivel; if (visivel) total++;
     });
     document.querySelectorAll('[data-tipo]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tipo === filtro)));
     $('resultado').textContent = `${total} de ${campi.length} campi encontrados`;
     $('vazio').hidden = total !== 0;
   }
   document.querySelectorAll('[data-vista]').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('[data-vista]').forEach(outro => outro.setAttribute('aria-pressed', String(outro === b)));
-    $('mapa').hidden = b.dataset.vista !== 'mapa'; $('lista').hidden = b.dataset.vista !== 'lista';
+    mudarVista(b.dataset.vista);
   }));
   $('busca').addEventListener('input', atualizar);
   $('fechar').addEventListener('click', () => $('detalhes').close());
