@@ -24,6 +24,13 @@
     const ponto = botao('', 'ponto', () => abrir(campus));
     ponto.style.top = `${campus.top}%`; ponto.style.left = `${campus.left}%`;
     ponto.style.setProperty('--cor', campus.cor);
+    ponto.dataset.tipologia = campus.tipologia;
+    const pin = document.createElement('img');
+    pin.src = 'assets/ifba-pin.png';
+    pin.alt = '';
+    pin.className = 'pin-imagem';
+    pin.setAttribute('aria-hidden', 'true');
+    ponto.append(pin);
     ponto.setAttribute('aria-label', `Campus ${campus.nome}, tipologia ${campus.tipologia}`);
     ponto.setAttribute('aria-haspopup', 'dialog');
     const tooltip = document.createElement('span');

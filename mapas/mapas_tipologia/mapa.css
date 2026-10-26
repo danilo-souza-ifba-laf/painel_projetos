@@ -403,3 +403,39 @@ h3 {
   grid-column: 2;
   overflow-wrap: anywhere;
 }
+
+/* A ponta do pin coincide com as coordenadas originais do campus.
+   O recorte em CSS oculta o fundo branco sem modificar a imagem enviada. */
+.mapa .ponto {
+  width: 38px;
+  height: 56px;
+  transform: translate(-50%, -100%);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  isolation: isolate;
+}
+.mapa .ponto .pin-imagem {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  max-width: none;
+  transform: translateX(-50%);
+  opacity: 1;
+  border-radius: 0;
+  pointer-events: none;
+  clip-path: polygon(49.5% 96.2%, 35% 74%, 25% 55%, 21% 42%, 19.6% 34%, 20% 27%, 22% 20%, 26% 14%, 32% 9%, 39% 5.5%, 47% 3.8%, 54% 4%, 62% 6%, 69% 10%, 74% 15%, 78% 23%, 80% 31%, 79.5% 39%, 77% 49%, 72% 61%, 64% 75%, 54% 91%);
+}
+.ponto[data-tipologia="90/60"] .pin-imagem { filter: hue-rotate(70deg); }
+.ponto[data-tipologia="350/200"] .pin-imagem { filter: hue-rotate(210deg); }
+.ponto[data-tipologia="40/26"] .pin-imagem { filter: hue-rotate(265deg); }
+.mapa .ponto:hover,.mapa .ponto:focus-visible { z-index: 30; box-shadow: none; }
+.mapa .ponto:hover .pin-imagem,.mapa .ponto:focus-visible .pin-imagem { scale: 1.12; transform-origin: center bottom; }
+.mapa .ponto .tooltip { bottom: calc(100% + 5px); }
+@media (max-width: 600px) {
+  .mapa .ponto { width: 26px; height: 38px; }
+  .mapa .ponto .pin-imagem { width: 42px; height: 42px; }
+}
