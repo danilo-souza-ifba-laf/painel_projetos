@@ -32,6 +32,15 @@
     $('pontos').append(ponto);
     const card = botao('', 'campus-card', () => abrir(campus));
     card.setAttribute('aria-haspopup','dialog');
+    const simbolo = document.createElement('span');
+    simbolo.className = 'campus-simbolo';
+    simbolo.setAttribute('aria-hidden', 'true');
+    const imagem = document.createElement('img');
+    imagem.src = 'assets/ifba-marca.png';
+    imagem.alt = '';
+    imagem.loading = 'lazy';
+    simbolo.append(imagem);
+    card.append(simbolo);
     const nome = document.createElement('strong'); nome.textContent = campus.nome;
     const tipo = document.createElement('span'); tipo.textContent = `Tipologia ${campus.tipologia} ↗`;
     card.style.setProperty('--cor', campus.cor); card.append(nome, tipo);

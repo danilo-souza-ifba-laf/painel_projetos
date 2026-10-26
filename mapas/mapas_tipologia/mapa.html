@@ -1,18 +1,99 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rede IFBA | Mapa por tipologia</title>
-<link rel="stylesheet" href="mapa.css"><script src="campi.js" defer></script><script src="mapa.js" defer></script>
-</head>
-<body><main>
-<header><div class="marca">IFBA <span>Rede de campi</span></div><p class="eyebrow">TERRITÓRIO E EXPANSÃO</p><h1>Uma rede, muitas possibilidades.</h1><p>Explore os campi do IFBA na Bahia e consulte seus atos autorizativos por tipologia.</p><p class="resumo"><strong>27</strong> campi · <strong>4</strong> tipologias · Bahia</p></header>
-<section class="painel" aria-label="Explorar campi">
-<div class="ferramentas"><div><h2>Encontre um campus</h2><p>Selecione uma tipologia ou busque pelo nome.</p></div><label>Buscar campus<input id="busca" type="search" placeholder="Ex.: Salvador" autocomplete="off"></label></div>
-<div id="filtros" role="group" aria-label="Filtrar por tipologia"></div>
-<div class="barra"><p id="resultado" role="status" aria-live="polite"></p><div class="vistas" role="group" aria-label="Visualização"><button type="button" data-vista="mapa" aria-pressed="true" aria-controls="mapa">Mapa</button><button type="button" data-vista="lista" aria-pressed="false" aria-controls="lista">Lista</button></div></div>
-<section id="mapa" aria-label="Mapa dos campi"><div class="mapa"><img src="mapabahia.png" alt="Mapa das regiões da Bahia"><div id="pontos"></div></div><p class="dica">Selecione um ponto para consultar o campus. A lista permite explorar todos os nomes.</p></section>
-<section id="lista" aria-label="Lista dos campi" hidden></section><p id="vazio" hidden>Nenhum campus encontrado. Tente outro nome ou tipologia.</p>
-</section><footer>Instituto Federal de Educação, Ciência e Tecnologia da Bahia</footer></main>
-<dialog id="detalhes" aria-labelledby="titulo" aria-describedby="ato"><button id="fechar" type="button" aria-label="Fechar detalhes" autofocus>×</button><p class="eyebrow">REDE IFBA</p><h2 id="titulo"></h2><span id="badge"></span><div class="documento"><h3>Ato autorizativo</h3><p id="ato"></p><a id="documento" target="_blank" rel="noopener noreferrer">Abrir documento ↗ <span class="sr-only">(abre em nova aba)</span></a></div></dialog>
-<noscript>Ative o JavaScript para explorar os campi e consultar os documentos.</noscript></body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rede IFBA | Mapa por tipologia</title>
+    <link rel="stylesheet" href="mapa.css" />
+    <script src="campi.js" defer></script>
+    <script src="mapa.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="marca">IFBA <span>Rede de campi</span></div>
+        <p class="eyebrow">TERRITÓRIO E EXPANSÃO</p>
+        <h1>Uma rede, muitas possibilidades.</h1>
+        <p>
+          Explore os campi do IFBA na Bahia e consulte seus atos autorizativos
+          por tipologia.
+        </p>
+        <p class="resumo">
+          <strong>27</strong> campi · <strong>4</strong> tipologias · Bahia
+        </p>
+      </header>
+      <section class="painel" aria-label="Explorar campi">
+        <div class="ferramentas">
+          <div>
+            <h2>Encontre um campus</h2>
+            <p>Selecione uma tipologia ou busque pelo nome.</p>
+          </div>
+          <label
+            >Buscar campus<input
+              id="busca"
+              type="search"
+              placeholder="Ex.: Salvador"
+              autocomplete="off"
+          /></label>
+        </div>
+        <div id="filtros" role="group" aria-label="Filtrar por tipologia"></div>
+        <div class="barra">
+          <p id="resultado" role="status" aria-live="polite"></p>
+          <div class="vistas" role="group" aria-label="Visualização">
+            <button
+              type="button"
+              data-vista="mapa"
+              aria-pressed="true"
+              aria-controls="mapa"
+            >
+              Mapa</button
+            ><button
+              type="button"
+              data-vista="lista"
+              aria-pressed="false"
+              aria-controls="lista"
+            >
+              Lista
+            </button>
+          </div>
+        </div>
+        <section id="mapa" aria-label="Mapa dos campi">
+          <div class="mapa">
+            <img src="mapabahia.png" alt="Mapa das regiões da Bahia" />
+            <div id="pontos"></div>
+          </div>
+          <p class="dica">
+            Selecione um ponto para consultar o campus. A lista permite explorar
+            todos os nomes.
+          </p>
+        </section>
+        <section id="lista" aria-label="Lista dos campi" hidden></section>
+        <p id="vazio" hidden>
+          Nenhum campus encontrado. Tente outro nome ou tipologia.
+        </p>
+      </section>
+      <footer>
+        Instituto Federal de Educação, Ciência e Tecnologia da Bahia
+      </footer>
+    </main>
+    <dialog id="detalhes" aria-labelledby="titulo" aria-describedby="ato">
+      <button id="fechar" type="button" aria-label="Fechar detalhes" autofocus>
+        ×
+      </button>
+      <p class="eyebrow">REDE IFBA</p>
+      <h2 id="titulo"></h2>
+      <span id="badge"></span>
+      <div class="documento">
+        <h3>Ato autorizativo</h3>
+        <p id="ato"></p>
+        <a id="documento" target="_blank" rel="noopener noreferrer"
+          >Abrir documento ↗ <span class="sr-only">(abre em nova aba)</span></a
+        >
+      </div>
+    </dialog>
+    <noscript
+      >Ative o JavaScript para explorar os campi e consultar os
+      documentos.</noscript
+    >
+  </body>
+</html>

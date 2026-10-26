@@ -225,7 +225,7 @@ const CAMPI = [
         "cor":  "#854D0E",
         "fundo":  "#FFF8E1",
         "ato":  "PORTARIA Nº 2.166, DE 28 DE DEZEMBRO DE 2023",
-        "url":  "assets/files/campo_formoso_e_jaguaquara.pdf",
+        "url":  "assets/files/cfo_jag.pdf",
         "top":  22,
         "left":  61
     },
@@ -235,7 +235,7 @@ const CAMPI = [
         "cor":  "#854D0E",
         "fundo":  "#FFF8E1",
         "ato":  "PORTARIA Nº 2.166, DE 28 DE DEZEMBRO DE 2023",
-        "url":  "assets/files/campo_formoso_e_jaguaquara.pdf",
+        "url":  "assets/files/cfo_jag.pdf",
         "top":  52,
         "left":  64
     },
